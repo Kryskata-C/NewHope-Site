@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Здраве и Сигурност - NewHope</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <a href="index.html" class="back-button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 256 256"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path></svg>
+    <span>Назад</span>
+  </a>
+
+  <header class="details-hero" style="background-image: url('https://images.unsplash.com/photo-1538688273824-79b3d39c06a6?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400');">
+    <div class="details-overlay"></div>
+    <div class="details-hero-content">
+      <h1>Здраве и Сигурност</h1>
+      <p>Спокойствие и грижа за вашето семейство.</p>
+    </div>
+  </header>
+
+  <div class="divider-shape">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
+  </div>
+
+  <main class="details-container">
+    <div class="details-intro">
+      <h2>Сигурна среда за по-добър живот</h2>
+      <p>В основата на проекта "Нова Надежда" е заложена идеята за създаване на защитена и здравословна среда, където всяко семейство може да живее спокойно и да има достъп до качествени услуги.</p>
+    </div>
+
+    <section class="feature-section">
+      <div class="feature-image">
+        <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="Bright and modern medical clinic">
+      </div>
+      <div class="feature-content">
+        <h3>Комплексна Медицинска Грижа</h3>
+        <p>Достъпът до качествено здравеопазване е ключов. Затова изграждаме модерен медицински център, който да отговаря на всички съвременни изисквания.</p>
+        <ul>
+          <li>Медицински център с над 30 лекарски кабинета</li>
+          <li>Акредитирана клинична лаборатория</li>
+          <li>Голяма и добре заредена аптека</li>
+          <li>Лесен достъп за всички жители на квартала</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="feature-section">
+      <div class="feature-image">
+        <img src="https://images.unsplash.com/photo-1599838634966-350d56447f5a?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="A safe neighborhood street with modern homes">
+      </div>
+      <div class="feature-content">
+        <h3>Безопасност и Сигурност</h3>
+        <p>Сигурността на жителите е наш основен приоритет. Кварталът ще разполага със собствена полицейска служба и модерна система за наблюдение.</p>
+        <ul>
+          <li>Полицейски участък в самия квартал</li>
+          <li>Smart камери, свързани с оптична мрежа</li>
+          <li>Център за видеонаблюдение към районното управление</li>
+          <li>Добре осветени улици и паркове</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="feature-section">
+      <div class="feature-image">
+        <img src="https://images.unsplash.com/photo-1549491746-17362f2a748c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="Children playing in a safe, green park">
+      </div>
+      <div class="feature-content">
+        <h3>Грижа за Децата</h3>
+        <p>Създаваме среда, в която децата да растат щастливи и обгрижени. Новата детска градина ще предлага най-добрите условия за обучение и игра.</p>
+        <ul>
+          <li>Просторна и модерна детска градина</li>
+          <li>Безопасни детски площадки</li>
+          <li>Зелени площи за игра и отдих</li>
+          <li>Лесен достъп за родителите от квартала</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const animatedSections = document.querySelectorAll('.feature-section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        } else {
+          entry.target.classList.remove('is-visible');
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+    animatedSections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+
+</body>
+</html>
