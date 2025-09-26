@@ -9,11 +9,10 @@
   ],
   "routes": [
     { "src": "/", "dest": "/index.html" },
-    { "src": "/health-safety", "dest": "/health-safety.html" },
-    { "src": "/retail-park", "dest": "/retail-park.html" },
+    { "src": "/health-safety.html", "dest": "/health-safety.html" },
+    { "src": "/retail-park.html", "dest": "/retail-park.html" },
     { "src": "/style.css", "dest": "/style.css" },
     { "src": "/settings.json", "dest": "/settings.json" },
-    { "src": "/video1.mp4", "dest": "/video1.mp4" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/video1.mp4", "dest": "/video1.mp4" }
   ]
 }
