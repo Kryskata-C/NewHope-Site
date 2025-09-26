@@ -1,4 +1,19 @@
 {
-  "builds": [{ "src": "index.html", "use": "@vercel/static" }],
-  "routes": [{ "src": "/(.*)", "dest": "/index.html" }]
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "health-safety.html", "use": "@vercel/static" },
+    { "src": "retail-park.html", "use": "@vercel/static" },
+    { "src": "style.css", "use": "@vercel/static" },
+    { "src": "settings.json", "use": "@vercel/static" },
+    { "src": "video1.mp4", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/health-safety", "dest": "/health-safety.html" },
+    { "src": "/retail-park", "dest": "/retail-park.html" },
+    { "src": "/style.css", "dest": "/style.css" },
+    { "src": "/settings.json", "dest": "/settings.json" },
+    { "src": "/video1.mp4", "dest": "/video1.mp4" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }
