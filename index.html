@@ -288,91 +288,168 @@
     }
     
     /* --- 🚀 NEW SCROLLING LOGO BANNER 🚀 --- */
-.scrolling-logo-banner {
-    padding: 2rem 0;
-    background-color: #000;
-    width: 100%;
-    overflow: hidden;
-    position: relative;
+    .scrolling-logo-banner {
+      padding: 2rem 0;
+      background-color: #000;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    .filter-dropdowns {
+  display: none;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  align-items: flex-end;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-20px) scale(0.95);
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.logo-track {
-    display: flex;
-    align-items: center;
-    gap: 5rem;
-    animation: scrollRight 25s linear infinite;
-    will-change: transform;
-}
+.filter-dropdowns.active {
+    display: grid;
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+    overflow: visible; /* <-- ADD THIS LINE! */
+} 
 
-.banner-logo-item {
-    font-size: 2.5rem;
-    font-weight: 700;
-    display: flex;
-    gap: 0.3rem;
-    transition: transform 0.3s ease, text-shadow 0.3s ease;
-    cursor: pointer;
-}
+    .logo-track {
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+      animation: scrollRight 25s linear infinite;
+      will-change: transform;
+    }
+    button, select {
+      outline: none;
+    }
+    button:focus, select:focus {
+      outline: none;
+      box-shadow: none;
+    }
+    .filter-sub-categories button, .filter-main-categories button, .cta-button, select {
+      transition: all 0.3s ease-in-out;
+    }
 
-.banner-logo-item span:first-child {
-    color: #fff;
-}
+    .banner-logo-item {
+      font-size: 2.5rem;
+      font-weight: 700;
+      display: flex;
+      gap: 0.3rem;
+      transition: transform 0.3s ease, text-shadow 0.3s ease;
+      cursor: pointer;
+    }
 
-.banner-logo-item span:last-child {
-    color: var(--accent-color);
-}
+    .banner-logo-item span:first-child {
+      color: #fff;
+    }
 
-.banner-logo-item:hover {
-    transform: scale(1.2);
-    text-shadow: 0 0 20px var(--accent-color);
-}
+    .banner-logo-item span:last-child {
+      color: var(--accent-color);
+    }
 
-@keyframes scrollRight {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-}
+    .banner-logo-item:hover {
+      transform: scale(1.2);
+      text-shadow: 0 0 20px var(--accent-color);
+    }
 
-    /* --- 🏆 PROPERTY FINDER SECTION 🏆 --- */
+    @keyframes scrollRight {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* --- 🔥 UPGRADED & ANIMATED FILTERS 🔥 --- */
     .property-finder {
         background: var(--surface-color);
         border-radius: 16px;
         padding: 2.5rem;
         margin-bottom: 5rem;
         border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .finder-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1.5fr auto;
-        gap: 2rem;
-        align-items: center;
-    }
-
-    .availability-stat {
         display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding-right: 2rem;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .finder-grid .availability-stat:last-of-type {
-        border-right: none;
+        flex-direction: column;
+        gap: 2rem;
+        position: relative;
+        z-index: 5; 
     }
 
-    .availability-stat .icon {
-        width: 50px;
-        height: 50px;
-        color: var(--primary-text);
+    .filter-main-categories {
+        display: flex;
+        background-color: var(--bg-color);
+        border-radius: 12px;
+        padding: 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .availability-stat h4 {
-        font-size: 1.5rem;
-        margin-bottom: 0.25rem;
-    }
-    
-    .availability-stat p {
+    .filter-main-categories button {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        border: none;
+        background: transparent;
         color: var(--secondary-text);
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .filter-main-categories button.active {
+        background-color: var(--accent-color);
+        color: var(--bg-color);
+    }
+    
+    .filter-options-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .filter-sub-categories {
+        display: flex;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 1rem;
+    }
+    
+    .filter-sub-categories button {
+        padding: 0.5rem 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: transparent;
+        color: var(--primary-text);
+        border-radius: 20px;
+        cursor: pointer;
         font-size: 0.9rem;
+        font-weight: 600;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    
+    .filter-sub-categories button.active {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+        color: var(--bg-color);
+    }
+
+    .filter-dropdowns {
+        display: none; /* Hidden by default, shown by JS */
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        align-items: flex-end;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transform: translateY(-10px);
+        transition: max-height 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .filter-dropdowns.active {
+        display: grid;
+        max-height: 500px; /* Large enough to fit content */
+        opacity: 1;
+        transform: translateY(0);
     }
 
     .filter-control {
@@ -394,70 +471,12 @@
         padding: 0.75rem;
         font-family: 'Poppins', sans-serif;
         font-size: 1rem;
-    }
-
-    .finder-grid .cta-button {
-        align-self: end; /* Aligns button to the bottom */
-        padding: 0.75rem 2rem;
-    }
-    
-    #search-results {
-        display: none; /* Hidden by default */
-        margin-top: 3rem;
-        padding-top: 3rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .results-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-    }
-    
-    .result-card {
-        background: var(--bg-color);
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        display: none; /* Cards are hidden until filtered */
-    }
-    
-    .result-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-    }
-    
-    .result-card img {
         width: 100%;
-        height: 180px;
-        object-fit: cover;
-    }
-    
-    .result-info {
-        padding: 1.5rem;
     }
 
-    .result-info h4 {
-        font-size: 1.4rem;
-        margin-bottom: 0.5rem;
-        color: var(--accent-color);
+    .filter-dropdowns .cta-button {
+      padding: 0.75rem 2rem;
     }
-    
-    .result-info .price {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
-    
-    .result-info ul {
-        list-style: none;
-        display: flex;
-        gap: 1rem;
-        font-size: 0.9rem;
-        color: var(--secondary-text);
-    }
-    
 
     /* --- SHOWCASE SECTION --- */
     .showcase-container {
@@ -478,6 +497,55 @@
       margin-bottom: 1rem;
       color: var(--accent-color);
     }
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  z-index: 10; /* add this */
+}
+.dropdown-toggle {
+  background: var(--bg-color);
+  color: var(--primary-text);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.dropdown-toggle:hover {
+  background: rgba(255,255,255,0.05);
+}
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background: var(--surface-color);
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+  z-index: 9999; 
+}
+
+.dropdown-menu.open {
+  max-height: 300px;
+  opacity: 1;
+  transform: translateY(0);
+}
+.dropdown-menu li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.dropdown-menu li:hover {
+  background: var(--accent-color);
+  color: var(--bg-color);
+}
 
     .showcase-intro p {
       font-size: 1.2rem;
@@ -546,6 +614,29 @@
       padding: 0.5rem 1rem;
       border-radius: 20px;
       font-size: 0.9rem;
+    }
+    .section-separator {
+      position: relative;
+      margin: 6rem auto;
+      height: 2px;
+      width: 80%;
+      background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+    }
+    .section-separator span {
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 12px;
+      background: var(--bg-color);
+      border: 2px solid var(--accent-color);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: translateX(-50%) scale(1); opacity: 1; }
+      50% { transform: translateX(-50%) scale(1.3); opacity: 0.6; }
     }
 
     /* --- VISION SECTION --- */
@@ -633,16 +724,6 @@
         to { opacity: 1; transform: translateY(0); }
     }
     
-    @media (max-width: 1024px) {
-        .finder-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-        .finder-grid .cta-button {
-            grid-column: 2 / -1;
-            justify-self: end;
-        }
-    }
-
     @media (max-width: 768px) {
         .nav-links { display: none; }
         .hero-content h1 { font-size: 2.8rem; }
@@ -651,19 +732,7 @@
         .home-card:nth-child(even) .home-image { order: 0; }
         .intro-logo { font-size: 3.5rem; }
         .intro-tagline { font-size: 1rem; }
-        
-        .finder-grid {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        .availability-stat {
-            border-right: none;
-            padding-right: 0;
-        }
-        .finder-grid .cta-button {
-             justify-self: stretch; /* Full width */
-             text-align: center;
-        }
+        .filter-dropdowns { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -736,139 +805,113 @@
         <p>Открийте върха на комфорта и дизайна в най-добрите имоти на NewHope.</p>
       </div>
       
+
       <section class="property-finder">
-        <div class="finder-grid">
-            <div class="availability-stat">
-                <img src="https://api.iconify.design/ph:buildings-light.svg?color=%23f0f0f0" alt="Apartment Icon" class="icon">
-                <div>
-                    <h4>34</h4>
-                    <p>Свободни апартаменти</p>
-                </div>
+        <div class="filter-main-categories">
+            <button id="btn-buy" class="active">Покупка</button>
+            <button id="btn-rent">Наем</button>
+        </div>
+
+        <div id="buy-options" class="filter-options-container">
+            <div class="filter-sub-categories">
+                <button data-target="buy-commercial-filters" class="sub-cat-btn active">Търговска площ</button>
+                <button data-target="buy-residential-filters" class="sub-cat-btn">Жилищна площ</button>
             </div>
-            <div class="availability-stat">
-                <img src="https://api.iconify.design/ph:garage-light.svg?color=%23f0f0f0" alt="Garage Icon" class="icon">
-                <div>
-                    <h4>52</h4>
-                    <p>Свободни гаражи</p>
+            <div id="buy-commercial-filters" class="filter-dropdowns active">
+                <div class="filter-control">
+                  <label>Размер</label>
+                  <div class="custom-dropdown">
+                    <button class="dropdown-toggle">Всички</button>
+                    <ul class="dropdown-menu">
+                      <li>Всички</li>
+                      <li>до 50 кв.м.</li>
+                      <li>50-100 кв.м.</li>
+                      <li>над 100 кв.м.</li>
+                    </ul>
+                  </div>
                 </div>
+                <div class="filter-control">
+                  <label>Локация</label>
+                  <div class="custom-dropdown">
+                    <button class="dropdown-toggle">Всички</button>
+                    <ul class="dropdown-menu">
+                      <li>Всички</li>
+                      <li>Търговски център</li>
+                      <li>Медицински център</li>
+                      <li>Във вътрешността на квартала</li>
+                    </ul>
+                  </div>
+                </div>
+                <button class="cta-button">Търсене</button>
+            </div>
+            <div id="buy-residential-filters" class="filter-dropdowns">
+            <div class="filter-control">
+              <label>Размер</label>
+              <div class="custom-dropdown">
+                <button class="dropdown-toggle">Всички</button>
+                <ul class="dropdown-menu">
+                  <li>Всички</li>
+                  <li>Студио</li>
+                  <li>Двустаен</li>
+                  <li>Тристаен</li>
+                </ul>
+              </div>
             </div>
             <div class="filter-control">
-                <label for="bedrooms">Брой спални</label>
-                <select name="bedrooms" id="bedrooms">
-                    <option value="any">Всички</option>
-                    <option value="1">1 спалня</option>
-                    <option value="2">2 спални</option>
-                    <option value="3">3 спални</option>
-                    <option value="4">4+ спални</option>
-                </select>
+              <label>Локация</label>
+              <div class="custom-dropdown">
+                <button class="dropdown-toggle">Всички</button>
+                <ul class="dropdown-menu">
+                  <li>Всички</li>
+                  <li>Във вътрешността на квартала</li>
+                  <li>Премиум локация</li>
+                </ul>
+              </div>
             </div>
-            <button id="search-btn" class="cta-button">Разгледай</button>
-        </div>
-        
-        <div id="search-results">
-            <div class="results-grid">
-                <div class="result-card" data-bedrooms="1">
-                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Студио 'Изгрев'">
-                    <div class="result-info">
-                        <h4>Студио "Изгрев"</h4>
-                        <p class="price">€85,000</p>
-                        <ul><li>• 1 спалня</li><li>• 65 кв. м.</li></ul>
-                    </div>
-                </div>
-                <div class="result-card" data-bedrooms="1">
-                    <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Апартамент 'Уют'">
-                    <div class="result-info">
-                        <h4>Апартамент "Уют"</h4>
-                        <p class="price">€92,000</p>
-                        <ul><li>• 1 спалня</li><li>• 70 кв. м.</li></ul>
-                    </div>
-                </div>
-                <div class="result-card" data-bedrooms="1">
-                    <img src="https://images.unsplash.com/photo-1598928636135-d146006ff4be?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Компактен 'Градски'">
-                    <div class="result-info">
-                        <h4>Компактен "Градски"</h4>
-                        <p class="price">€89,500</p>
-                        <ul><li>• 1 спалня</li><li>• 68 кв. м.</li></ul>
-                    </div>
-                </div>
-                
-                <div class="result-card" data-bedrooms="2">
-                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Семеен 'Комфорт'">
-                    <div class="result-info">
-                        <h4>Семеен "Комфорт"</h4>
-                        <p class="price">€125,000</p>
-                        <ul><li>• 2 спални</li><li>• 95 кв. м.</li></ul>
-                    </div>
-                </div>
-                <div class="result-card" data-bedrooms="2">
-                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Модерен 'Простор'">
-                    <div class="result-info">
-                        <h4>Модерен "Простор"</h4>
-                        <p class="price">€135,000</p>
-                        <ul><li>• 2 спални</li><li>• 105 кв. м.</li></ul>
-                    </div>
-                </div>
-                <div class="result-card" data-bedrooms="2">
-                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Апартамент 'Панорама'">
-                    <div class="result-info">
-                        <h4>Апартамент "Панорама"</h4>
-                        <p class="price">€142,000</p>
-                        <ul><li>• 2 спални</li><li>• 110 кв. м.</li></ul>
-                    </div>
-                </div>
+            <button class="cta-button">Търсене</button>
+          </div>
 
-                <div class="result-card" data-bedrooms="3">
-                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Луксозен 'Хоризонт'">
-                    <div class="result-info">
-                        <h4>Луксозен "Хоризонт"</h4>
-                        <p class="price">€180,000</p>
-                        <ul><li>• 3 спални</li><li>• 130 кв. м.</li></ul>
-                    </div>
-                </div>
-                <div class="result-card" data-bedrooms="3">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Голям 'Фамилия'">
-                    <div class="result-info">
-                        <h4>Голям "Фамилия"</h4>
-                        <p class="price">€174,000</p>
-                        <ul><li>• 3 спални</li><li>• 125 кв. м.</li></ul>
-                    </div>
-                </div>
-                <div class="result-card" data-bedrooms="3">
-                    <img src="https://images.unsplash.com/photo-1605276374104-5de67d476900?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Апартамент 'Виста'">
-                    <div class="result-info">
-                        <h4>Апартамент "Виста"</h4>
-                        <p class="price">€195,000</p>
-                        <ul><li>• 3 спални</li><li>• 140 кв. м.</li></ul>
-                    </div>
-                </div>
-                
-                <div class="result-card" data-bedrooms="4">
-                    <img src="https://images.unsplash.com/photo-1600566753190-17f0e278e090?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Мезонет 'Елеганс'">
-                    <div class="result-info">
-                        <h4>Мезонет "Елеганс"</h4>
-                        <p class="price">€250,000</p>
-                        <ul><li>• 4 спални</li><li>• 210 кв. м.</li></ul>
-                    </div>
-                </div>
-                 <div class="result-card" data-bedrooms="4">
-                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Пентхаус 'Небе'">
-                    <div class="result-info">
-                        <h4>Пентхаус "Небе"</h4>
-                        <p class="price">€310,000</p>
-                        <ul><li>• 4 спални</li><li>• 250 кв. м.</li></ul>
-                    </div>
-                </div>
-                 <div class="result-card" data-bedrooms="4">
-                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Вила 'Престиж'">
-                    <div class="result-info">
-                        <h4>Вила "Престиж"</h4>
-                        <p class="price">€420,000</p>
-                        <ul><li>• 5 спални</li><li>• 310 кв. м.</li></ul>
-                    </div>
-                </div>
+        </div>
+
+        <div id="rent-options" class="filter-options-container" style="display: none;">
+            <div class="filter-sub-categories">
+                <button class="sub-cat-btn active">Търговска площ</button>
+                 </div>
+            <div id="rent-commercial-filters" class="filter-dropdowns active">
+          <div class="filter-control">
+            <label>Размер</label>
+            <div class="custom-dropdown">
+              <button class="dropdown-toggle">Всички</button>
+              <ul class="dropdown-menu">
+                <li>Всички</li>
+                <li>до 50 кв.м.</li>
+                <li>50-100 кв.м.</li>
+                <li>над 100 кв.м.</li>
+              </ul>
             </div>
+          </div>
+          <div class="filter-control">
+            <label>Локация</label>
+            <div class="custom-dropdown">
+              <button class="dropdown-toggle">Всички</button>
+              <ul class="dropdown-menu">
+                <li>Всички</li>
+                <li>Търговски център</li>
+                <li>Медицински център</li>
+                <li>Във вътрешността на квартала</li>
+              </ul>
+            </div>
+          </div>
+          <button class="cta-button">Търсене</button>
+        </div>
+
         </div>
       </section>
+      <div class="section-separator">
+        <span>
+
+        </span>
+      </div>
       <article class="home-card">
         <div class="home-image">
           <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="Имението Оуксайд">
@@ -947,74 +990,119 @@
       </div>
     </section>
   
-  </div> <script>
-    // --- 🏆 ALL THE JAVASCRIPT LOGIC 🏆 ---
-    document.addEventListener('DOMContentLoaded', function() {
-      
-      const introOverlay = document.querySelector('.intro-overlay');
-      const mainContent = document.querySelector('#main-content');
-      const body = document.body;
+  </div> 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // --- INTRO & MAIN CONTENT FADE-IN ---
+  const introOverlay = document.querySelector('.intro-overlay');
+  const mainContent = document.querySelector('#main-content');
+  const body = document.body;
 
-      body.classList.add('intro-active');
-      
-      setTimeout(() => {
-        introOverlay.classList.add('hidden');
-        mainContent.classList.add('visible');
-        body.classList.remove('intro-active');
-      }, 4500);
+  body.classList.add('intro-active');
+  setTimeout(() => {
+    introOverlay.classList.add('hidden');
+    mainContent.classList.add('visible');
+    body.classList.remove('intro-active');
+  }, 4500); // This delay matches your epic intro animation!
 
-
-      // --- Smooth scroll animations (Intersection Observer) ---
-      const animatedElements = document.querySelectorAll('.home-card, .vision-item');
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
-        });
-      }, {
-        threshold: 0.1
-      });
-      animatedElements.forEach(element => {
-        observer.observe(element);
-      });
-
-      // --- Navbar scroll effect ---
-      const navbar = document.querySelector('.navbar');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
-      });
-      
-      // --- ✅ NEW & IMPROVED: Property Finder Logic ✅ ---
-      const searchBtn = document.getElementById('search-btn');
-      const searchResultsContainer = document.getElementById('search-results');
-      const bedroomSelect = document.getElementById('bedrooms');
-      const allApartments = document.querySelectorAll('.result-card');
-
-      searchBtn.addEventListener('click', () => {
-        const selectedBedrooms = bedroomSelect.value;
-        
-        // Loop through all apartment cards
-        allApartments.forEach(apartment => {
-            const apartmentBedrooms = apartment.dataset.bedrooms;
-
-            // Check if the apartment matches the filter
-            if (selectedBedrooms === 'any' || selectedBedrooms === apartmentBedrooms) {
-                apartment.style.display = 'block'; // Show matching apartment
-            } else {
-                apartment.style.display = 'none'; // Hide non-matching apartment
-            }
-        });
-        
-        // Finally, show the whole results container
-        searchResultsContainer.style.display = 'block';
-      });
-
+  // --- SCROLL-IN ANIMATIONS FOR CARDS & ITEMS ---
+  const animatedElements = document.querySelectorAll('.home-card, .vision-item');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
     });
-  </script>
+  }, { threshold: 0.1 });
+  animatedElements.forEach(element => observer.observe(element));
+
+  // --- NAVBAR SCROLL EFFECT ---
+  const navbar = document.querySelector('.navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // --- PROPERTY FINDER TABS (BUY/RENT) ---
+  const btnBuy = document.getElementById('btn-buy');
+  const btnRent = document.getElementById('btn-rent');
+  const buyOptions = document.getElementById('buy-options');
+  const rentOptions = document.getElementById('rent-options');
+
+  btnBuy.addEventListener('click', () => {
+    btnBuy.classList.add('active');
+    btnRent.classList.remove('active');
+    buyOptions.style.display = 'flex';
+    rentOptions.style.display = 'none';
+  });
+
+  btnRent.addEventListener('click', () => {
+    btnRent.classList.add('active');
+    btnBuy.classList.remove('active');
+    rentOptions.style.display = 'flex';
+    buyOptions.style.display = 'none';
+  });
+
+  // --- SUB-CATEGORY TABS (COMMERCIAL/RESIDENTIAL) ---
+  const subCategoryButtons = document.querySelectorAll('.sub-cat-btn');
+  subCategoryButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const parent = button.parentElement;
+      parent.querySelectorAll('.sub-cat-btn').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      const optionsContainer = button.closest('.filter-options-container');
+      optionsContainer.querySelectorAll('.filter-dropdowns').forEach(filters => filters.classList.remove('active'));
+      const targetId = button.dataset.target;
+      const targetFilters = document.getElementById(targetId);
+      if (targetFilters) {
+        targetFilters.classList.add('active');
+      }
+    });
+  });
+
+  // --- ✨ UPGRADED CUSTOM DROPDOWN LOGIC ✨ ---
+  const closeAllDropdowns = () => {
+      document.querySelectorAll('.dropdown-menu.open').forEach(menu => {
+          menu.classList.remove('open');
+      });
+  };
+
+  document.addEventListener('click', e => {
+    // These logs will be our clues!
+    console.log("--- Click Detected! ---");
+    console.log("1. The exact element clicked was:", e.target);
+
+    const customDropdown = e.target.closest('.custom-dropdown');
+    console.log("2. Found parent '.custom-dropdown':", customDropdown);
+    
+    // --- The rest of the logic ---
+    if (!customDropdown) {
+        closeAllDropdowns();
+        return;
+    }
+
+    const toggle = customDropdown.querySelector('.dropdown-toggle');
+    const menu = customDropdown.querySelector('.dropdown-menu');
+
+    if (e.target === toggle) {
+        const isOpen = menu.classList.contains('open');
+        closeAllDropdowns();
+        if (!isOpen) {
+            menu.classList.add('open');
+        }
+    }
+
+    if (e.target.tagName === 'LI' && e.target.closest('.dropdown-menu')) {
+        toggle.textContent = e.target.textContent.trim();
+        closeAllDropdowns();
+    }
+});
+});
+</script>
+
+
 </body>
 </html>
