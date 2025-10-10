@@ -295,26 +295,6 @@
       overflow: hidden;
       position: relative;
     }
-    .filter-dropdowns {
-  display: none;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  align-items: flex-end;
-  max-height: 0;
-  opacity: 0;
-  transform: translateY(-20px) scale(0.95);
-  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.filter-dropdowns.active {
-    display: grid;
-    max-height: 500px;
-    opacity: 1;
-    transform: translateY(0);
-    overflow: visible; /* <-- ADD THIS LINE! */
-} 
 
     .logo-track {
       display: flex;
@@ -322,16 +302,6 @@
       gap: 5rem;
       animation: scrollRight 25s linear infinite;
       will-change: transform;
-    }
-    button, select {
-      outline: none;
-    }
-    button:focus, select:focus {
-      outline: none;
-      box-shadow: none;
-    }
-    .filter-sub-categories button, .filter-main-categories button, .cta-button, select {
-      transition: all 0.3s ease-in-out;
     }
 
     .banner-logo-item {
@@ -424,7 +394,7 @@
         cursor: pointer;
         font-size: 0.9rem;
         font-weight: 600;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+        transition: background-color 0.3s ease, border-color 0.3s ease, all 0.3s ease-in-out;
     }
     
     .filter-sub-categories button.active {
@@ -450,6 +420,7 @@
         max-height: 500px; /* Large enough to fit content */
         opacity: 1;
         transform: translateY(0);
+        overflow: visible; /* Allows dropdown menus to show */
     }
 
     .filter-control {
@@ -463,19 +434,69 @@
         font-size: 0.9rem;
     }
 
-    .filter-control select {
-        background-color: var(--bg-color);
-        color: var(--primary-text);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        padding: 0.75rem;
-        font-family: 'Poppins', sans-serif;
-        font-size: 1rem;
-        width: 100%;
-    }
-
     .filter-dropdowns .cta-button {
       padding: 0.75rem 2rem;
+      transition: all 0.3s ease-in-out;
+    }
+    
+    /* Custom Dropdown Styles */
+    .custom-dropdown {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .dropdown-toggle {
+      background: var(--bg-color);
+      color: var(--primary-text);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+    }
+
+    .dropdown-toggle:hover {
+      background: rgba(255,255,255,0.05);
+    }
+    
+    .dropdown-menu {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      right: 0;
+      background: var(--surface-color);
+      border-radius: 8px;
+      list-style: none;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+      z-index: 999; 
+    }
+
+    .dropdown-menu.open {
+      max-height: 300px;
+      opacity: 1;
+      transform: translateY(0);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .dropdown-menu li {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .dropdown-menu li:hover {
+      background: var(--accent-color);
+      color: var(--bg-color);
     }
 
     /* --- SHOWCASE SECTION --- */
@@ -497,61 +518,33 @@
       margin-bottom: 1rem;
       color: var(--accent-color);
     }
-.custom-dropdown {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  z-index: 10; /* add this */
-}
-.dropdown-toggle {
-  background: var(--bg-color);
-  color: var(--primary-text);
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-.dropdown-toggle:hover {
-  background: rgba(255,255,255,0.05);
-}
-.dropdown-menu {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  right: 0;
-  background: var(--surface-color);
-  border-radius: 8px;
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
-  z-index: 9999; 
-}
-
-.dropdown-menu.open {
-  max-height: 300px;
-  opacity: 1;
-  transform: translateY(0);
-}
-.dropdown-menu li {
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-.dropdown-menu li:hover {
-  background: var(--accent-color);
-  color: var(--bg-color);
-}
 
     .showcase-intro p {
       font-size: 1.2rem;
       color: var(--secondary-text);
       max-width: 700px;
       margin: 0 auto;
+    }
+    
+    /* --- NEW: SEARCH RESULTS STYLES --- */
+    #search-results {
+        padding: 4rem 0 2rem 0;
+    }
+
+    .results-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: var(--accent-color);
+        margin-bottom: 3rem;
+    }
+
+    .search-result-card {
+        animation: fadeIn 0.8s ease-out forwards;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     .home-card {
@@ -615,6 +608,7 @@
       border-radius: 20px;
       font-size: 0.9rem;
     }
+    
     .section-separator {
       position: relative;
       margin: 6rem auto;
@@ -622,6 +616,7 @@
       width: 80%;
       background: linear-gradient(to right, transparent, var(--accent-color), transparent);
     }
+    
     .section-separator span {
       position: absolute;
       top: -6px;
@@ -634,6 +629,7 @@
       border-radius: 50%;
       animation: pulse 2s infinite;
     }
+    
     @keyframes pulse {
       0%,100% { transform: translateX(-50%) scale(1); opacity: 1; }
       50% { transform: translateX(-50%) scale(1.3); opacity: 0.6; }
@@ -680,7 +676,7 @@
       border: 2px solid transparent;
       opacity: 0;
       transform: translateY(30px);
-      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
     }
     
     .vision-item:hover {
@@ -799,13 +795,13 @@
             <div class="banner-logo-item"><span>New</span><span>Hope</span></div>
         </div>
     </div>
+
     <main class="showcase-container" id="homes">
       <div class="showcase-intro">
         <h2>Нашите специални домове</h2>
         <p>Открийте върха на комфорта и дизайна в най-добрите имоти на NewHope.</p>
       </div>
       
-
       <section class="property-finder">
         <div class="filter-main-categories">
             <button id="btn-buy" class="active">Покупка</button>
@@ -817,6 +813,7 @@
                 <button data-target="buy-commercial-filters" class="sub-cat-btn active">Търговска площ</button>
                 <button data-target="buy-residential-filters" class="sub-cat-btn">Жилищна площ</button>
             </div>
+            
             <div id="buy-commercial-filters" class="filter-dropdowns active">
                 <div class="filter-control">
                   <label>Размер</label>
@@ -844,74 +841,75 @@
                 </div>
                 <button class="cta-button">Търсене</button>
             </div>
+            
             <div id="buy-residential-filters" class="filter-dropdowns">
-            <div class="filter-control">
-              <label>Размер</label>
-              <div class="custom-dropdown">
-                <button class="dropdown-toggle">Всички</button>
-                <ul class="dropdown-menu">
-                  <li>Всички</li>
-                  <li>Студио</li>
-                  <li>Двустаен</li>
-                  <li>Тристаен</li>
-                </ul>
+              <div class="filter-control">
+                <label>Размер</label>
+                <div class="custom-dropdown">
+                  <button class="dropdown-toggle">Всички</button>
+                  <ul class="dropdown-menu">
+                    <li>Всички</li>
+                    <li>Студио</li>
+                    <li>Двустаен</li>
+                    <li>Тристаен</li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            <div class="filter-control">
-              <label>Локация</label>
-              <div class="custom-dropdown">
-                <button class="dropdown-toggle">Всички</button>
-                <ul class="dropdown-menu">
-                  <li>Всички</li>
-                  <li>Във вътрешността на квартала</li>
-                  <li>Премиум локация</li>
-                </ul>
+              <div class="filter-control">
+                <label>Локация</label>
+                <div class="custom-dropdown">
+                  <button class="dropdown-toggle">Всички</button>
+                  <ul class="dropdown-menu">
+                    <li>Всички</li>
+                    <li>Във вътрешността на квартала</li>
+                    <li>Премиум локация</li>
+                  </ul>
+                </div>
               </div>
+              <button class="cta-button">Търсене</button>
             </div>
-            <button class="cta-button">Търсене</button>
-          </div>
-
         </div>
 
         <div id="rent-options" class="filter-options-container" style="display: none;">
             <div class="filter-sub-categories">
                 <button class="sub-cat-btn active">Търговска площ</button>
-                 </div>
+            </div>
             <div id="rent-commercial-filters" class="filter-dropdowns active">
-          <div class="filter-control">
-            <label>Размер</label>
-            <div class="custom-dropdown">
-              <button class="dropdown-toggle">Всички</button>
-              <ul class="dropdown-menu">
-                <li>Всички</li>
-                <li>до 50 кв.м.</li>
-                <li>50-100 кв.м.</li>
-                <li>над 100 кв.м.</li>
-              </ul>
+              <div class="filter-control">
+                <label>Размер</label>
+                <div class="custom-dropdown">
+                  <button class="dropdown-toggle">Всички</button>
+                  <ul class="dropdown-menu">
+                    <li>Всички</li>
+                    <li>до 50 кв.м.</li>
+                    <li>50-100 кв.м.</li>
+                    <li>над 100 кв.м.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="filter-control">
+                <label>Локация</label>
+                <div class="custom-dropdown">
+                  <button class="dropdown-toggle">Всички</button>
+                  <ul class="dropdown-menu">
+                    <li>Всички</li>
+                    <li>Търговски център</li>
+                    <li>Медицински център</li>
+                    <li>Във вътрешността на квартала</li>
+                  </ul>
+                </div>
+              </div>
+              <button class="cta-button">Търсене</button>
             </div>
-          </div>
-          <div class="filter-control">
-            <label>Локация</label>
-            <div class="custom-dropdown">
-              <button class="dropdown-toggle">Всички</button>
-              <ul class="dropdown-menu">
-                <li>Всички</li>
-                <li>Търговски център</li>
-                <li>Медицински център</li>
-                <li>Във вътрешността на квартала</li>
-              </ul>
-            </div>
-          </div>
-          <button class="cta-button">Търсене</button>
-        </div>
-
         </div>
       </section>
-      <div class="section-separator">
-        <span>
 
-        </span>
+      <div id="search-results"></div>
+
+      <div class="section-separator">
+        <span></span>
       </div>
+
       <article class="home-card">
         <div class="home-image">
           <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="Имението Оуксайд">
@@ -1064,45 +1062,127 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // --- ✨ UPGRADED CUSTOM DROPDOWN LOGIC ✨ ---
-  const closeAllDropdowns = () => {
+  const closeAllDropdowns = (exceptThisOne = null) => {
       document.querySelectorAll('.dropdown-menu.open').forEach(menu => {
-          menu.classList.remove('open');
+          if (menu !== exceptThisOne) {
+              menu.classList.remove('open');
+          }
       });
   };
 
   document.addEventListener('click', e => {
-    // These logs will be our clues!
-    console.log("--- Click Detected! ---");
-    console.log("1. The exact element clicked was:", e.target);
+      const customDropdown = e.target.closest('.custom-dropdown');
 
-    const customDropdown = e.target.closest('.custom-dropdown');
-    console.log("2. Found parent '.custom-dropdown':", customDropdown);
-    
-    // --- The rest of the logic ---
-    if (!customDropdown) {
-        closeAllDropdowns();
-        return;
+      if (!customDropdown) {
+          closeAllDropdowns();
+          return;
+      }
+      
+      const toggle = customDropdown.querySelector('.dropdown-toggle');
+      const menu = customDropdown.querySelector('.dropdown-menu');
+
+      if (e.target === toggle) {
+          const isOpen = menu.classList.contains('open');
+          closeAllDropdowns(); 
+          if (!isOpen) {
+              menu.classList.add('open'); 
+          }
+      }
+
+      if (e.target.tagName === 'LI' && e.target.closest('.dropdown-menu')) {
+          toggle.textContent = e.target.textContent.trim();
+          closeAllDropdowns();
+      }
+  });
+
+  // --- 🚀 NEW: FAKE SEARCH RESULTS LOGIC 🚀 ---
+
+  // 1. FAKE DATA - This is our placeholder content!
+  const fakeBuyProperties = [
+    {
+      title: "Луксозен Мезонет 'Скай'",
+      description: "Живот на върха с несравними гледки. Този мезонет предлага всичко, за което сте мечтали.",
+      details: ["3 спални", "4 бани", "310 кв. м.", "Покривна тераса"],
+      image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600"
+    },
+    {
+      title: "Семейна Къща 'Хармония'",
+      description: "Просторен дом с голям двор, идеален за вашето семейство. Тишина и спокойствие в сърцето на NewHope.",
+      details: ["4 спални", "3 бани", "280 кв. м.", "Двоен гараж"],
+      image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600"
     }
+  ];
 
-    const toggle = customDropdown.querySelector('.dropdown-toggle');
-    const menu = customDropdown.querySelector('.dropdown-menu');
-
-    if (e.target === toggle) {
-        const isOpen = menu.classList.contains('open');
-        closeAllDropdowns();
-        if (!isOpen) {
-            menu.classList.add('open');
-        }
+  const fakeRentProperties = [
+    {
+      title: "Модерен Офис 'Централ'",
+      description: "Перфектното място за вашия бизнес. Напълно оборудвано офис пространство в търговския център.",
+      details: ["120 кв. м.", "Конферентна зала", "Кухненски бокс", "Рецепция"],
+      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600"
+    },
+    {
+      title: "Търговски обект 'Витрина'",
+      description: "Магазин с голяма витрина на главна улица. Страхотен човекопоток и видимост.",
+      details: ["85 кв. м.", "Складово помещение", "Санитарен възел", "Климатизация"],
+      image: "https://images.unsplash.com/photo-1556742044-597b15a54c19?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600"
     }
+  ];
 
-    if (e.target.tagName === 'LI' && e.target.closest('.dropdown-menu')) {
-        toggle.textContent = e.target.textContent.trim();
-        closeAllDropdowns();
-    }
-});
+  // 2. GET THE ELEMENTS
+  const searchButtons = document.querySelectorAll('.property-finder .cta-button');
+  const resultsContainer = document.getElementById('search-results');
+
+  // 3. FUNCTION TO CREATE A PROPERTY CARD HTML
+  const createPropertyCard = (property, index) => {
+    // Alternate image and text blocks
+    const orderClass = index % 2 === 1 ? 'style="order: 2;"' : '';
+    const detailsHTML = property.details.map(detail => `<li>${detail}</li>`).join('');
+
+    return `
+      <article class="home-card search-result-card is-visible">
+        <div class="home-image" ${orderClass}>
+          <img src="${property.image}" alt="${property.title}">
+        </div>
+        <div class="home-info">
+          <h3>${property.title}</h3>
+          <p>${property.description}</p>
+          <ul>${detailsHTML}</ul>
+        </div>
+      </article>
+    `;
+  };
+
+  // 4. ADD CLICK EVENT TO ALL SEARCH BUTTONS
+  searchButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault(); // Stop page from doing anything weird
+
+      // Clear previous results
+      resultsContainer.innerHTML = ''; 
+
+      // Check if "Buy" or "Rent" is active
+      const isBuying = btnBuy.classList.contains('active');
+      const propertiesToShow = isBuying ? fakeBuyProperties : fakeRentProperties;
+      
+      // Create the title
+      const title = document.createElement('h2');
+      title.className = 'results-title';
+      title.textContent = isBuying ? 'Имоти за продажба' : 'Имоти под наем';
+      resultsContainer.appendChild(title);
+
+      // Generate and add new cards
+      propertiesToShow.forEach((prop, index) => {
+        const cardHTML = createPropertyCard(prop, index);
+        resultsContainer.innerHTML += cardHTML;
+      });
+
+      // Smoothly scroll to the results
+      resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
 });
 </script>
-
 
 </body>
 </html>

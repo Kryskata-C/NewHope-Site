@@ -4,102 +4,321 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Здраве и Сигурност - NewHope</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- VIBE CHECK: GLOBAL STYLES & VARIABLES --- */
+    :root {
+      --bg-color: #0c0c0c;
+      --surface-color: #1a1a1a;
+      --primary-text: #f0f0f0;
+      --secondary-text: #a0a0a0;
+      --accent-color: #D4AF37;
+      --accent-color-glow: rgba(212, 175, 55, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-color);
+      color: var(--primary-text);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* --- 💥 SICK ANIMATED BACKGROUND 💥 --- */
+    .background-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -10;
+      overflow: hidden;
+    }
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--accent-color-glow);
+      filter: blur(80px);
+      animation: float 25s ease-in-out infinite alternate;
+    }
+    .shape-1 { width: 400px; height: 400px; top: -5%; left: 70%; animation-duration: 30s; }
+    .shape-2 { width: 300px; height: 300px; top: 70%; left: -10%; animation-duration: 25s; }
+    .shape-3 { width: 500px; height: 500px; top: 20%; left: 40%; animation-duration: 35s; }
+
+    @keyframes float {
+      0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+      100% { transform: translateY(-100px) translateX(50px) rotate(90deg); }
+    }
+    
+    /* --- UPGRADED BACK BUTTON --- */
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      color: var(--primary-text);
+      background: rgba(0,0,0,0.3);
+      border-radius: 50px;
+      text-decoration: none;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+    .back-button:hover {
+        background: var(--accent-color);
+        color: var(--bg-color);
+    }
+    .back-button svg {
+        transition: transform 0.3s ease;
+    }
+    .back-button:hover svg {
+        transform: translateX(-3px);
+    }
+
+    /* --- HEADER WITH STATIC IMAGE --- */
+    .details-hero {
+      position: relative;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-size: cover;
+      background-position: center;
+    }
+    .details-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 0;
+    }
+    .details-hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      padding: 20px;
+    }
+    .details-hero-content h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    .details-hero-content p {
+      font-size: 1.25rem;
+      color: var(--secondary-text);
+      font-weight: 400;
+    }
+
+    /* --- MAIN CONTENT STYLES --- */
+    .details-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 80px 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .details-intro {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .details-intro h2 {
+        font-size: 3rem;
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+    }
+    .details-intro p {
+        font-size: 1.2rem;
+        color: var(--secondary-text);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* --- REVAMPED FEATURE SECTIONS --- */
+    .feature-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 6rem;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      background: var(--surface-color);
+      padding: 2.5rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .feature-section:nth-child(even) .feature-image {
+        order: 2; /* Alternate image position */
+    }
+    .feature-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .feature-image img {
+      width: 100%;
+      border-radius: 12px;
+      transition: transform 0.4s ease;
+    }
+    .feature-section:hover .feature-image img {
+        transform: scale(1.05);
+    }
+
+    .feature-content h3 {
+      font-size: 2.2rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
+    .feature-content p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        color: var(--secondary-text);
+    }
+    .feature-content ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .feature-content li {
+        background: var(--bg-color);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+
+    /* --- RESPONSIVENESS --- */
+    @media (max-width: 768px) {
+        .details-hero-content h1 { font-size: 2.5rem; }
+        .details-container { padding: 40px 20px; }
+        .feature-section { 
+            grid-template-columns: 1fr;
+            padding: 1.5rem;
+        }
+        .feature-section:nth-child(even) .feature-image {
+            order: 0; /* Stack images on top on mobile */
+        }
+    }
+  </style>
 </head>
 <body>
 
-  <a href="index.html" class="back-button">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 256 256"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path></svg>
-    <span>Назад</span>
-  </a>
+<div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+</div>
 
-  <header class="details-hero" style="background-image: url('https://images.unsplash.com/photo-1538688273824-79b3d39c06a6?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400');">
-    <div class="details-overlay"></div>
-    <div class="details-hero-content">
-      <h1>Здраве и Сигурност</h1>
-      <p>Спокойствие и грижа за вашето семейство.</p>
-    </div>
-  </header>
+<a href="index.html" class="back-button">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path></svg>
+  <span>Назад</span>
+</a>
 
-  <div class="divider-shape">
-    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-    </svg>
+<header class="details-hero" style="background-image: url('https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
+  <div class="details-overlay"></div>
+  <div class="details-hero-content">
+    <h1>Здраве и Сигурност</h1>
+    <p>Спокойствие и грижа за вашето семейство.</p>
+  </div>
+</header>
+
+<main class="details-container">
+  <div class="details-intro">
+    <h2>Сигурна среда за по-добър живот</h2>
+    <p>В основата на проекта "Нова Надежда" е заложена идеята за създаване на защитена и здравословна среда, където всяко семейство може да живее спокойно и да има достъп до качествени услуги.</p>
   </div>
 
-  <main class="details-container">
-    <div class="details-intro">
-      <h2>Сигурна среда за по-добър живот</h2>
-      <p>В основата на проекта "Нова Надежда" е заложена идеята за създаване на защитена и здравословна среда, където всяко семейство може да живее спокойно и да има достъп до качествени услуги.</p>
+  <section class="feature-section">
+    <div class="feature-image">
+      <img src="https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Bright and modern medical clinic">
     </div>
+    <div class="feature-content">
+      <h3>Комплексна Медицинска Грижа</h3>
+      <p>Достъпът до качествено здравеопазване е ключов. Затова изграждаме модерен медицински център, който да отговаря на всички съвременни изисквания.</p>
+      <ul>
+        <li>Медицински център с 30+ кабинета</li>
+        <li>Акредитирана клинична лаборатория</li>
+        <li>Голяма и добре заредена аптека</li>
+        <li>Лесен достъп за всички жители</li>
+      </ul>
+    </div>
+  </section>
 
-    <section class="feature-section">
-      <div class="feature-image">
-        <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="Bright and modern medical clinic">
-      </div>
-      <div class="feature-content">
-        <h3>Комплексна Медицинска Грижа</h3>
-        <p>Достъпът до качествено здравеопазване е ключов. Затова изграждаме модерен медицински център, който да отговаря на всички съвременни изисквания.</p>
-        <ul>
-          <li>Медицински център с над 30 лекарски кабинета</li>
-          <li>Акредитирана клинична лаборатория</li>
-          <li>Голяма и добре заредена аптека</li>
-          <li>Лесен достъп за всички жители на квартала</li>
-        </ul>
-      </div>
-    </section>
+  <section class="feature-section">
+    <div class="feature-image">
+      <img src="https://images.pexels.com/photos/221540/pexels-photo-221540.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="A safe neighborhood street with modern homes">
+    </div>
+    <div class="feature-content">
+      <h3>Безопасност и Сигурност</h3>
+      <p>Сигурността на жителите е наш основен приоритет. Кварталът ще разполага със собствена полицейска служба и модерна система за наблюдение.</p>
+      <ul>
+        <li>Полицейски участък в квартала</li>
+        <li>Smart камери с оптична мрежа</li>
+        <li>Център за видеонаблюдение</li>
+        <li>Добре осветени улици и паркове</li>
+      </ul>
+    </div>
+  </section>
 
-    <section class="feature-section">
-      <div class="feature-image">
-        <img src="https://images.unsplash.com/photo-1599838634966-350d56447f5a?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="A safe neighborhood street with modern homes">
-      </div>
-      <div class="feature-content">
-        <h3>Безопасност и Сигурност</h3>
-        <p>Сигурността на жителите е наш основен приоритет. Кварталът ще разполага със собствена полицейска служба и модерна система за наблюдение.</p>
-        <ul>
-          <li>Полицейски участък в самия квартал</li>
-          <li>Smart камери, свързани с оптична мрежа</li>
-          <li>Център за видеонаблюдение към районното управление</li>
-          <li>Добре осветени улици и паркове</li>
-        </ul>
-      </div>
-    </section>
+  <section class="feature-section">
+    <div class="feature-image">
+      <img src="https://images.pexels.com/photos/1765005/pexels-photo-1765005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Children playing in a safe, green park">
+    </div>
+    <div class="feature-content">
+      <h3>Грижа за Децата</h3>
+      <p>Създаваме среда, в която децата да растат щастливи и обгрижени. Новата детска градина ще предлага най-добрите условия за обучение и игра.</p>
+      <ul>
+        <li>Просторна детска градина</li>
+        <li>Безопасни детски площадки</li>
+        <li>Зелени площи за игра и отдих</li>
+        <li>Лесен достъп за родителите</li>
+      </ul>
+    </div>
+  </section>
 
-    <section class="feature-section">
-      <div class="feature-image">
-        <img src="https://images.unsplash.com/photo-1549491746-17362f2a748c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="Children playing in a safe, green park">
-      </div>
-      <div class="feature-content">
-        <h3>Грижа за Децата</h3>
-        <p>Създаваме среда, в която децата да растат щастливи и обгрижени. Новата детска градина ще предлага най-добрите условия за обучение и игра.</p>
-        <ul>
-          <li>Просторна и модерна детска градина</li>
-          <li>Безопасни детски площадки</li>
-          <li>Зелени площи за игра и отдих</li>
-          <li>Лесен достъп за родителите от квартала</li>
-        </ul>
-      </div>
-    </section>
+</main>
 
-  </main>
-
-  <script>
-    const animatedSections = document.querySelectorAll('.feature-section');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        } else {
-          entry.target.classList.remove('is-visible');
-        }
-      });
-    }, {
-      threshold: 0.2
+<script>
+  // --- SCROLL-IN ANIMATION FOR FEATURE SECTIONS ---
+  const sections = document.querySelectorAll('.feature-section');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      // Add the 'is-visible' class when the element comes into view
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
     });
-    animatedSections.forEach(section => {
-      observer.observe(section);
-    });
-  </script>
+  }, {
+    threshold: 0.1 // Trigger when 10% of the element is visible
+  });
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+</script>
 
 </body>
 </html>
