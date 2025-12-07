@@ -36,13 +36,11 @@
         .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
         .lenis.lenis-stopped { overflow: hidden; }
 
-        /* --- THE FIX: Force background on HTML so it's NEVER white --- */
         html {
             background-color: var(--bg-main);
         }
 
         body {
-            /* Remove background from body to let our custom layers shine */
             background: transparent;
             color: var(--text-primary);
             font-family: var(--font-body);
@@ -51,7 +49,6 @@
             position: relative;
         }
 
-        /* --- NEW: DEDICATED BACKGROUND LAYER (Layer -5) --- */
         .global-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: radial-gradient(circle at top center, #1b1810 0%, var(--bg-main) 50%, var(--bg-darker) 100%);
@@ -59,7 +56,6 @@
             pointer-events: none;
         }
 
-        /* --- PRELOADER --- */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: #000; z-index: 10000;
@@ -76,14 +72,13 @@
             100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(212, 175, 55, 0)); }
         }
 
-        /* --- BACKGROUND FLOATING LOGOS (Layer -4) --- */
         .bg-logo-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: -4; overflow: hidden;
         }
         .floating-logo {
             position: absolute;
-            opacity: 0.04; /* Subtle but visible */
+            opacity: 0.04;
             filter: grayscale(1);
             animation: floatUp linear infinite;
         }
@@ -94,7 +89,6 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Noise Overlay */
         .noise-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -102,7 +96,6 @@
             background: url('https://grainy-gradients.vercel.app/noise.svg');
         }
 
-        /* Custom Cursor */
         .cursor-dot {
             position: fixed; top: 0; left: 0; width: 6px; height: 6px;
             background-color: var(--accent-gold-light); border-radius: 50%;
@@ -120,7 +113,6 @@
             border-color: var(--accent-gold);
         }
 
-        /* Typography */
         h1, h2, h3, h4 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1px; color: #fff; }
         p { color: var(--text-secondary); }
         .gold-span { color: var(--accent-gold); display: inline-block; }
@@ -131,7 +123,6 @@
         }
         .section-label::before { content: ''; width: 20px; height: 1px; background: var(--accent-gold); }
 
-        /* Navbar */
         .navbar {
             position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem;
             display: flex; justify-content: space-between; align-items: center;
@@ -166,26 +157,22 @@
         }
         .nav-links a:hover { color: var(--accent-gold-light); }
 
-        /* Hero */
         .hero-container {
             height: 100vh; position: relative; display: flex;
             justify-content: center; align-items: center; text-align: center; overflow: hidden;
-            /* Keep z-index positive relative to BG */
             z-index: 1;
         }
         .bg-video {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             min-width: 100%; min-height: 100%; object-fit: cover; 
-            z-index: -3; /* Behind content, above bg */
+            z-index: -3;
             filter: saturate(0) brightness(0.6); 
         }
         .hero-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(5,5,5,0.95) 90%);
-            z-index: -2; /* Above video */
+            z-index: -2;
         }
-        
-        /* MASSIVE HERO LOGO WATERMARK */
         
         .hero-content { z-index: 2; max-width: 900px; padding: 2rem; }
         .hero-logo-inline {
@@ -202,7 +189,6 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
 
-        /* Buttons */
         .cta-button {
             padding: 1rem 2.5rem; border-radius: 50px; border: none;
             background: linear-gradient(90deg, var(--accent-gold-light), var(--accent-gold));
@@ -219,7 +205,6 @@
         }
         .cta-button-secondary:hover { background: rgba(212, 175, 55, 0.1); box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.3); }
 
-        /* Scrolling Banner */
         .scrolling-banner {
             background: var(--accent-gold); padding: 1.5rem 0; overflow: hidden;
             transform: skewY(-2deg); margin-top: -2rem; position: relative; z-index: 10;
@@ -230,7 +215,6 @@
         
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Section Styling */
         .section-container {
             max-width: 1200px; margin: 8rem auto; padding: 0 2rem; position: relative; z-index: 2;
         }
@@ -242,7 +226,6 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.4);
         }
 
-        /* About */
         .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; align-items: center; }
         .about-badges { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
         .badge {
@@ -255,7 +238,6 @@
         }
         .about-image-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Facts */
         .facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
         .fact-item {
             background: var(--surface-soft);
@@ -270,7 +252,7 @@
             content: '';
             position: absolute; right: -20px; bottom: -20px;
             width: 80px; height: 80px;
-            background: url('logo.png') no-repeat center/contain;
+            background: url('/logo.png') no-repeat center/contain;
             opacity: 0.05; transform: rotate(-20deg);
         }
         .fact-item:hover { border-color: var(--accent-gold); transform: translateY(-5px); }
@@ -279,7 +261,6 @@
             word-wrap: break-word; overflow-wrap: break-word; hyphens: auto;
         }
 
-        /* Property Finder */
         .finder-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
         .tab-btn {
             padding: 1rem 2.5rem; background: transparent; border: 1px solid rgba(244, 215, 122, 0.3);
@@ -293,7 +274,6 @@
             color: var(--text-primary); font-family: var(--font-body); border-radius: 10px; outline: none;
         }
 
-        /* Gallery */
         .gallery-grid {
             display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; height: 500px; 
         }
@@ -309,7 +289,6 @@
         .thumb-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .thumb-card:hover img { transform: scale(1.1); }
 
-        /* Vision */
         .vision-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
         .vision-card {
             padding: 2.5rem; background: var(--surface); border-radius: 20px;
@@ -318,7 +297,6 @@
         .vision-card:hover { border-color: var(--accent-gold); background: var(--surface-soft); transform: translateY(-7px); }
         .vision-icon { font-size: 3rem; color: var(--accent-gold); margin-bottom: 1.5rem; display: block; }
 
-        /* Footer */
         footer {
             background: #080705; padding: 5rem 2rem; margin-top: 5rem; border-top: 1px solid rgba(244, 215, 122, 0.1);
         }
@@ -342,7 +320,7 @@
     <div class="global-bg"></div>
 
     <div id="preloader">
-        <img src="logo.png" alt="Loading..." class="preloader-logo">
+        <img src="/logo.png" alt="Loading..." class="preloader-logo">
     </div>
 
     <div class="bg-logo-container" id="bgLogoContainer"></div>
@@ -354,7 +332,7 @@
 
     <nav class="navbar">
         <a href="#top" class="nav-logo hover-trigger">
-            <img src="logo.png" alt="Logo" class="logo-img">
+            <img src="/logo.png" alt="Logo" class="logo-img">
             <div class="nav-logo-text">НОВА <span class="gold-span">НАДЕЖДА</span></div>
         </a>
         <div class="nav-links">
@@ -387,22 +365,22 @@
     <div class="scrolling-banner">
         <div class="banner-track">
             <div class="banner-item">
-                <img src="logo.png" class="banner-logo-icon"> НОВА НАДЕЖДА
+                <img src="/logo.png" class="banner-logo-icon"> НОВА НАДЕЖДА
             </div>
             <div class="banner-item">
-                <img src="logo.png" class="banner-logo-icon"> ГРАД НА БЪДЕЩЕТО
+                <img src="/logo.png" class="banner-logo-icon"> ГРАД НА БЪДЕЩЕТО
             </div>
             <div class="banner-item">
-                 <img src="logo.png" class="banner-logo-icon"> СЛИВЕН 2025
+                 <img src="/logo.png" class="banner-logo-icon"> СЛИВЕН 2025
             </div>
             <div class="banner-item">
-                <img src="logo.png" class="banner-logo-icon"> НОВА НАДЕЖДА
+                <img src="/logo.png" class="banner-logo-icon"> НОВА НАДЕЖДА
             </div>
             <div class="banner-item">
-                <img src="logo.png" class="banner-logo-icon"> ГРАД НА БЪДЕЩЕТО
+                <img src="/logo.png" class="banner-logo-icon"> ГРАД НА БЪДЕЩЕТО
             </div>
             <div class="banner-item">
-                 <img src="logo.png" class="banner-logo-icon"> СЛИВЕН 2025
+                 <img src="/logo.png" class="banner-logo-icon"> СЛИВЕН 2025
             </div>
         </div>
     </div>
@@ -555,7 +533,7 @@
         <div class="footer-content">
             <div>
                 <div class="nav-logo" style="margin-bottom: 1rem;">
-                     <img src="logo.png" alt="Logo" class="logo-img">
+                     <img src="/logo.png" alt="Logo" class="logo-img">
                     <div class="nav-logo-text">НОВА <span class="gold-span">НАДЕЖДА</span></div>
                 </div>
                 <p>Нов жилищен комплекс в Сливен, изграден с мисъл за бъдещето.</p>
@@ -584,7 +562,6 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // --- PRELOADER REMOVAL ---
         window.addEventListener("load", () => {
             const preloader = document.getElementById("preloader");
             setTimeout(() => {
@@ -595,28 +572,21 @@
             }, 1000); 
         });
 
-        // --- BACKGROUND FLOATING LOGOS GENERATOR ---
         const container = document.getElementById('bgLogoContainer');
         const logoCount = 15; 
         
         for (let i = 0; i < logoCount; i++) {
             const img = document.createElement('img');
-            img.src = 'logo.png';
+            img.src = '/logo.png';
             img.classList.add('floating-logo');
-            
-            // Randomize position and size
-            const size = Math.random() * 50 + 30; // 30px to 80px
+            const size = Math.random() * 50 + 30;
             img.style.width = `${size}px`;
             img.style.left = `${Math.random() * 100}vw`;
-            
-            // Randomize animation delay/duration
             img.style.animationDuration = `${Math.random() * 15 + 15}s`; 
             img.style.animationDelay = `-${Math.random() * 20}s`; 
-            
             container.appendChild(img);
         }
 
-        // 1. Smooth Scroll
         const lenis = new Lenis({
             duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true, mouseMultiplier: 1, smoothTouch: false,
@@ -624,7 +594,6 @@
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 2. Custom Cursor
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         window.addEventListener('mousemove', (e) => {
@@ -637,14 +606,12 @@
             trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovered'));
         });
 
-        // 3. Navbar
         const navbar = document.querySelector('.navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) navbar.classList.add('scrolled');
             else navbar.classList.remove('scrolled');
         });
 
-        // 4. Reveal Animations
         gsap.utils.toArray('.reveal-up').forEach(elem => {
             gsap.from(elem, {
                 y: 50, opacity: 0, duration: 1, ease: "power3.out",
@@ -658,7 +625,6 @@
             });
         });
 
-        // 5. Tabs
         const tabBtns = document.querySelectorAll('.tab-btn');
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
