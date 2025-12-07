@@ -29,23 +29,69 @@
             --font-body: 'Rajdhani', sans-serif;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
         .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
         .lenis.lenis-stopped { overflow: hidden; }
 
+        /* --- THE FIX: Force background on HTML so it's NEVER white --- */
+        html {
+            background-color: var(--bg-main);
+        }
+
         body {
-            background: radial-gradient(circle at top center, #1b1810 0%, var(--bg-main) 50%, var(--bg-darker) 100%);
+            /* Remove background from body to let our custom layers shine */
+            background: transparent;
             color: var(--text-primary);
             font-family: var(--font-body);
             overflow-x: hidden;
             cursor: none; 
+            position: relative;
+        }
+
+        /* --- NEW: DEDICATED BACKGROUND LAYER (Layer -5) --- */
+        .global-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: radial-gradient(circle at top center, #1b1810 0%, var(--bg-main) 50%, var(--bg-darker) 100%);
+            z-index: -5;
+            pointer-events: none;
+        }
+
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #000; z-index: 10000;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease;
+        }
+        .preloader-logo {
+            width: 120px;
+            animation: pulse-gold 2s infinite;
+        }
+        @keyframes pulse-gold {
+            0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(212, 175, 55, 0)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(212, 175, 55, 0)); }
+        }
+
+        /* --- BACKGROUND FLOATING LOGOS (Layer -4) --- */
+        .bg-logo-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -4; overflow: hidden;
+        }
+        .floating-logo {
+            position: absolute;
+            opacity: 0.04; /* Subtle but visible */
+            filter: grayscale(1);
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.04; }
+            80% { opacity: 0.04; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         /* Noise Overlay */
@@ -101,17 +147,13 @@
             display: flex; align-items: center; gap: 15px; text-decoration: none;
         }
         
-        /* NEW LOGO IMAGE STYLING */
         .logo-img {
-            height: 45px; /* Adjust height to match navbar */
-            width: auto;
-            object-fit: contain;
-            /* Optional: Adds a subtle gold glow to the png */
+            height: 45px; width: auto; object-fit: contain;
             filter: drop-shadow(0 0 5px rgba(244, 215, 122, 0.4));
             transition: transform 0.3s ease;
         }
         .nav-logo:hover .logo-img {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(5deg);
             filter: drop-shadow(0 0 10px rgba(244, 215, 122, 0.8));
         }
 
@@ -128,17 +170,23 @@
         .hero-container {
             height: 100vh; position: relative; display: flex;
             justify-content: center; align-items: center; text-align: center; overflow: hidden;
+            /* Keep z-index positive relative to BG */
+            z-index: 1;
         }
         .bg-video {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            min-width: 100%; min-height: 100%; object-fit: cover; z-index: -2;
+            min-width: 100%; min-height: 100%; object-fit: cover; 
+            z-index: -3; /* Behind content, above bg */
             filter: saturate(0) brightness(0.6); 
         }
         .hero-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(5,5,5,0.95) 90%);
-            z-index: -1;
+            z-index: -2; /* Above video */
         }
+        
+        /* MASSIVE HERO LOGO WATERMARK */
+        
         .hero-content { z-index: 2; max-width: 900px; padding: 2rem; }
         .hero-logo-inline {
             font-family: var(--font-display); font-size: 1rem; color: var(--accent-gold-light);
@@ -176,13 +224,15 @@
             background: var(--accent-gold); padding: 1.5rem 0; overflow: hidden;
             transform: skewY(-2deg); margin-top: -2rem; position: relative; z-index: 10;
         }
-        .banner-track { display: flex; white-space: nowrap; animation: scroll 25s linear infinite; }
-        .banner-item { font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: #0c0b09; margin-right: 4rem; }
+        .banner-track { display: flex; align-items: center; white-space: nowrap; animation: scroll 25s linear infinite; }
+        .banner-item { font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: #0c0b09; margin-right: 4rem; display: flex; align-items: center; gap: 2rem;}
+        .banner-logo-icon { height: 40px; width: auto; filter: brightness(0); }
+        
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* Section Styling */
         .section-container {
-            max-width: 1200px; margin: 8rem auto; padding: 0 2rem;
+            max-width: 1200px; margin: 8rem auto; padding: 0 2rem; position: relative; z-index: 2;
         }
         .glass-card {
             background: linear-gradient(145deg, rgba(36,32,26,0.9), rgba(24,20,14,0.95));
@@ -209,23 +259,26 @@
         .facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
         .fact-item {
             background: var(--surface-soft);
-            padding: 1.5rem; /* Reduced from 2rem to give text more space */
+            padding: 1.5rem; 
             border-radius: 18px;
             border: 1px solid rgba(244, 215, 122, 0.1);
             transition: 0.3s;
-            overflow: hidden; /* Ensures nothing spills out technically */
+            overflow: hidden;
+            position: relative; 
+        }
+        .fact-item::after {
+            content: '';
+            position: absolute; right: -20px; bottom: -20px;
+            width: 80px; height: 80px;
+            background: url('logo.png') no-repeat center/contain;
+            opacity: 0.05; transform: rotate(-20deg);
         }
         .fact-item:hover { border-color: var(--accent-gold); transform: translateY(-5px); }
         .fact-item h3 {
-            color: var(--accent-gold);
-            font-size: 1rem; /* Slightly smaller (was 1.5rem) to fit the long word */
-            margin: 0.5rem 0;
-            
-            /* THE MAGIC SAUCE FOR LONG WORDS 👇 */
-            word-wrap: break-word; 
-            overflow-wrap: break-word;
-            hyphens: auto;
+            color: var(--accent-gold); font-size: 1rem; margin: 0.5rem 0;
+            word-wrap: break-word; overflow-wrap: break-word; hyphens: auto;
         }
+
         /* Property Finder */
         .finder-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
         .tab-btn {
@@ -240,30 +293,17 @@
             color: var(--text-primary); font-family: var(--font-body); border-radius: 10px; outline: none;
         }
 
-        /* Gallery - STACKED FIX */
+        /* Gallery */
         .gallery-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1.5rem;
-            height: 500px; 
+            display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; height: 500px; 
         }
         .main-video-card {
-            height: 100%;
-            border-radius: 22px;
-            overflow: hidden;
+            height: 100%; border-radius: 22px; overflow: hidden;
             border: 1px solid rgba(244, 215, 122, 0.2);
         }
-        .thumb-grid {
-            display: flex;
-            flex-direction: column; 
-            gap: 1.5rem;
-            height: 100%;
-        }
+        .thumb-grid { display: flex; flex-direction: column; gap: 1.5rem; height: 100%; }
         .thumb-card {
-            flex: 1; 
-            border-radius: 16px;
-            overflow: hidden;
-            position: relative;
+            flex: 1; border-radius: 16px; overflow: hidden; position: relative;
             border: 1px solid rgba(244, 215, 122, 0.2);
         }
         .thumb-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
@@ -299,6 +339,14 @@
 </head>
 <body>
 
+    <div class="global-bg"></div>
+
+    <div id="preloader">
+        <img src="logo.png" alt="Loading..." class="preloader-logo">
+    </div>
+
+    <div class="bg-logo-container" id="bgLogoContainer"></div>
+
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
@@ -324,6 +372,7 @@
         </video>
         <div class="hero-overlay"></div>
         
+
         <div class="hero-content">
             <div class="hero-logo-inline reveal-up">ЖК НОВА НАДЕЖДА</div>
             <h1 class="reveal-up">Новият <span class="gold-span">Златен Квартал</span> на Сливен</h1>
@@ -337,9 +386,24 @@
 
     <div class="scrolling-banner">
         <div class="banner-track">
-            <div class="banner-item">НОВА НАДЕЖДА — ГРАД НА БЪДЕЩЕТО — СЛИВЕН 2025 —</div>
-            <div class="banner-item">НОВА НАДЕЖДА — ГРАД НА БЪДЕЩЕТО — СЛИВЕН 2025 —</div>
-             <div class="banner-item">НОВА НАДЕЖДА — ГРАД НА БЪДЕЩЕТО — СЛИВЕН 2025 —</div>
+            <div class="banner-item">
+                <img src="logo.png" class="banner-logo-icon"> НОВА НАДЕЖДА
+            </div>
+            <div class="banner-item">
+                <img src="logo.png" class="banner-logo-icon"> ГРАД НА БЪДЕЩЕТО
+            </div>
+            <div class="banner-item">
+                 <img src="logo.png" class="banner-logo-icon"> СЛИВЕН 2025
+            </div>
+            <div class="banner-item">
+                <img src="logo.png" class="banner-logo-icon"> НОВА НАДЕЖДА
+            </div>
+            <div class="banner-item">
+                <img src="logo.png" class="banner-logo-icon"> ГРАД НА БЪДЕЩЕТО
+            </div>
+            <div class="banner-item">
+                 <img src="logo.png" class="banner-logo-icon"> СЛИВЕН 2025
+            </div>
         </div>
     </div>
 
@@ -444,13 +508,13 @@
              <h2 class="reveal-up" style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">Повече от Квартал. <span class="gold-span">Екосистема.</span></h2>
              
              <div class="vision-grid">
-                 <a href="retail.html" class="vision-card reveal-up hover-trigger" style="text-decoration: none; color: inherit; display: block;">
+                 <a href="retail-park.html" class="vision-card reveal-up hover-trigger" style="text-decoration: none; color: inherit; display: block;">
                      <i class="ri-store-2-line vision-icon"></i>
                      <h3>Retail Park</h3>
                      <p>Модерен търговски парк за лесно ежедневие.</p>
                  </a>
 
-                 <a href="health.html" class="vision-card reveal-up hover-trigger" style="text-decoration: none; color: inherit; display: block;">
+                 <a href="health-safety.html" class="vision-card reveal-up hover-trigger" style="text-decoration: none; color: inherit; display: block;">
                      <i class="ri-heart-pulse-line vision-icon"></i>
                      <h3>Здраве & Сигурност</h3>
                      <p>Медицински център и 24/7 видеонаблюдение.</p>
@@ -519,6 +583,38 @@
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
+
+        // --- PRELOADER REMOVAL ---
+        window.addEventListener("load", () => {
+            const preloader = document.getElementById("preloader");
+            setTimeout(() => {
+                preloader.style.opacity = "0";
+                setTimeout(() => {
+                    preloader.style.display = "none";
+                }, 800);
+            }, 1000); 
+        });
+
+        // --- BACKGROUND FLOATING LOGOS GENERATOR ---
+        const container = document.getElementById('bgLogoContainer');
+        const logoCount = 15; 
+        
+        for (let i = 0; i < logoCount; i++) {
+            const img = document.createElement('img');
+            img.src = 'logo.png';
+            img.classList.add('floating-logo');
+            
+            // Randomize position and size
+            const size = Math.random() * 50 + 30; // 30px to 80px
+            img.style.width = `${size}px`;
+            img.style.left = `${Math.random() * 100}vw`;
+            
+            // Randomize animation delay/duration
+            img.style.animationDuration = `${Math.random() * 15 + 15}s`; 
+            img.style.animationDelay = `-${Math.random() * 20}s`; 
+            
+            container.appendChild(img);
+        }
 
         // 1. Smooth Scroll
         const lenis = new Lenis({
