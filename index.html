@@ -67,11 +67,10 @@
             animation: pulse-gold 2s infinite;
         }
         
-        /* NEW: Class applied to logos between sections for that Pulse effect! */
         .section-separator-logo {
             width: 80px;
             opacity: 0.8;
-            animation: pulse-gold 3s infinite; /* Slightly slower, chill pulse */
+            animation: pulse-gold 3s infinite;
             margin: 2rem auto;
             display: block;
         }
@@ -87,7 +86,6 @@
             pointer-events: none; z-index: -4; overflow: hidden;
         }
         
-        /* UPDATED: Slightly more visible opacity since we are making them bigger */
         .floating-logo {
             position: absolute;
             opacity: 0.06; 
@@ -223,7 +221,6 @@
         }
         .banner-track { display: flex; align-items: center; white-space: nowrap; animation: scroll 25s linear infinite; }
         .banner-item { font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: #0c0b09; margin-right: 4rem; display: flex; align-items: center; gap: 2rem;}
-        /* UPDATED: Banner logo sizing just in case */
         .banner-logo-icon { height: 50px; width: auto; filter: brightness(0); }
         
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -231,7 +228,6 @@
         .section-container {
             max-width: 1200px; margin: 6rem auto; padding: 0 2rem; position: relative; z-index: 2;
         }
-        /* New Separator Container */
         .separator-container {
             display: flex; justify-content: center; align-items: center; width: 100%; margin: 2rem 0;
         }
@@ -294,6 +290,12 @@
             width: 100%; padding: 1rem; background: var(--bg-darker); border: 1px solid rgba(244, 215, 122, 0.3);
             color: var(--text-primary); font-family: var(--font-body); border-radius: 10px; outline: none;
         }
+        /* NEW STYLES FOR TEXTAREA */
+        textarea.filter-select {
+            resize: vertical;
+            min-height: 120px;
+            font-family: var(--font-body);
+        }
 
         .gallery-grid {
             display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; height: 500px; 
@@ -317,6 +319,21 @@
         }
         .vision-card:hover { border-color: var(--accent-gold); background: var(--surface-soft); transform: translateY(-7px); }
         .vision-icon { font-size: 3rem; color: var(--accent-gold); margin-bottom: 1.5rem; display: block; }
+        
+        /* UPDATED FORM GRID FOR PRETTINESS */
+        .contact-form-grid {
+            display: grid; 
+            gap: 1rem;
+            grid-template-columns: 1fr; 
+        }
+        @media (min-width: 768px) {
+            .contact-form-grid {
+                grid-template-columns: 1fr 1fr; 
+            }
+            .full-width {
+                grid-column: span 2;
+            }
+        }
 
         footer {
             background: #080705; padding: 5rem 2rem; margin-top: 5rem; border-top: 1px solid rgba(244, 215, 122, 0.1);
@@ -551,17 +568,24 @@
                      <div class="section-label">КОНТАКТ</div>
                      <h2 class="reveal-up" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Започни Своето <span class="gold-span">Бъдеще</span> Днес</h2>
                      <p style="margin-bottom: 2rem;">Свържете се с нас за индивидуална консултация относно наличните парцели и жилища.</p>
-                     <h3 class="gold-span hover-trigger" style="font-size: 1.5rem;">angelov.p@gmail.com</h3>
+                     <h3 class="gold-span hover-trigger" style="font-size: 1.5rem;">+359 888 123 456</h3>
+                     <h3 class="gold-span hover-trigger" style="font-size: 1.5rem;">contact@novanadejda.bg</h3>
                 </div>
-                <form class="reveal-up" style="display: grid; gap: 1rem;">
+                <form class="reveal-up contact-form-grid">
                     <input type="text" placeholder="Вашето Име" class="filter-select hover-trigger">
-                    <input type="email" placeholder="Email Адрес" class="filter-select hover-trigger">
-                    <select class="filter-select hover-trigger">
+                    <input type="tel" placeholder="Телефон за връзка" class="filter-select hover-trigger">
+                    
+                    <input type="email" placeholder="Email Адрес" class="filter-select hover-trigger full-width">
+                    
+                    <select class="filter-select hover-trigger full-width">
                         <option>Интересувам се от...</option>
                         <option>Покупка на парцел</option>
                         <option>Покупка на жилище</option>
                     </select>
-                    <button class="cta-button hover-trigger" style="width: 100%;">ИЗПРАТИ ЗАПИТВАНЕ</button>
+                    
+                    <textarea placeholder="Вашето Съобщение..." class="filter-select hover-trigger full-width"></textarea>
+                    
+                    <button class="cta-button hover-trigger full-width">ИЗПРАТИ ЗАПИТВАНЕ</button>
                 </form>
             </div>
         </section>
@@ -621,9 +645,6 @@
             }, 1000); 
         });
 
-        // ----------------------------------------------------
-        // UPDATED BACKGROUND LOGO LOGIC (BIGGER & BOLDER) 🚀
-        // ----------------------------------------------------
         const container = document.getElementById('bgLogoContainer');
         const logoCount = 15; 
         
@@ -632,7 +653,6 @@
             img.src = 'logo.png'; 
             img.classList.add('floating-logo');
             
-            // UPDATED: Size increased significantly! (Now 100px to 200px)
             const size = Math.random() * 100 + 100;   
             img.style.width = `${size}px`;
             
@@ -641,7 +661,6 @@
             img.style.animationDelay = `-${Math.random() * 20}s`; 
             container.appendChild(img);
         }
-        // ----------------------------------------------------
 
         const lenis = new Lenis({
             duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
