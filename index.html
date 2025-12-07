@@ -66,6 +66,16 @@
             width: 120px;
             animation: pulse-gold 2s infinite;
         }
+        
+        /* NEW: Class applied to logos between sections for that Pulse effect! */
+        .section-separator-logo {
+            width: 80px;
+            opacity: 0.8;
+            animation: pulse-gold 3s infinite; /* Slightly slower, chill pulse */
+            margin: 2rem auto;
+            display: block;
+        }
+
         @keyframes pulse-gold {
             0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(212, 175, 55, 0)); }
             50% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6)); }
@@ -76,16 +86,18 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: -4; overflow: hidden;
         }
+        
+        /* UPDATED: Slightly more visible opacity since we are making them bigger */
         .floating-logo {
             position: absolute;
-            opacity: 0.04;
+            opacity: 0.06; 
             filter: grayscale(1);
             animation: floatUp linear infinite;
         }
         @keyframes floatUp {
             0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.04; }
-            80% { opacity: 0.04; }
+            20% { opacity: 0.06; }
+            80% { opacity: 0.06; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
@@ -211,13 +223,22 @@
         }
         .banner-track { display: flex; align-items: center; white-space: nowrap; animation: scroll 25s linear infinite; }
         .banner-item { font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: #0c0b09; margin-right: 4rem; display: flex; align-items: center; gap: 2rem;}
-        .banner-logo-icon { height: 40px; width: auto; filter: brightness(0); }
+        /* UPDATED: Banner logo sizing just in case */
+        .banner-logo-icon { height: 50px; width: auto; filter: brightness(0); }
         
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         .section-container {
-            max-width: 1200px; margin: 8rem auto; padding: 0 2rem; position: relative; z-index: 2;
+            max-width: 1200px; margin: 6rem auto; padding: 0 2rem; position: relative; z-index: 2;
         }
+        /* New Separator Container */
+        .separator-container {
+            display: flex; justify-content: center; align-items: center; width: 100%; margin: 2rem 0;
+        }
+        .separator-line {
+            height: 1px; width: 100px; background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
         .glass-card {
             background: linear-gradient(145deg, rgba(36,32,26,0.9), rgba(24,20,14,0.95));
             backdrop-filter: blur(10px);
@@ -409,6 +430,12 @@
             </div>
         </section>
 
+        <div class="separator-container reveal-up">
+            <div class="separator-line"></div>
+            <img src="/logo.png" class="section-separator-logo">
+            <div class="separator-line"></div>
+        </div>
+
         <section class="section-container" id="facts">
             <div class="section-label" style="justify-content: center;">ФАКТИ ЗА ПРОЕКТА</div>
             <h2 class="reveal-up" style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">Мащабът на <span class="gold-span">Бъдещето</span></h2>
@@ -437,6 +464,12 @@
             </div>
         </section>
 
+        <div class="separator-container reveal-up">
+            <div class="separator-line"></div>
+            <img src="/logo.png" class="section-separator-logo">
+            <div class="separator-line"></div>
+        </div>
+
         <section class="section-container glass-card" id="homes">
              <div class="section-label" style="justify-content: center;">НАМЕРИ СВОЯ ДОМ</div>
              <h2 class="reveal-up" style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">Избери <span class="gold-span">Своето Място</span></h2>
@@ -462,6 +495,12 @@
                  <button class="cta-button hover-trigger" style="width: 100%;">ТЪРСЕНЕ</button>
              </div>
         </section>
+
+        <div class="separator-container reveal-up">
+            <div class="separator-line"></div>
+            <img src="/logo.png" class="section-separator-logo">
+            <div class="separator-line"></div>
+        </div>
 
         <section class="section-container" id="gallery">
              <div class="section-label">ГАЛЕРИЯ</div>
@@ -563,12 +602,10 @@
         gsap.registerPlugin(ScrollTrigger);
 
         // --- EMERGENCY AUTO-FIX SCRIPT ---
-        // This little guy checks if logo.png fails and tries Logo.png instead!
         document.addEventListener('error', function(e) {
             if (e.target.tagName === 'IMG' && e.target.src.includes('logo.png')) {
                 const currentSrc = e.target.src;
                 if (!currentSrc.includes('Logo.png') && !currentSrc.includes('logo.PNG')) {
-                     // Try Capitalized L if lowercase fails
                     e.target.src = 'Logo.png'; 
                 }
             }
@@ -585,20 +622,27 @@
             }, 1000); 
         });
 
+        // ----------------------------------------------------
+        // UPDATED BACKGROUND LOGO LOGIC (BIGGER & BOLDER) 🚀
+        // ----------------------------------------------------
         const container = document.getElementById('bgLogoContainer');
         const logoCount = 15; 
         
         for (let i = 0; i < logoCount; i++) {
             const img = document.createElement('img');
-            img.src = 'logo.png'; // Make sure this matches your file exactly!
+            img.src = 'logo.png'; 
             img.classList.add('floating-logo');
-            const size = Math.random() * 50 + 30;   
+            
+            // UPDATED: Size increased significantly! (Now 100px to 200px)
+            const size = Math.random() * 100 + 100;   
             img.style.width = `${size}px`;
+            
             img.style.left = `${Math.random() * 100}vw`;
             img.style.animationDuration = `${Math.random() * 15 + 15}s`; 
             img.style.animationDelay = `-${Math.random() * 20}s`; 
             container.appendChild(img);
         }
+        // ----------------------------------------------------
 
         const lenis = new Lenis({
             duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
