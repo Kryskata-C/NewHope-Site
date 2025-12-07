@@ -533,7 +533,7 @@
         <div class="footer-content">
             <div>
                 <div class="nav-logo" style="margin-bottom: 1rem;">
-                     <img src="logo.png" alt="Logo" class="logo-img">
+                    <img src="logo.png" alt="Logo" class="logo-img">
                     <div class="nav-logo-text">НОВА <span class="gold-span">НАДЕЖДА</span></div>
                 </div>
                 <p>Нов жилищен комплекс в Сливен, изграден с мисъл за бъдещето.</p>
@@ -562,6 +562,19 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
+        // --- EMERGENCY AUTO-FIX SCRIPT ---
+        // This little guy checks if logo.png fails and tries Logo.png instead!
+        document.addEventListener('error', function(e) {
+            if (e.target.tagName === 'IMG' && e.target.src.includes('logo.png')) {
+                const currentSrc = e.target.src;
+                if (!currentSrc.includes('Logo.png') && !currentSrc.includes('logo.PNG')) {
+                     // Try Capitalized L if lowercase fails
+                    e.target.src = 'Logo.png'; 
+                }
+            }
+        }, true);
+        // ---------------------------------
+
         window.addEventListener("load", () => {
             const preloader = document.getElementById("preloader");
             setTimeout(() => {
@@ -577,7 +590,7 @@
         
         for (let i = 0; i < logoCount; i++) {
             const img = document.createElement('img');
-            img.src = 'logo.png';
+            img.src = 'logo.png'; // Make sure this matches your file exactly!
             img.classList.add('floating-logo');
             const size = Math.random() * 50 + 30;   
             img.style.width = `${size}px`;
