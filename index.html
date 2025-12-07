@@ -98,14 +98,25 @@
             border-bottom: 1px solid rgba(244, 215, 122, 0.1);
         }
         .nav-logo {
-            display: flex; align-items: center; gap: 10px; text-decoration: none;
+            display: flex; align-items: center; gap: 15px; text-decoration: none;
         }
-        .nav-logo-badge {
-            width: 35px; height: 35px; background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold));
-            color: #000; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            font-weight: 900; font-family: var(--font-display); box-shadow: 0 0 15px var(--accent-glow);
+        
+        /* NEW LOGO IMAGE STYLING */
+        .logo-img {
+            height: 45px; /* Adjust height to match navbar */
+            width: auto;
+            object-fit: contain;
+            /* Optional: Adds a subtle gold glow to the png */
+            filter: drop-shadow(0 0 5px rgba(244, 215, 122, 0.4));
+            transition: transform 0.3s ease;
         }
+        .nav-logo:hover .logo-img {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(244, 215, 122, 0.8));
+        }
+
         .nav-logo-text { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: #fff; }
+        
         .nav-links a {
             text-decoration: none; color: var(--text-primary); font-weight: 600;
             margin-left: 2rem; position: relative; font-size: 0.9rem; letter-spacing: 1px;
@@ -197,12 +208,24 @@
         /* Facts */
         .facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
         .fact-item {
-            background: var(--surface-soft); padding: 2rem; border-radius: 18px;
-            border: 1px solid rgba(244, 215, 122, 0.1); transition: 0.3s;
+            background: var(--surface-soft);
+            padding: 1.5rem; /* Reduced from 2rem to give text more space */
+            border-radius: 18px;
+            border: 1px solid rgba(244, 215, 122, 0.1);
+            transition: 0.3s;
+            overflow: hidden; /* Ensures nothing spills out technically */
         }
         .fact-item:hover { border-color: var(--accent-gold); transform: translateY(-5px); }
-        .fact-item h3 { color: var(--accent-gold); font-size: 1.5rem; margin: 0.5rem 0; }
-
+        .fact-item h3 {
+            color: var(--accent-gold);
+            font-size: 1rem; /* Slightly smaller (was 1.5rem) to fit the long word */
+            margin: 0.5rem 0;
+            
+            /* THE MAGIC SAUCE FOR LONG WORDS 👇 */
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
         /* Property Finder */
         .finder-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
         .tab-btn {
@@ -217,12 +240,12 @@
             color: var(--text-primary); font-family: var(--font-body); border-radius: 10px; outline: none;
         }
 
-        /* Gallery - FIXED: Bigger, Stacked Images */
+        /* Gallery - STACKED FIX */
         .gallery-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr; /* 2 parts video, 1 part images */
+            grid-template-columns: 2fr 1fr;
             gap: 1.5rem;
-            height: 500px; /* Fixed height for the whole row for alignment */
+            height: 500px; 
         }
         .main-video-card {
             height: 100%;
@@ -232,12 +255,12 @@
         }
         .thumb-grid {
             display: flex;
-            flex-direction: column; /* Stack vertically */
+            flex-direction: column; 
             gap: 1.5rem;
             height: 100%;
         }
         .thumb-card {
-            flex: 1; /* Each takes 50% height */
+            flex: 1; 
             border-radius: 16px;
             overflow: hidden;
             position: relative;
@@ -265,11 +288,9 @@
 
         @media (max-width: 992px) {
             .about-grid, .footer-content, .filters-container { grid-template-columns: 1fr; }
-            /* Mobile fixes for gallery */
             .gallery-grid { grid-template-columns: 1fr; height: auto; }
             .thumb-grid { flex-direction: row; height: 200px; }
             .main-video-card { height: 300px; }
-            
             .hero-content h1 { font-size: 3rem; }
             .navbar { padding: 1rem; }
             .nav-links { display: none; }
@@ -285,7 +306,7 @@
 
     <nav class="navbar">
         <a href="#top" class="nav-logo hover-trigger">
-            <div class="nav-logo-badge">Н</div>
+            <img src="logo.png" alt="Logo" class="logo-img">
             <div class="nav-logo-text">НОВА <span class="gold-span">НАДЕЖДА</span></div>
         </a>
         <div class="nav-links">
@@ -421,17 +442,20 @@
         <section class="section-container" id="vision">
              <div class="section-label" style="justify-content: center;">НАШАТА ВИЗИЯ</div>
              <h2 class="reveal-up" style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">Повече от Квартал. <span class="gold-span">Екосистема.</span></h2>
+             
              <div class="vision-grid">
-                 <div class="vision-card reveal-up hover-trigger">
+                 <a href="retail.html" class="vision-card reveal-up hover-trigger" style="text-decoration: none; color: inherit; display: block;">
                      <i class="ri-store-2-line vision-icon"></i>
                      <h3>Retail Park</h3>
                      <p>Модерен търговски парк за лесно ежедневие.</p>
-                 </div>
-                 <div class="vision-card reveal-up hover-trigger">
+                 </a>
+
+                 <a href="health.html" class="vision-card reveal-up hover-trigger" style="text-decoration: none; color: inherit; display: block;">
                      <i class="ri-heart-pulse-line vision-icon"></i>
                      <h3>Здраве & Сигурност</h3>
                      <p>Медицински център и 24/7 видеонаблюдение.</p>
-                 </div>
+                 </a>
+
                  <div class="vision-card reveal-up hover-trigger">
                      <i class="ri-wifi-line vision-icon"></i>
                      <h3>Smart City</h3>
@@ -467,7 +491,7 @@
         <div class="footer-content">
             <div>
                 <div class="nav-logo" style="margin-bottom: 1rem;">
-                    <div class="nav-logo-badge">Н</div>
+                     <img src="logo.png" alt="Logo" class="logo-img">
                     <div class="nav-logo-text">НОВА <span class="gold-span">НАДЕЖДА</span></div>
                 </div>
                 <p>Нов жилищен комплекс в Сливен, изграден с мисъл за бъдещето.</p>

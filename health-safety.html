@@ -1,324 +1,276 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Здраве и Сигурност - NewHope</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    /* --- VIBE CHECK: GLOBAL STYLES & VARIABLES --- */
-    :root {
-      --bg-color: #0c0c0c;
-      --surface-color: #1a1a1a;
-      --primary-text: #f0f0f0;
-      --secondary-text: #a0a0a0;
-      --accent-color: #D4AF37;
-      --accent-color-glow: rgba(212, 175, 55, 0.6);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg-color);
-      color: var(--primary-text);
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    /* --- 💥 SICK ANIMATED BACKGROUND 💥 --- */
-    .background-shapes {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -10;
-      overflow: hidden;
-    }
-    .shape {
-      position: absolute;
-      border-radius: 50%;
-      background: var(--accent-color-glow);
-      filter: blur(80px);
-      animation: float 25s ease-in-out infinite alternate;
-    }
-    .shape-1 { width: 400px; height: 400px; top: -5%; left: 70%; animation-duration: 30s; }
-    .shape-2 { width: 300px; height: 300px; top: 70%; left: -10%; animation-duration: 25s; }
-    .shape-3 { width: 500px; height: 500px; top: 20%; left: 40%; animation-duration: 35s; }
-
-    @keyframes float {
-      0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-      100% { transform: translateY(-100px) translateX(50px) rotate(90deg); }
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Здраве и Сигурност – NewHope</title>
     
-    /* --- UPGRADED BACK BUTTON --- */
-    .back-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      color: var(--primary-text);
-      background: rgba(0,0,0,0.3);
-      border-radius: 50px;
-      text-decoration: none;
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 10;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
-    }
-    .back-button:hover {
-        background: var(--accent-color);
-        color: var(--bg-color);
-    }
-    .back-button svg {
-        transition: transform 0.3s ease;
-    }
-    .back-button:hover svg {
-        transform: translateX(-3px);
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-    /* --- HEADER WITH STATIC IMAGE --- */
-    .details-hero {
-      position: relative;
-      height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background-size: cover;
-      background-position: center;
-    }
-    .details-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 0;
-    }
-    .details-hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-      padding: 20px;
-    }
-    .details-hero-content h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      text-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    }
-    .details-hero-content p {
-      font-size: 1.25rem;
-      color: var(--secondary-text);
-      font-weight: 400;
-    }
-
-    /* --- MAIN CONTENT STYLES --- */
-    .details-container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 80px 40px;
-      position: relative;
-      z-index: 1;
-    }
-    .details-intro {
-      text-align: center;
-      margin-bottom: 80px;
-    }
-    .details-intro h2 {
-        font-size: 3rem;
-        color: var(--accent-color);
-        margin-bottom: 1rem;
-    }
-    .details-intro p {
-        font-size: 1.2rem;
-        color: var(--secondary-text);
-        max-width: 700px;
-        margin: 0 auto;
-        line-height: 1.6;
-    }
-
-    /* --- REVAMPED FEATURE SECTIONS --- */
-    .feature-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      margin-bottom: 6rem;
-      align-items: center;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-      background: var(--surface-color);
-      padding: 2.5rem;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .feature-section:nth-child(even) .feature-image {
-        order: 2; /* Alternate image position */
-    }
-    .feature-section.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .feature-image img {
-      width: 100%;
-      border-radius: 12px;
-      transition: transform 0.4s ease;
-    }
-    .feature-section:hover .feature-image img {
-        transform: scale(1.05);
-    }
-
-    .feature-content h3 {
-      font-size: 2.2rem;
-      color: var(--accent-color);
-      margin-bottom: 1rem;
-    }
-    .feature-content p {
-        font-size: 1.1rem;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-        color: var(--secondary-text);
-    }
-    .feature-content ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .feature-content li {
-        background: var(--bg-color);
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.9rem;
-    }
-
-    /* --- RESPONSIVENESS --- */
-    @media (max-width: 768px) {
-        .details-hero-content h1 { font-size: 2.5rem; }
-        .details-container { padding: 40px 20px; }
-        .feature-section { 
-            grid-template-columns: 1fr;
-            padding: 1.5rem;
+    <style>
+        /* --- CORE STYLES FROM REFERENCE --- */
+        :root {
+            --bg-main: #0c0b09;
+            --bg-darker: #050505;
+            --surface: #1e1b16;
+            --surface-soft: #24201a;
+            --accent-gold: #d4af37;
+            --accent-gold-light: #f4d77a;
+            --text-primary: #fff8e9;
+            --text-secondary: #c1b29a;
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Rajdhani', sans-serif;
         }
-        .feature-section:nth-child(even) .feature-image {
-            order: 0; /* Stack images on top on mobile */
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: radial-gradient(circle at top center, #1b1810 0%, var(--bg-main) 50%, var(--bg-darker) 100%);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            cursor: none; 
         }
-    }
-  </style>
+
+        /* Essential Utilities */
+        h1, h2, h3, h4 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1px; color: #fff; }
+        p { color: var(--text-secondary); line-height: 1.6; }
+        .gold-span { color: var(--accent-gold); display: inline-block; }
+        .section-label {
+            font-family: var(--font-display); font-size: 0.8rem; color: var(--accent-gold-light);
+            letter-spacing: 3px; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;
+        }
+        .section-label::before { content: ''; width: 20px; height: 1px; background: var(--accent-gold); }
+
+        /* Effects */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9000; opacity: 0.03;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+        .cursor-dot {
+            position: fixed; top: 0; left: 0; width: 6px; height: 6px;
+            background-color: var(--accent-gold-light); border-radius: 50%;
+            z-index: 9999; pointer-events: none; transform: translate(-50%, -50%);
+        }
+        .cursor-outline {
+            position: fixed; top: 0; left: 0; width: 30px; height: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 50%;
+            z-index: 9998; pointer-events: none; transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        body.hovered .cursor-outline { width: 50px; height: 50px; background-color: rgba(212, 175, 55, 0.05); border-color: var(--accent-gold); }
+
+        /* Navigation */
+        .navbar {
+            position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; background: rgba(12, 10, 5, 0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(244, 215, 122, 0.1);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 15px; text-decoration: none; color: white; }
+        .nav-logo-text { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
+        
+        .cta-button {
+            padding: 0.8rem 2rem; border-radius: 50px; border: none;
+            background: linear-gradient(90deg, var(--accent-gold-light), var(--accent-gold));
+            color: #0c0b09; font-family: var(--font-display); font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+            text-decoration: none; display: inline-block; transition: 0.3s;
+        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.5); }
+
+        /* Hero */
+        .page-hero {
+            height: 60vh; position: relative; display: flex; justify-content: center; align-items: center;
+            text-align: center; overflow: hidden; margin-top: 80px;
+        }
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -2; opacity: 0.6;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, var(--bg-main) 90%);
+            z-index: -1;
+        }
+
+        /* Layouts */
+        .section-container { max-width: 1200px; margin: 6rem auto; padding: 0 2rem; }
+        
+        .glass-card {
+            background: linear-gradient(145deg, rgba(36,32,26,0.9), rgba(24,20,14,0.95));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(244, 215, 122, 0.15);
+            border-radius: 24px; padding: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; }
+        .about-grid.reversed { grid-template-columns: 1fr 1.2fr; direction: rtl; }
+        .about-grid.reversed > * { direction: ltr; }
+
+        .about-image-card {
+            height: 400px; border-radius: 24px; overflow: hidden; position: relative;
+            border: 1px solid rgba(244, 215, 122, 0.3);
+        }
+        .about-image-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .about-image-card:hover img { transform: scale(1.05); }
+
+        .feature-list { list-style: none; margin-top: 2rem; display: grid; gap: 1rem; }
+        .feature-item { 
+            display: flex; align-items: center; gap: 10px; color: var(--text-primary); 
+            font-size: 1.1rem; border-bottom: 1px solid rgba(244, 215, 122, 0.1); padding-bottom: 0.5rem;
+        }
+        .feature-item i { color: var(--accent-gold); font-size: 1.2rem; }
+
+        /* Footer */
+        footer {
+            background: #080705; padding: 5rem 2rem; margin-top: 5rem; border-top: 1px solid rgba(244, 215, 122, 0.1); text-align: center;
+        }
+
+        @media (max-width: 992px) {
+            .about-grid, .about-grid.reversed { grid-template-columns: 1fr; direction: ltr; }
+            .navbar { padding: 1rem; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="background-shapes">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-</div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="noise-overlay"></div>
 
-<a href="index.html" class="back-button">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path></svg>
-  <span>Назад</span>
-</a>
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo hover-trigger">
+            <i class="ri-arrow-left-line" style="font-size: 1.5rem; color: var(--accent-gold);"></i>
+            <div class="nav-logo-text">НАЗАД КЪМ <span class="gold-span">НАЧАЛОТО</span></div>
+        </a>
+        <a href="#contact" class="cta-button hover-trigger">КОНТАКТ</a>
+    </nav>
 
-<header class="details-hero" style="background-image: url('https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
-  <div class="details-overlay"></div>
-  <div class="details-hero-content">
-    <h1>Здраве и Сигурност</h1>
-    <p>Спокойствие и грижа за вашето семейство.</p>
-  </div>
-</header>
+    <header class="page-hero">
+        <img src="https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Healthy City" class="hero-bg">
+        <div class="hero-overlay"></div>
+        <div class="hero-content" style="z-index: 2; max-width: 800px; padding: 2rem;">
+            <div class="section-label" style="justify-content: center;">ОБЩНОСТ И ГРИЖА</div>
+            <h1 class="reveal-up" style="font-size: 3.5rem; margin-bottom: 1rem;">Здраве и <span class="gold-span">Сигурност</span></h1>
+            <p class="reveal-up" style="font-size: 1.2rem;">Спокойствие и грижа за вашето семейство в защитена среда.</p>
+        </div>
+    </header>
 
-<main class="details-container">
-  <div class="details-intro">
-    <h2>Сигурна среда за по-добър живот</h2>
-    <p>В основата на проекта "Нова Надежда" е заложена идеята за създаване на защитена и здравословна среда, където всяко семейство може да живее спокойно и да има достъп до качествени услуги.</p>
-  </div>
+    <main class="section-container">
+        
+        <div class="glass-card reveal-up" style="text-align: center;">
+            <h2 style="margin-bottom: 1rem;">Сигурна Среда за <span class="gold-span">По-добър Живот</span></h2>
+            <p style="max-width: 700px; margin: 0 auto;">В основата на проекта "Нова Надежда" е заложена идеята за създаване на защитена и здравословна среда, където всяко семейство може да живее спокойно и да има достъп до качествени услуги.</p>
+        </div>
 
-  <section class="feature-section">
-    <div class="feature-image">
-      <img src="https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Bright and modern medical clinic">
-    </div>
-    <div class="feature-content">
-      <h3>Комплексна Медицинска Грижа</h3>
-      <p>Достъпът до качествено здравеопазване е ключов. Затова изграждаме модерен медицински център, който да отговаря на всички съвременни изисквания.</p>
-      <ul>
-        <li>Медицински център с 30+ кабинета</li>
-        <li>Акредитирана клинична лаборатория</li>
-        <li>Голяма и добре заредена аптека</li>
-        <li>Лесен достъп за всички жители</li>
-      </ul>
-    </div>
-  </section>
+        <div class="glass-card about-grid">
+            <div class="about-text reveal-up">
+                <div class="section-label">ЗДРАВЕОПАЗВАНЕ</div>
+                <h2 style="margin-bottom: 1.5rem;">Комплексна <span class="gold-span">Медицинска Грижа</span></h2>
+                <p>Достъпът до качествено здравеопазване е ключов. Затова изграждаме модерен медицински център, който да отговаря на всички съвременни изисквания.</p>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="ri-hospital-line"></i> Медицински център с 30+ кабинета</li>
+                    <li class="feature-item"><i class="ri-microscope-line"></i> Акредитирана клинична лаборатория</li>
+                    <li class="feature-item"><i class="ri-capsule-fill"></i> Голяма и добре заредена аптека</li>
+                    <li class="feature-item"><i class="ri-wheelchair-line"></i> Лесен достъп за всички жители</li>
+                </ul>
+            </div>
+            <div class="about-image-card reveal-scale">
+                <img src="https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Medical Center">
+            </div>
+        </div>
 
-  <section class="feature-section">
-    <div class="feature-image">
-      <img src="https://images.pexels.com/photos/221540/pexels-photo-221540.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="A safe neighborhood street with modern homes">
-    </div>
-    <div class="feature-content">
-      <h3>Безопасност и Сигурност</h3>
-      <p>Сигурността на жителите е наш основен приоритет. Кварталът ще разполага със собствена полицейска служба и модерна система за наблюдение.</p>
-      <ul>
-        <li>Полицейски участък в квартала</li>
-        <li>Smart камери с оптична мрежа</li>
-        <li>Център за видеонаблюдение</li>
-        <li>Добре осветени улици и паркове</li>
-      </ul>
-    </div>
-  </section>
+        <div class="glass-card about-grid reversed">
+            <div class="about-text reveal-up">
+                <div class="section-label">СИГУРНОСТ</div>
+                <h2 style="margin-bottom: 1.5rem;">Безопасност и <span class="gold-span">Спокойствие</span></h2>
+                <p>Сигурността на жителите е наш основен приоритет. Кварталът ще разполага със собствена полицейска служба и модерна система за наблюдение.</p>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="ri-shield-star-line"></i> Полицейски участък в квартала</li>
+                    <li class="feature-item"><i class="ri-camera-lens-line"></i> Smart камери с оптична мрежа</li>
+                    <li class="feature-item"><i class="ri-eye-2-line"></i> 24/7 Център за видеонаблюдение</li>
+                    <li class="feature-item"><i class="ri-lightbulb-flash-line"></i> Добре осветени улици и паркове</li>
+                </ul>
+            </div>
+            <div class="about-image-card reveal-scale">
+                <img src="https://images.pexels.com/photos/221540/pexels-photo-221540.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Security Home">
+            </div>
+        </div>
 
-  <section class="feature-section">
-    <div class="feature-image">
-      <img src="https://images.pexels.com/photos/1765005/pexels-photo-1765005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Children playing in a safe, green park">
-    </div>
-    <div class="feature-content">
-      <h3>Грижа за Децата</h3>
-      <p>Създаваме среда, в която децата да растат щастливи и обгрижени. Новата детска градина ще предлага най-добрите условия за обучение и игра.</p>
-      <ul>
-        <li>Просторна детска градина</li>
-        <li>Безопасни детски площадки</li>
-        <li>Зелени площи за игра и отдих</li>
-        <li>Лесен достъп за родителите</li>
-      </ul>
-    </div>
-  </section>
+        <div class="glass-card about-grid">
+            <div class="about-text reveal-up">
+                <div class="section-label">БЪДЕЩЕ</div>
+                <h2 style="margin-bottom: 1.5rem;">Грижа за <span class="gold-span">Децата</span></h2>
+                <p>Създаваме среда, в която децата да растат щастливи и обгрижени. Новата детска градина ще предлага най-добрите условия за обучение и игра.</p>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="ri-parent-line"></i> Просторна детска градина</li>
+                    <li class="feature-item"><i class="ri-emotion-happy-line"></i> Безопасни детски площадки</li>
+                    <li class="feature-item"><i class="ri-tree-line"></i> Зелени площи за игра и отдих</li>
+                    <li class="feature-item"><i class="ri-walk-line"></i> Пешеходни зони без автомобили</li>
+                </ul>
+            </div>
+            <div class="about-image-card reveal-scale">
+                <img src="https://images.pexels.com/photos/1765005/pexels-photo-1765005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Happy Kids">
+            </div>
+        </div>
 
-</main>
+    </main>
 
-<script>
-  // --- SCROLL-IN ANIMATION FOR FEATURE SECTIONS ---
-  const sections = document.querySelectorAll('.feature-section');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      // Add the 'is-visible' class when the element comes into view
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-      }
-    });
-  }, {
-    threshold: 0.1 // Trigger when 10% of the element is visible
-  });
+    <footer id="contact">
+        <div class="nav-logo" style="justify-content: center; margin-bottom: 1rem;">
+             <div class="nav-logo-text">НОВА <span class="gold-span">НАДЕЖДА</span></div>
+        </div>
+        <p>© 2025 ЖК „Нова надежда“, Сливен. Всички права запазени.</p>
+    </footer>
 
-  sections.forEach(section => {
-    observer.observe(section);
-  });
-</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true, mouseMultiplier: 1, smoothTouch: false,
+        });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX; const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+        });
+        document.querySelectorAll('.hover-trigger').forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => document.body.classList.add('hovered'));
+            trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovered'));
+        });
+
+        // Animations
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.from(elem, {
+                y: 50, opacity: 0, duration: 1, ease: "power3.out",
+                scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" }
+            });
+        });
+         gsap.utils.toArray('.reveal-scale').forEach(elem => {
+            gsap.from(elem, {
+                scale: 0.9, opacity: 0, duration: 1.2, ease: "power3.out",
+                scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" }
+            });
+        });
+    </script>
 </body>
 </html>
