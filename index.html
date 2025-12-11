@@ -67,35 +67,51 @@
         li::before { content: '•'; color: var(--gold-main); font-weight: bold; width: 1em; margin-left: -1em; display: inline-block; }
 
         section {
-            padding: 100px 20px 40px 20px;
+            padding: 60px 20px 40px 20px; /* Reduced top padding slightly */
             max-width: 900px;
             margin: 0 auto;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            position: relative;
         }
 
-        /* --- NEGATIVE / HIGHLIGHT SECTION (CONTACT) --- */
+        /* --- LOGO SEPARATORS --- */
+        .logo-separator {
+            display: flex; align-items: center; justify-content: center;
+            margin: 40px 0; opacity: 0.5;
+        }
+        .logo-separator img { width: 50px; height: auto; margin: 0 15px; }
+        .logo-separator .line { flex: 1; height: 1px; background: var(--gold-main); max-width: 150px; }
+
+        /* --- IMAGE PLACEHOLDERS --- */
+        .img-placeholder {
+            width: 100%;
+            height: 250px;
+            border: 2px dashed var(--gold-main);
+            background: rgba(212, 175, 55, 0.05);
+            display: flex; align-items: center; justify-content: center;
+            margin: 30px 0;
+            border-radius: 10px;
+            color: var(--gold-main);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+        .img-placeholder i { font-size: 40px; margin-right: 10px; }
+
+        /* --- CONTACT SECTION (GOLD) --- */
         section.highlight-section {
             background-color: var(--gold-main);
-            color: var(--bg-main); /* Black Text */
-            width: 100%;
-            max-width: 100%; /* Full width background */
-            padding-left: 0; padding-right: 0; /* Reset padding for full width */
-            border-bottom: none;
+            color: var(--bg-main); 
+            width: 100%; max-width: 100%; 
+            padding-left: 0; padding-right: 0; 
+            padding-top: 60px; padding-bottom: 60px;
         }
-        
-        /* Inner container for the highlighted section to keep text centered */
-        .highlight-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-
+        .highlight-container { max-width: 900px; margin: 0 auto; padding: 0 20px; text-align: center; }
         .highlight-section h1 { color: var(--bg-main); border-color: var(--bg-main); }
         .highlight-section h2 { color: var(--bg-main); font-weight: 900; }
-        .highlight-section p { color: #2a251e; font-weight: 500; } /* Darker grey/brown text */
+        .highlight-section p { color: #2a251e; font-weight: 500; }
         .highlight-section strong { color: black; }
-        .highlight-section .gold-text { color: white; } /* Reverse accent */
+        .highlight-section .gold-text { color: white; }
         .highlight-section a { color: black; }
 
         /* BUTTONS */
@@ -108,15 +124,9 @@
         }
         .btn-whatsapp { background-color: #25D366; color: white; border: 2px solid white; }
         
-        /* --- FIXED: INVERTED CALL BUTTON --- */
         .btn-call-inverted { 
-            background-color: #ffffff; /* White Background */
-            color: #000000; /* Black Text */
-            border: 2px solid #ffffff;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2); /* Make it float/pop */
-        }
-        .btn-call-inverted:active {
-            transform: scale(0.98);
+            background-color: #ffffff; color: #000000; border: 2px solid #ffffff;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
         }
 
         /* HEADER */
@@ -155,6 +165,7 @@
             padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
+        /* STICKY WHATSAPP WITH PULSE */
         .fixed-wa {
             position: fixed; bottom: 20px; right: 20px;
             background: #25D366; width: 70px; height: 70px;
@@ -162,6 +173,12 @@
             font-size: 40px; color: white; text-decoration: none;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 1001;
             border: 2px solid white;
+            animation: pulse-green 2s infinite;
+        }
+        @keyframes pulse-green {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
         /* MAP BOX */
@@ -176,7 +193,6 @@
             flex-direction: column; text-align: center; color: var(--gold-main);
         }
 
-        /* MEDIA LINKS */
         .media-link {
             display: flex; align-items: center; gap: 15px;
             background: var(--bg-card); border: 1px solid #333;
@@ -198,7 +214,6 @@
         .close-modal { position: absolute; top: 10px; right: 15px; font-size: 40px; color: var(--gold-main); }
         .btn-call { background-color: var(--gold-main); color: #0c0b09; }
 
-        /* FOOTER */
         .partners-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin: 30px 0; opacity: 0.8; }
         .partner-box { border: 1px solid #444; padding: 10px 15px; font-size: 14px; border-radius: 5px; color: #888;}
 
@@ -232,13 +247,15 @@
 
     <a href="https://wa.me/359888123456" class="fixed-wa"><i class="ri-whatsapp-line"></i></a>
 
-    <section id="about">
+    <section id="about" style="padding-top: 100px;">
         <h1>ЗА КВАРТАЛА</h1>
         
         <h2>Нова Надежда, гр. Сливен – кварталът за <span class="gold-text">по‑добър живот</span></h2>
 
         <p>В продължение на години тази част на Сливен беше забравена. Улиците не бяха обновявани, услугите липсваха, инфраструктурата беше в лошо състояние, а хората, които живееха тук, свикнаха да приемат, че промяна няма да дойде.</p>
         
+        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА КВАРТАЛ</div>
+
         <p>И когато никой не вярваше, че някой ден ще се направи нещо мащабно, подредено и истински полезно за хората…</p>
 
         <p style="border-left: 4px solid var(--gold-main); padding-left: 15px; color: white;">
@@ -256,7 +273,7 @@
             <li>Електрификация</li>
             <li>Водопровод и канализация</li>
             <li>Газификация</li>
-            <li>Модерна оптична мрежа, която поддържа услуги от тип „Smart City“ – интернет, телевизия, видеонаблюдение и системи за безопасност</li>
+            <li>Модерна оптична мрежа, която поддържа услуги от тип „Smart City“</li>
         </ul>
 
         <p>Всичко това ще бъде готово, за да може всеки нов собственик да започне строителство веднага, а наемателите на търговски площи - да имат ликвидност на инвестицията си от ден едно.</p>
@@ -266,12 +283,14 @@
             <li>Търговски център</li>
             <li>Здравен комплекс с десетки лекарски кабинети</li>
             <li>Лаборатория и аптека</li>
-            <li>Кооперативен пазар, хранителни магазини, заведения, салони за услуги, сервизи</li>
+            <li>Кооперативен пазар, хранителни магазини</li>
             <li>Административни сгради</li>
             <li>Бъдеща детска градина</li>
             <li>Полицейски участък</li>
             <li>Стотици паркоместа</li>
         </ul>
+
+        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА ПАРК/СГРАДИ</div>
 
         <p>Изграждаме среда, която не само изглежда модерна, но и предлага реален комфорт за хората, които ще живеят и работят тук.</p>
 
@@ -281,11 +300,19 @@
         <p style="text-align: center;">Тук всеки може да стане собственик. Тук всеки може да изгради бъдеще.</p>
     </section>
 
+    <div class="logo-separator">
+        <span class="line"></span>
+        <img src="/logo.png" alt="Logo">
+        <span class="line"></span>
+    </div>
+
     <section id="plots">
         <h1>ПОКУПКА НА ПАРЦЕЛ</h1>
         <h2>Купи парцел (УПИ)</h2>
 
         <p>В Нова Надежда можеш да купиш собствен парцел (УПИ) и да започнеш да строиш веднага. Инфраструктурата ще бъде напълно изградена – ток, вода, канализация, газ и оптична свързаност. Улиците са нови, осветлението е осигурено, а достъпът е лесен и организиран.</p>
+
+        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА ПАРЦЕЛ</div>
 
         <p>Това означава, че когато купиш своя парцел, не чакаш, не се притесняваш, не питаш „кога“.</p>
 
@@ -296,8 +323,7 @@
         <p>Тук има свобода за всеки план, защото кварталът е създаден така, че хората да могат да развият живота си според собствените си желания.</p>
 
         <p>НОВА НАДЕЖДА ДАВА ШАНС, КОЙТО РЯДКО СЕ ПОЯВЯВА: новоизграден квартал, подредена среда и възможност за собствен имот на място, което расте и се развива.</p>
-        <p>Това е инвестиция в бъдеще, стабилност и сигурност.</p>
-        <p>Възможност, която не бива да се изпуска.</p>
+        <p>Това е инвестиция в бъдеще, стабилност и сигурност. Възможност, която не бива да се изпуска.</p>
         
         <h3 style="text-align: center; margin-top: 30px;">Твоето място. Твоят дом. Твоята Нова Надежда.</h3>
 
@@ -309,6 +335,12 @@
         </div>
         <p style="text-align: center; font-weight: bold; color: var(--gold-main);">Погледни карта, кликни и избери своето място в ЖК Нова Надежда.</p>
     </section>
+
+    <div class="logo-separator">
+        <span class="line"></span>
+        <img src="/logo.png" alt="Logo">
+        <span class="line"></span>
+    </div>
 
     <section id="contact" class="highlight-section">
         <div class="highlight-container">
@@ -346,6 +378,12 @@
         </div>
     </section>
 
+    <div class="logo-separator">
+        <span class="line"></span>
+        <img src="/logo.png" alt="Logo">
+        <span class="line"></span>
+    </div>
+
     <section id="media">
         <h1>МЕДИИ</h1>
         <h2>За Нова Надежда вече се говори</h2>
@@ -353,6 +391,8 @@
         <p>Нова Надежда привлича вниманието не само в Сливен, но и в цяла България. Медиите, репортерите, хората от квартала и всички, които следят развитието на града, коментират как се променя мястото и какво ново се изгражда тук.</p>
 
         <p>Тук събираме най‑интересните материали – статии, видеа, репортажи и мнения. Всичко, което показва как проектът расте, какво впечатлява хората и как този квартал се превръща в символ на развитие и по‑добър живот.</p>
+        
+        <div class="img-placeholder"><i class="ri-play-circle-line"></i> СНИМКА/ВИДЕО ТУК</div>
 
         <p>Разгледай какво се говори за нас… понякога дори преди ние да го кажем…</p>
 
