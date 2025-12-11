@@ -72,16 +72,24 @@
             z-index: 1000;
             padding: 15px 20px;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; /* keep items in flow so we can control spacing */
             align-items: center;
         }
-
+        
         .logo-container {
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-right: 30px; /* add extra space between logo+name and the right-side buttons */
         }
-
+       
+        .right-controls {
+            margin-left: auto; /* push controls to the far right */
+            display: flex;
+            align-items: center;
+            gap: 20px; /* spacing between the controls themselves */
+        }
+        
         /* THE SHINE EFFECT (Light animation on load) */
         .logo-img {
             height: 50px;
@@ -361,15 +369,17 @@
                 НОВА<br><span style="color:var(--gold-main)">НАДЕЖДА</span>
             </div>
         </div>
-        <div class="burger-menu" onclick="toggleMenu()">
-            <i class="ri-menu-line"></i>
+        <div class="right-controls">
+            <div class="burger-menu" onclick="toggleMenu()">
+                <i class="ri-menu-line"></i>
+            </div>
+            <nav class="mobile-nav" id="mobileNav">
+                <a href="#about" onclick="toggleMenu()">ЗА КВАРТАЛА</a>
+                <a href="#plots" onclick="toggleMenu()">ПАРЦЕЛИ</a>
+                <a href="#media" onclick="toggleMenu()">МЕДИИ</a>
+                <a href="#contact" onclick="toggleMenu()">КОНТАКТ</a>
+            </nav>
         </div>
-        <nav class="mobile-nav" id="mobileNav">
-            <a href="#about" onclick="toggleMenu()">ЗА КВАРТАЛА</a>
-            <a href="#plots" onclick="toggleMenu()">ПАРЦЕЛИ</a>
-            <a href="#media" onclick="toggleMenu()">МЕДИИ</a>
-            <a href="#contact" onclick="toggleMenu()">КОНТАКТ</a>
-        </nav>
     </header>
 
     <a href="https://wa.me/359888123456" class="fixed-wa">
