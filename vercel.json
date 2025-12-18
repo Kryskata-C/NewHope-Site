@@ -10,7 +10,7 @@
     { "src": "style.css", "use": "@vercel/static" },
     { "src": "settings.json", "use": "@vercel/static" },
     { "src": "video1.mp4", "use": "@vercel/static" },
-    { "src": "public/logo.png", "use": "@vercel/static" }
+    { "src": "logo.png", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/", "dest": "/index.html" },
@@ -23,6 +23,6 @@
     { "src": "/style.css", "dest": "/style.css" },
     { "src": "/settings.json", "dest": "/settings.json" },
     { "src": "/video1.mp4", "dest": "/video1.mp4" },
-    { "src": "/logo.png", "dest": "/public/logo.png" }
+    { "src": "/logo.png", "dest": "/logo.png" }
   ]
 }
