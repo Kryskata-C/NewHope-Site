@@ -1,13 +1,28 @@
 {
-  "version": 2,
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "health-safety.html", "use": "@vercel/static" },
+    { "src": "retail-park.html", "use": "@vercel/static" },
+    { "src": "about.html", "use": "@vercel/static" },
+    { "src": "media.html", "use": "@vercel/static" },
+    { "src": "plots.html", "use": "@vercel/static" },
+    { "src": "contact.html", "use": "@vercel/static" },
+    { "src": "style.css", "use": "@vercel/static" },
+    { "src": "settings.json", "use": "@vercel/static" },
+    { "src": "video1.mp4", "use": "@vercel/static" },
+    { "src": "public/logo.png", "use": "@vercel/static" }
+  ],
   "routes": [
-    { "src": "/logo.png", "dest": "/public/logo.png" },
-    { "src": "/about", "dest": "/about.html" },
-    { "src": "/plots", "dest": "/plots.html" },
-    { "src": "/media", "dest": "/media.html" },
-    { "src": "/contact", "dest": "/contact.html" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/about.html", "dest": "/about.html" },
+    { "src": "/media.html", "dest": "/media.html" },
+    { "src": "/plots.html", "dest": "/plots.html" },
+    { "src": "/contact.html", "dest": "/contact.html" },
+    { "src": "/health-safety.html", "dest": "/health-safety.html" },
+    { "src": "/retail-park.html", "dest": "/retail-park.html" },
+    { "src": "/style.css", "dest": "/style.css" },
+    { "src": "/settings.json", "dest": "/settings.json" },
+    { "src": "/video1.mp4", "dest": "/video1.mp4" },
+    { "src": "/logo.png", "dest": "/public/logo.png" }
   ]
 }
