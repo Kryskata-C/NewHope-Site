@@ -1,18 +1,13 @@
 {
   "version": 2,
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "cleanUrls": false,
   "routes": [
-    {
-      "src": "/logo.png",
-      "dest": "/logo.png"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/about.html", "dest": "/about.html" },
+    { "src": "/plots.html", "dest": "/plots.html" },
+    { "src": "/media.html", "dest": "/media.html" },
+    { "src": "/contact.html", "dest": "/contact.html" },
+    { "src": "/logo.png", "dest": "/logo.png" },
+    { "handle": "filesystem" }
   ]
 }
