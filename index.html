@@ -3,408 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ЖК Нова Надежда - За по-добър живот</title>
-    
+    <title>ЖК Нова Надежда - Начало</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-
     <style>
         :root {
             --bg-main: #0c0b09; 
-            --bg-card: #14120e;
             --gold-main: #d4af37; 
             --text-white: #ffffff;
-            --text-grey: #e0e0e0;
-            
-            /* Sizes */
-            --h1-mobile: 32px;
-            --p-mobile: 20px;
-            --p-line-height: 1.5;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        
         body {
             background-color: var(--bg-main);
             color: var(--text-white);
             font-family: 'Roboto', sans-serif;
             overflow-x: hidden;
-            line-height: var(--p-line-height);
         }
 
-        h1, h2, h3 {
-            font-family: 'Rajdhani', sans-serif;
-            text-transform: uppercase;
-            color: var(--gold-main);
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
-        
-        h1 { font-size: var(--h1-mobile); font-weight: 700; border-bottom: 2px solid var(--gold-main); display: inline-block; padding-bottom: 5px; }
-        h2 { font-size: 24px; color: white; }
-        h3 { font-size: 22px; color: var(--gold-main); margin-top: 30px; }
-
-        p {
-            font-size: var(--p-mobile);
-            color: var(--text-grey);
-            margin-bottom: 25px;
+        /* --- PRELOADER ANIMATION --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-main);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
         }
 
-        strong { color: white; font-weight: 700; }
-        .gold-text { color: var(--gold-main); }
-        
-        section {
-            padding: 60px 20px 40px 20px;
-            max-width: 900px;
-            margin: 0 auto;
+        .anim-container {
             position: relative;
+            width: 300px;
+            height: 120px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
         }
 
-        /* --- LOGO SEPARATORS --- */
-        .logo-separator {
-            display: flex; align-items: center; justify-content: center;
-            margin: 40px 0; opacity: 0.5;
+        .growth-line {
+            position: absolute;
+            bottom: 20px;
+            height: 2px;
+            background: var(--gold-main);
+            width: 0;
+            animation: drawLine 1.5s forwards ease-in-out;
         }
-        .logo-separator img { width: 50px; height: auto; margin: 0 15px; }
-        .logo-separator .line { flex: 1; height: 1px; background: var(--gold-main); max-width: 150px; }
 
-        /* --- IMAGE PLACEHOLDERS --- */
-        .img-placeholder {
-            width: 100%;
-            height: 250px;
-            border: 2px dashed var(--gold-main);
-            background: rgba(212, 175, 55, 0.05);
-            display: flex; align-items: center; justify-content: center;
-            margin: 30px 0;
-            border-radius: 10px;
+        .pop-icon {
             color: var(--gold-main);
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 700;
-            font-size: 20px;
-            text-transform: uppercase;
-        }
-        .img-placeholder i { font-size: 40px; margin-right: 10px; }
-
-        /* --- CONTACT SECTION (GOLD) --- */
-        section.highlight-section {
-            background-color: var(--gold-main);
-            color: var(--bg-main); 
-            width: 100%; max-width: 100%; 
-            padding-left: 0; padding-right: 0; 
-            padding-top: 60px; padding-bottom: 60px;
-        }
-        .highlight-container { max-width: 900px; margin: 0 auto; padding: 0 20px; text-align: center; }
-        .highlight-section h1 { color: var(--bg-main); border-color: var(--bg-main); }
-        .highlight-section h2 { color: var(--bg-main); font-weight: 900; }
-        .highlight-section p { color: #2a251e; font-weight: 500; }
-        .highlight-section strong { color: black; }
-        .highlight-section .gold-text { color: white; }
-        .highlight-section a { color: black; }
-
-        /* BUTTONS */
-        .btn-main {
-            display: block; width: 100%; padding: 20px; margin: 15px 0;
-            border-radius: 10px; text-align: center; text-decoration: none;
-            font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 24px;
-            text-transform: uppercase;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        .btn-whatsapp { background-color: #25D366; color: white; border: 2px solid white; }
-        
-        .btn-call-inverted { 
-            background-color: #ffffff; color: #000000; border: 2px solid #ffffff;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+            font-size: 30px;
+            position: absolute;
+            bottom: 22px;
+            transform: scale(0);
+            opacity: 0;
         }
 
-        /* HEADER */
+        .building-1 { left: 20%; animation: popUp 0.5s 0.8s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); }
+        .tree-1     { left: 40%; animation: popUp 0.5s 1.0s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 20px; }
+        .building-2 { left: 60%; animation: popUp 0.5s 1.2s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); }
+        .tree-2     { left: 80%; animation: popUp 0.5s 1.4s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 20px; }
+
+        .preloader-logo-img {
+            height: 60px; /* Adjust height based on your logo shape */
+            width: auto;
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeIn 1s 1.8s forwards;
+        }
+
+        @keyframes drawLine { to { width: 100%; } }
+        @keyframes popUp { 
+            0% { transform: scale(0) translateY(0); opacity: 0; }
+            100% { transform: scale(1) translateY(-10px); opacity: 1; }
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* --- MAIN CONTENT STYLING --- */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
         header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            background: rgba(12, 11, 9, 0.98);
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            z-index: 1000;
-            padding: 15px 20px;
-            display: flex; justify-content: space-between; align-items: center;
         }
-        .logo-container { display: flex; align-items: center; gap: 10px; }
-        .logo-img { height: 50px; width: auto; }
+
+        .header-logo {
+            height: 70px;
+            width: auto;
+        }
         
-        /* SHINE ANIMATION */
-        .logo-shine-wrapper { position: relative; overflow: hidden; display: inline-block; }
-        .logo-shine-wrapper::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg); animation: shine 1.5s ease-in-out 1 forwards;
+        .hero-title {
+            text-align: center;
+            padding: 60px 20px 20px;
         }
-        @keyframes shine { 100% { left: 200%; } }
-
-        .burger-menu { font-size: 32px; color: var(--gold-main); cursor: pointer; }
-        .mobile-nav {
-            position: fixed; top: 81px; left: 0; width: 100%;
-            background: var(--bg-main); padding: 20px;
-            border-bottom: 2px solid var(--gold-main);
-            transform: translateY(-150%); transition: transform 0.3s ease;
-            z-index: 999; text-align: center;
+        .hero-title h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 48px;
+            color: var(--gold-main);
+            text-transform: uppercase;
         }
-        .mobile-nav.open { transform: translateY(0); }
-        .mobile-nav a {
-            display: block; font-family: 'Rajdhani', sans-serif;
-            font-size: 24px; color: white; text-decoration: none;
-            padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
         }
-
-        /* STICKY WHATSAPP WITH PULSE */
-        .fixed-wa {
-            position: fixed; bottom: 20px; right: 20px;
-            background: #25D366; width: 70px; height: 70px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 40px; color: white; text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 1001;
-            border: 2px solid white;
-            animation: pulse-green 2s infinite;
+        
+        .nav-card {
+            background: #14120e;
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 50px 30px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
         }
-        @keyframes pulse-green {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        .nav-card:hover {
+            border-color: var(--gold-main);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
         }
-
-        /* MAP BOX */
-        .map-container {
-            border: 2px solid var(--gold-main); border-radius: 10px;
-            overflow: hidden; margin: 30px 0; cursor: pointer;
-            position: relative;
-        }
-        .map-placeholder {
-            background: radial-gradient(circle, #2a251e 0%, #0c0b09 100%);
-            min-height: 300px; display: flex; align-items: center; justify-content: center;
-            flex-direction: column; text-align: center; color: var(--gold-main);
+        .nav-card i { font-size: 50px; color: var(--gold-main); }
+        .nav-card span {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 24px; font-weight: 700;
+            color: white; text-transform: uppercase;
         }
 
-        .media-link {
-            display: flex; align-items: center; gap: 15px;
-            background: var(--bg-card); border: 1px solid #333;
-            padding: 20px; margin-bottom: 15px; text-decoration: none; color: white;
-            border-radius: 8px;
-        }
-
-        /* MODAL */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 2000; display: none;
-            justify-content: center; align-items: center; padding: 20px;
-        }
-        .modal-content {
-            background: var(--bg-card); border: 2px solid var(--gold-main);
-            padding: 30px; border-radius: 15px; width: 100%; max-width: 450px;
-            text-align: center; position: relative;
-        }
-        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 40px; color: var(--gold-main); }
-        .btn-call { background-color: var(--gold-main); color: #0c0b09; }
-
-        .partners-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin: 30px 0; opacity: 0.8; }
-        .partner-box { border: 1px solid #444; padding: 10px 15px; font-size: 14px; border-radius: 5px; color: #888;}
-
-        @media (min-width: 768px) {
-            h1 { font-size: 48px; }
-            .mobile-nav { position: static; transform: none; background: transparent; border: none; padding: 0; display: flex; gap: 30px; }
-            .mobile-nav a { border: none; font-size: 18px; padding: 0; }
-            .burger-menu { display: none; }
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            text-align: center;
+            opacity: 0.6;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-container">
-            <div class="logo-shine-wrapper">
-                <img src="/logo.png" alt="Лого" class="logo-img">
-            </div>
-            <div style="font-family:'Rajdhani'; font-weight:700; color:white; line-height:1; font-size: 20px;">
-                НОВА<br><span class="gold-text">НАДЕЖДА</span>
-            </div>
+    <div id="preloader">
+        <div class="anim-container">
+            <div class="growth-line"></div>
+            <i class="ri-building-2-fill pop-icon building-1"></i>
+            <i class="ri-tree-fill pop-icon tree-1"></i>
+            <i class="ri-building-4-fill pop-icon building-2"></i>
+            <i class="ri-plant-fill pop-icon tree-2"></i>
         </div>
-        <div class="burger-menu" onclick="toggleMenu()"><i class="ri-menu-line"></i></div>
-        <nav class="mobile-nav" id="mobileNav">
-            <a href="#about" onclick="toggleMenu()">ЗА КВАРТАЛА</a>
-            <a href="#plots" onclick="toggleMenu()">КУПИ ПАРЦЕЛ</a>
-            <a href="#contact" onclick="toggleMenu()">СВЪРЖИ СЕ</a>
-            <a href="#media" onclick="toggleMenu()">МЕДИИ</a>
+        <img src="logo.png" alt="Нова Надежда" class="preloader-logo-img">
+    </div>
+
+    <div id="main-content">
+        <header>
+            <img src="logo.png" alt="Нова Надежда" class="header-logo">
+        </header>
+
+        <div class="hero-title">
+            <h1>ЗА ПО-ДОБЪР ЖИВОТ</h1>
+            <p style="color: #888; margin-top: 10px;">Изберете секция, за да разгледате проекта</p>
+        </div>
+
+        <nav class="nav-grid">
+            <a href="about.html" class="nav-card">
+                <i class="ri-community-line"></i>
+                <span>ЗА КВАРТАЛА</span>
+            </a>
+            <a href="plots.html" class="nav-card">
+                <i class="ri-map-pin-2-line"></i>
+                <span>КУПИ ПАРЦЕЛ</span>
+            </a>
+            <a href="media.html" class="nav-card">
+                <i class="ri-mickey-line"></i>
+                <span>МЕДИИ</span>
+            </a>
+            <a href="contact.html" class="nav-card">
+                <i class="ri-phone-line"></i>
+                <span>СВЪРЖИ СЕ</span>
+            </a>
         </nav>
-    </header>
 
-    <a href="https://wa.me/359888123456" class="fixed-wa"><i class="ri-whatsapp-line"></i></a>
-
-    <section id="about" style="padding-top: 100px;">
-        <h1>ЗА КВАРТАЛА</h1>
-        
-        <h2>Нова Надежда – кварталът за <span class="gold-text">по-добър живот</span></h2>
-
-        <p>В продължение на десетилетия тази част на Сливен беше забравена. Улиците се рушаха, липсваха услуги, а хората свикнаха с мисълта, че тук промяна няма да дойде. Място, което всички подминаваха с усещането, че нищо няма да се промени към по-добро.</p>
-        
-        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА КВАРТАЛ</div>
-
-        <p>Днес тук се изгражда най-мащабният нов жилищен квартал в Сливен. Нова Надежда е подреден и модерен район, създаден за хора, които искат да живеят по-добре – спокойно, удобно и сигурно. Готовата инфраструктура дава свободата веднага да проектираш и построиш това, което си планирал – дом, бизнес или съчетание от двете.</p>
-
-        <p>Кварталът обединява жилищна зона и нова градска среда: здравен център с десетки лекарски кабинети, лаборатория, аптека, магазини, търговски обекти, кооперативен пазар, заведения, салони за услуги, сервизи, административни сгради, полицейско управление за сигурност в квартала и детска градина за най-малките, както и стотици паркоместа. Това е място, което предлага всичко необходимо за ежедневния живот на едно място.</p>
-
-        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА ИНФРАСТРУКТУРА</div>
-
-        <p>Нова Надежда е проект със сърце. Той се изгражда за хора, които дълго време не са имали възможност да притежават собствен имот, да развият бизнес или да осигурят по-добри условия за семейството си. Това не е просто квартал — това е шанс. Шанс за собственост, развитие и стабилност.</p>
-
-        <h2 style="text-align: center; margin-top: 40px; border-bottom: none;">Тук можеш да построиш дом, бизнес и бъдеще. <br><span class="gold-text">ЗА ПО-ДОБЪР ЖИВОТ</span></h2>
-        <p style="text-align: center;">Нова Надежда показва какво означава да се работи за по-добър живот на хора, които твърде дълго не са били чути.</p>
-    </section>
-
-    <div class="logo-separator">
-        <span class="line"></span>
-        <img src="/logo.png" alt="Logo">
-        <span class="line"></span>
-    </div>
-
-    <section id="plots">
-        <h1>ПОКУПКА НА ПАРЦЕЛ</h1>
-        <h2>Купи парцел в Нова Надежда – с готова инфраструктура</h2>
-
-        <p>В Нова Надежда можеш да притежаваш собствен парцел (УПИ), върху който да строиш веднага. Всички основни мрежи са изградени – ток, вода, канализация, газ и оптична свързаност.</p>
-
-        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА ПАРЦЕЛ</div>
-
-        <p>Тук можеш да изградиш дом, работилница, магазин, ресторант, кафене, офис или да съчетаеш жилище и бизнес в един имот. Кварталът е планиран така, че да дава свобода за развитие и ясни условия за бъдещето.</p>
-
-        <p>Това е възможност, която се появява рядко: нов квартал, подредена среда, готови УПИ, удобства наблизо и проект, който се развива бързо. Много хора вече избраха своите парцели, защото разбират стойността на подобна възможност.</p>
-        
-        <p>Погледни картата на квартала по-долу, виж свободните парцели и избери мястото, което ще бъде твое.</p>
-        
-        <h3 style="text-align: center; margin-top: 30px;">Избери своя парцел от скицата на квартала.</h3>
-
-        <div class="map-container" onclick="openModal()">
-            <div class="map-placeholder">
-                <i class="ri-map-2-line" style="font-size: 60px; margin-bottom: 20px;"></i>
-                <h3 style="margin: 0; color: white;">КАРТА (Кликни тук)</h3>
-            </div>
-        </div>
-    </section>
-
-    <div class="logo-separator">
-        <span class="line"></span>
-        <img src="/logo.png" alt="Logo">
-        <span class="line"></span>
-    </div>
-
-    <section id="contact" class="highlight-section">
-        <div class="highlight-container">
-            <h1>СВЪРЖИ СЕ С НАС</h1>
-            
-            <h2 style="margin-bottom: 20px;">Искаш информация, проверка на свободни парцели или среща на място?</h2>
-            
-            <p>Свържи се с нас по най-лесния и удобен начин — по телефона или през WhatsApp. Ще ти покажем квартала, ще ти обясним всичко и ще ти помогнем да избереш най-подходящия имот.</p>
-            
-            <div style="margin: 30px 0;">
-                <p style="margin-bottom: 5px; font-weight: bold;">📍 Офис Сливен</p>
-                <p>ул. Георги Сава Раковски 21</p>
-            </div>
-
-            <a href="tel:0888123456" class="btn-main btn-call-inverted">
-                <i class="ri-phone-fill"></i> 08XX XXX XXX
-            </a>
-            
-            <a href="https://wa.me/359888123456" class="btn-main btn-whatsapp">
-                <i class="ri-whatsapp-line"></i> WhatsApp – пиши или се обади
-            </a>
-
-            <div style="margin-top: 30px; display: flex; justify-content: center; gap: 20px;">
-                <a href="#" style="font-size: 40px; color: #1877F2;"><i class="ri-facebook-circle-fill"></i></a>
-                <a href="#" style="font-size: 40px; color: #E4405F;"><i class="ri-instagram-fill"></i></a>
-                <a href="#" style="font-size: 40px; color: red;"><i class="ri-youtube-fill"></i></a>
-            </div>
-
-            <p style="margin-top: 30px; border-top: 1px solid black; padding-top: 20px;">Без формуляри. Без имейли. Без излишни стъпки.<br><strong>Един контакт – директна връзка с екипа на Нова Надежда.</strong></p>
-        </div>
-    </section>
-
-    <div class="logo-separator">
-        <span class="line"></span>
-        <img src="/logo.png" alt="Logo">
-        <span class="line"></span>
-    </div>
-
-    <section id="media">
-        <h1>КАКВО ГОВОРЯТ ЗА НАС</h1>
-
-        <p>Нова Надежда привлича вниманието на медиите и на хора от цяла България. Проектът се следи с интерес – как се развива и как една забравена зона се превръща в място с живот, ред и възможности.</p>
-
-        <p>Тук събираме най-важните статии, репортажи и видеа за проекта. Материали, които показват как Нова Надежда се възприема отвън и защо се превръща в пример за развитие.</p>
-        
-        <div class="img-placeholder"><i class="ri-play-circle-line"></i> ВИДЕО РЕПОРТАЖ</div>
-
-        <p>Разгледай какво казват за нас.</p>
-
-        <div style="margin-top: 30px;">
-            <a href="#" class="media-link">
-                <i class="ri-youtube-fill" style="color: red; font-size: 30px;"></i>
-                <div>
-                    <strong>Видео Репортаж</strong>
-                    <div style="font-size: 14px; color: #888;">Виж как се променя кварталът</div>
-                </div>
-            </a>
-            <a href="#" class="media-link">
-                <i class="ri-article-line" style="color: white; font-size: 30px;"></i>
-                <div>
-                    <strong>Статия в Новините</strong>
-                    <div style="font-size: 14px; color: #888;">Инвестиция за милиони</div>
-                </div>
-            </a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="logo-container" style="justify-content: center; margin-bottom: 20px;">
-            <div style="font-family:'Rajdhani'; font-weight:700; color:white; font-size: 24px;">
-                НОВА <span class="gold-text">НАДЕЖДА</span>
-            </div>
-        </div>
-        <p style="text-align: center; margin-bottom: 10px;">За по-добър живот</p>
-
-        <div class="partners-grid">
-            <div class="partner-box">Община Сливен</div>
-            <div class="partner-box">Архитекти</div>
-            <div class="partner-box">А1</div>
-            <div class="partner-box">Госпожа</div>
-        </div>
-
-        <div style="text-align: center; font-size: 14px; line-height: 2;">
-            <a href="#" style="color: #888; text-decoration: none; margin: 0 10px;">Общи условия</a>
-            <a href="#" style="color: #888; text-decoration: none; margin: 0 10px;">Бисквитки</a>
-            <a href="#" style="color: #888; text-decoration: none; margin: 0 10px;">Лични данни</a>
-        </div>
-        
-        <p style="text-align: center; font-size: 12px; margin-top: 30px; opacity: 0.5;">
+        <footer>
             © 2025 ЖК Нова Надежда. Всички права запазени.
-        </p>
-    </footer>
-
-    <div class="modal-overlay" id="plotModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 style="margin-bottom: 10px;">Парцeл № 14</h2>
-            <div style="background: green; color: white; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px;">Свободно</div>
-            <p style="color:white; font-size: 18px; margin-bottom: 5px;">Площ: 420 кв.м</p>
-            <p style="color:white; font-size: 18px;">Разгъната застроена площ (РЗП): 630 кв.м</p>
-            <hr style="border-color: #333; margin: 20px 0;">
-            <a href="https://wa.me/359888123456" class="btn-main btn-whatsapp">
-                Уговори среща за повече информация
-            </a>
-        </div>
+        </footer>
     </div>
 
     <script>
-        function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
-        const modal = document.getElementById('plotModal');
-        function openModal() { modal.style.display = 'flex'; }
-        function closeModal() { modal.style.display = 'none'; }
-        window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
+        // Smooth transition from Preloader to Content
+        window.addEventListener('load', () => {
+            // We give it 3.5 seconds to make sure the user sees the image fade in
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                const content = document.getElementById('main-content');
+                
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                content.style.opacity = '1';
+            }, 3500); 
+        });
     </script>
 </body>
 </html>
