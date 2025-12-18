@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Купи Парцел - Нова Надежда</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root { --bg-main: #0c0b09; --bg-card: #14120e; --gold-main: #d4af37; --text-white: #ffffff; --text-grey: #e0e0e0; --p-mobile: 20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-main); color: var(--text-white); font-family: 'Roboto', sans-serif; }
+        .back-nav { padding: 20px; max-width: 900px; margin: 0 auto; }
+        .back-nav a { color: var(--gold-main); text-decoration: none; font-family: 'Rajdhani'; font-weight: 700; font-size: 20px; }
+        section { padding: 40px 20px; max-width: 900px; margin: 0 auto; }
+        h1 { font-family: 'Rajdhani'; font-size: 32px; color: var(--gold-main); border-bottom: 2px solid var(--gold-main); display: inline-block; padding-bottom: 5px; margin-bottom: 20px; text-transform: uppercase; }
+        h2 { font-family: 'Rajdhani'; font-size: 24px; color: white; margin-bottom: 20px; }
+        h3 { font-family: 'Rajdhani'; font-size: 22px; color: var(--gold-main); margin-top: 30px; }
+        p { font-size: var(--p-mobile); color: var(--text-grey); margin-bottom: 25px; }
+        .img-placeholder { width: 100%; height: 250px; border: 2px dashed var(--gold-main); background: rgba(212, 175, 55, 0.05); display: flex; align-items: center; justify-content: center; margin: 30px 0; border-radius: 10px; color: var(--gold-main); font-family: 'Rajdhani'; font-weight: 700; font-size: 20px; text-transform: uppercase; }
+        .map-container { border: 2px solid var(--gold-main); border-radius: 10px; overflow: hidden; margin: 30px 0; cursor: pointer; }
+        .map-placeholder { background: radial-gradient(circle, #2a251e 0%, #0c0b09 100%); min-height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; color: var(--gold-main); }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: var(--bg-card); border: 2px solid var(--gold-main); padding: 30px; border-radius: 15px; width: 100%; max-width: 450px; text-align: center; position: relative; }
+        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 40px; color: var(--gold-main); cursor: pointer; }
+        .btn-main { display: block; width: 100%; padding: 20px; margin: 15px 0; border-radius: 10px; text-align: center; text-decoration: none; font-family: 'Rajdhani'; font-weight: 700; font-size: 24px; text-transform: uppercase; }
+        .btn-whatsapp { background-color: #25D366; color: white; border: 2px solid white; }
+    </style>
+</head>
+<body>
+    <div class="back-nav"><a href="index.html"><i class="ri-arrow-left-line"></i> НАЗАД КЪМ НАЧАЛО</a></div>
+    <section id="plots">
+        <h1>ПОКУПКА НА ПАРЦЕЛ</h1>
+        <h2>Купи парцел в Нова Надежда – с готова инфраструктура</h2>
+        <p>В Нова Надежда можеш да притежаваш собствен парцел (УПИ), върху който да строиш веднага. Всички основни мрежи са изградени – ток, вода, канализация, газ и оптична свързаност.</p>
+        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА ПАРЦЕЛ</div>
+        <p>Тук можеш да изградиш дом, работилница, магазин, ресторант, кафене, офис или да съчетаеш жилище и бизнес в един имот. Кварталът е планиран така, че да дава свобода за развитие и ясни условия за бъдещето.</p>
+        <p>Това е възможност, която се появява рядко: нов квартал, подредена среда, готови УПИ, удобства наблизо и проект, който се развива бързо. Много хора вече избраха своите парцели, защото разбират стойността на подобна възможност.</p>
+        <p>Погледни картата на квартала по-долу, виж свободните парцели и избери мястото, което ще бъде твое.</p>
+        <h3 style="text-align: center; margin-top: 30px;">Избери своя парцел от скицата на квартала.</h3>
+        <div class="map-container" onclick="openModal()">
+            <div class="map-placeholder">
+                <i class="ri-map-2-line" style="font-size: 60px; margin-bottom: 20px;"></i>
+                <h3 style="margin: 0; color: white;">КАРТА (Кликни тук)</h3>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="plotModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 style="margin-bottom: 10px; color: var(--gold-main);">Парцeл № 14</h2>
+            <div style="background: green; color: white; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px;">Свободно</div>
+            <p style="color:white; font-size: 18px; margin-bottom: 5px;">Площ: 420 кв.м</p>
+            <p style="color:white; font-size: 18px;">Разгъната застроена площ (РЗП): 630 кв.м</p>
+            <hr style="border-color: #333; margin: 20px 0;">
+            <a href="https://wa.me/359888123456" class="btn-main btn-whatsapp">Уговори среща</a>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('plotModal');
+        function openModal() { modal.style.display = 'flex'; }
+        function closeModal() { modal.style.display = 'none'; }
+        window.onclick = function(event) { if (event.target == modal) { closeModal(); } }
+    </script>
+</body>
+</html>
