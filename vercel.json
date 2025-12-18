@@ -24,5 +24,9 @@
     { "src": "/settings.json", "dest": "/settings.json" },
     { "src": "/video1.mp4", "dest": "/video1.mp4" },
     { "src": "/logo.png", "dest": "/public/logo.png" }
-  ]
-}
+  ],
+  "buildCommand": "echo 'Static site'",
+  "outputDirectory": ".",
+  "cleanUrls": false
+
+}}
