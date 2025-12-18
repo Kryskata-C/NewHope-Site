@@ -1,16 +1,125 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>За Квартала - Нова Надежда</title>
-    </head>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0c0b09; 
+            --bg-card: #14120e;
+            --gold-main: #d4af37; 
+            --text-white: #ffffff;
+            --text-grey: #e0e0e0;
+            --h1-mobile: 32px;
+            --p-mobile: 20px;
+            --p-line-height: 1.5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+            line-height: var(--p-line-height);
+        }
+
+        .back-nav {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-nav a {
+            color: var(--gold-main);
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            color: var(--gold-main);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        h1 { font-size: var(--h1-mobile); font-weight: 700; border-bottom: 2px solid var(--gold-main); display: inline-block; padding-bottom: 5px; }
+        h2 { font-size: 24px; color: white; }
+
+        p {
+            font-size: var(--p-mobile);
+            color: var(--text-grey);
+            margin-bottom: 25px;
+        }
+
+        .gold-text { color: var(--gold-main); }
+        
+        section {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .img-placeholder {
+            width: 100%;
+            height: 250px;
+            border: 2px dashed var(--gold-main);
+            background: rgba(212, 175, 55, 0.05);
+            display: flex; align-items: center; justify-content: center;
+            margin: 30px 0;
+            border-radius: 10px;
+            color: var(--gold-main);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        @media (min-width: 768px) {
+            h1 { font-size: 48px; }
+        }
+    </style>
+</head>
 <body>
-    <nav style="padding: 20px;"><a href="index.html" style="color:var(--gold-main); text-decoration:none;"><i class="ri-arrow-left-line"></i> НАЗАД</a></nav>
-    <section>
+
+    <nav class="back-nav">
+        <a href="/"><i class="ri-arrow-left-line"></i> НАЗАД КЪМ НАЧАЛО</a>
+    </nav>
+
+    <section id="about">
         <h1>ЗА КВАРТАЛА</h1>
+        
         <h2>Нова Надежда – кварталът за <span class="gold-text">по-добър живот</span></h2>
-        <p>В продължение на десетилетия тази част на Сливен беше забравена...</p>
+
+        <p>В продължение на десетилетия тази част на Сливен беше забравена. Улиците се рушаха, липсваха услуги, а хората свикнаха с мисълта, че тук промяна няма да дойде. Място, което всички подминаваха с усещането, че нищо няма да се промени към по-добро.</p>
+        
         <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА КВАРТАЛ</div>
-        <p>Днес тук се изгражда най-мащабният нов жилищен квартал в Сливен...</p>
+
+        <p>Днес тук се изгражда най-мащабният нов жилищен квартал в Сливен. Нова Надежда е подреден и модерен район, създаден за хора, които искат да живеят по-добре – спокойно, удобно и сигурно. Готовата инфраструктура дава свободата веднага да проектираш и построиш това, което си планирал – дом, бизнес или съчетание от двете.</p>
+
+        <p>Кварталът обединява жилищна зона и нова градска среда: здравен център с десетки лекарски кабинети, лаборатория, аптека, магазини, търговски обекти, кооперативен пазар, заведения, салони за услуги, сервизи, административни сгради, полицейско управление за сигурност в квартала и детска градина за най-малките, както и стотици паркоместа. Това е място, което предлага всичко необходимо за ежедневния живот на едно място.</p>
+
+        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА ИНФРАСТРУКТУРА</div>
+
+        <p>Нова Надежда е проект със сърце. Той се изгражда за хора, които дълго време не са имали възможност да притежават собствен имот, да развият бизнес или да осигурят по-добри условия за семейството си. Това не е просто квартал — това е шанс. Шанс за собственост, развитие и стабилност.</p>
+
+        <h2 style="text-align: center; margin-top: 40px; border-bottom: none;">Тук можеш да построиш дом, бизнес и бъдеще. <br><span class="gold-text">ЗА ПО-ДОБЪР ЖИВОТ</span></h2>
+        <p style="text-align: center;">Нова Надежда показва какво означава да се работи за по-добър живот на хора, които твърде дълго не са били чути.</p>
     </section>
+
 </body>
 </html>
