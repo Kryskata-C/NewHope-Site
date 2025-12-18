@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-   <style>
+    <style>
         :root {
             --bg-main: #0c0b09; 
             --gold-main: #d4af37; 
@@ -39,7 +39,7 @@
         .anim-container {
             position: relative;
             width: 300px;
-            height: 100px;
+            height: 100px; /* Tighter height */
             display: flex;
             align-items: flex-end;
             justify-content: center;
@@ -47,7 +47,7 @@
 
         .growth-line {
             position: absolute;
-            bottom: 10px;
+            bottom: 10px; /* Lowered line */
             height: 2px;
             background: var(--gold-main);
             width: 0;
@@ -69,9 +69,9 @@
         .tree-2     { left: 85%; animation: popUp 0.5s 1.4s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 22px; }
 
         .preloader-logo-img {
-            height: 100px;
+            height: 100px; /* EVEN BIGGER LOGO */
             width: auto;
-            margin-top: 5px;
+            margin-top: 5px; /* MOVED UP CLOSER TO LINE */
             opacity: 0;
             animation: fadeIn 1s 1.8s forwards;
         }
@@ -93,47 +93,20 @@
         }
 
         header {
-            padding: 20px 40px;
+            padding: 40px 20px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            position: relative;
         }
-
-        /* Empty div to balance the logo in center */
-        .header-spacer { width: 160px; display: none; }
 
         .header-logo {
-            height: 90px;
+            height: 110px; /* BIGGER HEADER LOGO */
             width: auto;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .social-nav {
-            display: flex;
-            gap: 15px;
-            margin-left: auto; /* Pushes to right */
-            z-index: 10;
-        }
-
-        .social-nav a {
-            color: var(--gold-main);
-            font-size: 24px;
-            text-decoration: none;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .social-nav a:hover {
-            transform: scale(1.2);
-            color: white;
         }
         
         .hero-title {
             text-align: center;
-            padding: 80px 20px 10px;
+            padding: 50px 20px 10px;
         }
         .hero-title h1 {
             font-family: 'Rajdhani', sans-serif;
@@ -184,16 +157,6 @@
             opacity: 0.6;
             font-size: 14px;
         }
-
-        @media (max-width: 600px) {
-            header { padding: 20px; flex-direction: column; gap: 20px; }
-            .header-logo { position: static; transform: none; }
-            .social-nav { margin: 0 auto; }
-            .header-spacer { display: none; }
-        }
-        @media (min-width: 601px) {
-            .header-spacer { display: block; }
-        }
     </style>
 </head>
 <body>
@@ -206,19 +169,12 @@
             <i class="ri-building-4-fill pop-icon building-2"></i>
             <i class="ri-plant-fill pop-icon tree-2"></i>
         </div>
-        <img src="/logo.png" alt="Нова Надежда" class="preloader-logo-img">
+        <img src="logo.png" alt="Нова Надежда" class="preloader-logo-img">
     </div>
 
     <div id="main-content">
         <header>
-            <div class="header-spacer"></div> <img src="/logo.png" alt="Нова Надежда" class="header-logo">
-
-            <nav class="social-nav">
-                <a href="https://facebook.com" target="_blank"><i class="ri-facebook-circle-fill"></i></a>
-                <a href="https://instagram.com" target="_blank"><i class="ri-instagram-fill"></i></a>
-                <a href="https://youtube.com" target="_blank"><i class="ri-youtube-fill"></i></a>
-                <a href="https://wa.me/359888123456" target="_blank"><i class="ri-whatsapp-line"></i></a>
-            </nav>
+            <img src="logo.png" alt="Нова Надежда" class="header-logo">
         </header>
 
         <div class="hero-title">
