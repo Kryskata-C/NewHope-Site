@@ -3,7 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "routes": [
-    { "src": "/logo.png", "dest": "/logo.png" },
+    { "src": "/logo.png", "dest": "/public/logo.png" },
     { "src": "/about", "dest": "/about.html" },
     { "src": "/plots", "dest": "/plots.html" },
     { "src": "/media", "dest": "/media.html" },
