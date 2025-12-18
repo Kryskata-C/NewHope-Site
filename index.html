@@ -39,7 +39,7 @@
         .anim-container {
             position: relative;
             width: 300px;
-            height: 120px;
+            height: 100px; /* Tighter height */
             display: flex;
             align-items: flex-end;
             justify-content: center;
@@ -47,7 +47,7 @@
 
         .growth-line {
             position: absolute;
-            bottom: 20px;
+            bottom: 10px; /* Lowered line */
             height: 2px;
             background: var(--gold-main);
             width: 0;
@@ -56,22 +56,22 @@
 
         .pop-icon {
             color: var(--gold-main);
-            font-size: 30px;
+            font-size: 32px;
             position: absolute;
-            bottom: 22px;
+            bottom: 12px;
             transform: scale(0);
             opacity: 0;
         }
 
-        .building-1 { left: 20%; animation: popUp 0.5s 0.8s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); }
-        .tree-1     { left: 40%; animation: popUp 0.5s 1.0s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 20px; }
-        .building-2 { left: 60%; animation: popUp 0.5s 1.2s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); }
-        .tree-2     { left: 80%; animation: popUp 0.5s 1.4s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 20px; }
+        .building-1 { left: 15%; animation: popUp 0.5s 0.8s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); }
+        .tree-1     { left: 38%; animation: popUp 0.5s 1.0s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 22px; }
+        .building-2 { left: 62%; animation: popUp 0.5s 1.2s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); }
+        .tree-2     { left: 85%; animation: popUp 0.5s 1.4s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 22px; }
 
         .preloader-logo-img {
-            height: 60px; /* Adjust height based on your logo shape */
+            height: 100px; /* EVEN BIGGER LOGO */
             width: auto;
-            margin-top: 30px;
+            margin-top: 5px; /* MOVED UP CLOSER TO LINE */
             opacity: 0;
             animation: fadeIn 1s 1.8s forwards;
         }
@@ -79,7 +79,7 @@
         @keyframes drawLine { to { width: 100%; } }
         @keyframes popUp { 
             0% { transform: scale(0) translateY(0); opacity: 0; }
-            100% { transform: scale(1) translateY(-10px); opacity: 1; }
+            100% { transform: scale(1) translateY(-15px); opacity: 1; }
         }
         @keyframes fadeIn { to { opacity: 1; } }
 
@@ -93,20 +93,20 @@
         }
 
         header {
-            padding: 30px 20px;
+            padding: 40px 20px;
             display: flex;
             justify-content: center;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
         }
 
         .header-logo {
-            height: 70px;
+            height: 110px; /* BIGGER HEADER LOGO */
             width: auto;
         }
         
         .hero-title {
             text-align: center;
-            padding: 60px 20px 20px;
+            padding: 50px 20px 10px;
         }
         .hero-title h1 {
             font-family: 'Rajdhani', sans-serif;
@@ -120,7 +120,7 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             max-width: 1000px;
-            margin: 40px auto;
+            margin: 30px auto;
             padding: 0 20px;
             width: 100%;
         }
@@ -143,10 +143,10 @@
             transform: translateY(-10px);
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
         }
-        .nav-card i { font-size: 50px; color: var(--gold-main); }
+        .nav-card i { font-size: 55px; color: var(--gold-main); }
         .nav-card span {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 24px; font-weight: 700;
+            font-size: 26px; font-weight: 700;
             color: white; text-transform: uppercase;
         }
 
@@ -207,9 +207,7 @@
     </div>
 
     <script>
-        // Smooth transition from Preloader to Content
         window.addEventListener('load', () => {
-            // We give it 3.5 seconds to make sure the user sees the image fade in
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 const content = document.getElementById('main-content');
