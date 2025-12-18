@@ -1,13 +1,5 @@
 {
   "version": 2,
-  "cleanUrls": false,
-  "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/about.html", "dest": "/about.html" },
-    { "src": "/plots.html", "dest": "/plots.html" },
-    { "src": "/media.html", "dest": "/media.html" },
-    { "src": "/contact.html", "dest": "/contact.html" },
-    { "src": "/logo.png", "dest": "/logo.png" },
-    { "handle": "filesystem" }
-  ]
+  "cleanUrls": true,
+  "trailingSlash": false
 }
