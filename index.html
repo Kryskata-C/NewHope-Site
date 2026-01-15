@@ -114,17 +114,26 @@ body {
 @keyframes popUp { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1) translateY(-15px); opacity: 1; } }
 @keyframes fadeIn { to { opacity: 1; } }
 
-/* --- STICKY WHATSAPP --- */
+/* --- STICKY WHATSAPP (UPDATED) --- */
 .sticky-wa {
     position: fixed; bottom: 30px; right: 30px;
     background-color: var(--wa-green); color: white;
-    width: 60px; height: 60px; border-radius: 50%;
+    padding: 10px 25px;
+    border-radius: 50px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 30px; z-index: 1000; box-shadow: 0 0 20px var(--wa-green);
+    font-size: 16px; z-index: 1000; box-shadow: 0 0 20px var(--wa-green);
     text-decoration: none; border: 2px solid white; cursor: pointer;
-    animation: pulse 2s infinite; transition: 0.3s;
+    transition: 0.3s;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
-.sticky-wa:hover { transform: scale(1.1) rotate(10deg); }
+.sticky-wa i {
+    font-size: 24px;
+    margin-left: 10px;
+}
+.sticky-wa:hover { transform: scale(1.05); }
 
 /* --- HEADER --- */
 header {
@@ -144,29 +153,6 @@ header {
     padding: 5px 15px; border-radius: 20px; background: var(--glass);
 }
 .status-dot { width: 8px; height: 8px; background: var(--wa-green); border-radius: 50%; box-shadow: 0 0 10px var(--wa-green); animation: pulse 2s infinite; }
-
-/* Language */
-.lang-switch { position: relative; font-family: 'Rajdhani', sans-serif; z-index: 200; }
-.lang-btn {
-    background: transparent; border: none; color: white; font-size: 16px; font-weight: 700;
-    cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 10px; transition: 0.3s; letter-spacing: 1px;
-}
-.lang-btn:hover { color: var(--gold-main); }
-.lang-switch:hover .lang-btn i { transform: rotate(180deg); }
-.lang-dropdown {
-    position: absolute; top: 100%; right: 0; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(15px);
-    border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; display: none;
-    flex-direction: column; min-width: 120px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: fadeInDropdown 0.3s ease;
-}
-.lang-switch:hover .lang-dropdown { display: flex; }
-.lang-option {
-    color: #aaa; text-decoration: none; padding: 8px 15px; font-size: 14px; font-weight: 500;
-    transition: 0.3s; text-align: right; display: flex; justify-content: flex-end; align-items: center; gap: 10px;
-}
-.lang-option:hover { color: var(--text-white); border-right: 2px solid var(--gold-main); background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1)); }
-.lang-option.active { color: var(--gold-main); font-weight: 700; }
-
-@keyframes fadeInDropdown { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* Socials */
 .social-nav { display: flex; gap: 10px; }
@@ -257,18 +243,26 @@ header {
 }
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* --- DASHBOARD GRID --- */
+/* --- DASHBOARD GRID (UPDATED FOR CENTERING) --- */
 .dashboard { padding: 100px 5%; max-width: 1600px; margin: 0 auto; position: relative; z-index: 2; }
 .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; }
 .section-title { font-family: 'Rajdhani'; font-size: 36px; color: white; display: flex; align-items: center; gap: 15px; }
 .section-subtitle { color: #888; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
 
-.nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+/* Flex layout for aesthetic centering of 5 items */
+.nav-grid { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; /* This centers the items in the row */
+    gap: 30px; 
+}
 .nav-card {
     background: linear-gradient(145deg, rgba(20,20,20,0.6), rgba(5,5,5,0.8));
     backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
     border-radius: 4px; padding: 80px 40px; text-decoration: none; position: relative; overflow: hidden;
     transition: 0.5s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+    flex: 1 1 300px; /* Flex basis ensures responsive sizing */
+    max-width: 400px; /* Prevents them from getting too wide */
 }
 .nav-card::before {
     content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold-main); 
@@ -329,7 +323,6 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 
 @media (max-width: 480px) {
     .hero h1 { font-size: 42px; }
-    .nav-grid { grid-template-columns: 1fr; }
     .nav-card { padding: 50px 20px; }
     .cta-btn { padding: 12px 25px; font-size: 14px; }
     .header-logo { height: 60px; }
@@ -347,7 +340,9 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 <div class="corner-decor corner-tl"></div>
 <div class="corner-decor corner-br"></div>
 
-<a href="https://wa.me/359888123456" class="sticky-wa"><i class="ri-whatsapp-line"></i></a>
+<a href="https://wa.me/359888123456" class="sticky-wa">
+    СВЪРЖИ СЕ С НАС <i class="ri-whatsapp-line"></i>
+</a>
 
 <div class="video-background">
     <video autoplay muted loop playsinline>
@@ -371,19 +366,6 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
         <img src="logo.png" alt="Нова Надежда" class="header-logo">
         
         <div class="header-controls">
-            <div class="lang-switch">
-                <button class="lang-btn" id="current-lang-btn">
-                    <i class="ri-global-line"></i> BG <i class="ri-arrow-down-s-line"></i>
-                </button>
-                <div class="lang-dropdown">
-                    <a href="#" class="lang-option active" onclick="changeLang('BG', this)">Български</a>
-                    <a href="#" class="lang-option" onclick="changeLang('EN', this)">English</a>
-                    <a href="#" class="lang-option" onclick="changeLang('DE', this)">Deutsch</a>
-                    <a href="#" class="lang-option" onclick="changeLang('RU', this)">Русский</a>
-                    <a href="#" class="lang-option" onclick="changeLang('TR', this)">Türkçe</a>
-                </div>
-            </div>
-
             <div class="social-nav">
                 <a href="#"><i class="ri-facebook-fill"></i></a>
                 <a href="#"><i class="ri-instagram-line"></i></a>
@@ -394,7 +376,6 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 
     <section class="hero">
       
-
         <div class="dynamic-quote-wrapper">
             <div class="golden-blade" id="wiper"></div>
             <div class="quote-text" id="quote-display">Нова Надежда</div>
@@ -405,7 +386,7 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
         <div class="hero-cta">
              <p style="color: #ccc; letter-spacing: 2px; text-transform: uppercase; font-size: 14px; margin-bottom: 20px;">Нова Надежда – подредено място за престижен дом, бизнес и по-добър живот</p>
              <p style="color: var(--gold-main); font-size: 12px; margin-bottom: 5px; text-transform: uppercase;">Ела да се срещнем</p>
-             <a href="contact.html" class="cta-btn">ЗАПАЗИ ЧАС ЗА ОГЛЕД</a>
+             <a href="plots.html" class="cta-btn">ИЗБЕРИ СИ ПАРЦЕЛ</a>
         </div>
 
         <i class="ri-arrow-down-s-line scroll-indicator"></i>
@@ -415,7 +396,7 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
         <div class="marquee-content">
             <span class="marquee-item">ПРЕСТИЖЕН ДОМ <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
             <span class="marquee-item">ПОДРЕДЕНО МЯСТО <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
-            <span class="marquee-item">БИЗНЕС СРЕДА <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
+            <span class="marquee-item">ВЪЗМОЖНОСТИ ЗА БИЗНЕС <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
             <span class="marquee-item">СИГУРНОСТ <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
             <span class="marquee-item">ПО-ДОБЪР ЖИВОТ <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
              <span class="marquee-item">ПРЕСТИЖЕН ДОМ <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
@@ -467,6 +448,10 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
                 <span class="stat-label">ГАЗИФИКАЦИЯ И ТОК</span>
             </div>
             <div class="stat-item">
+                <div class="stat-num"><i class="ri-drop-fill"></i></div>
+                <span class="stat-label">ВиК и КАНАЛИЗАЦИЯ</span>
+            </div>
+            <div class="stat-item">
                 <div class="stat-num"><i class="ri-wifi-line"></i></div>
                 <span class="stat-label">ОПТИЧНА СВЪРЗАНОСТ</span>
             </div>
@@ -482,7 +467,7 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
         <p class="footer-text">Нова Надежда – подредено място за престижен дом, бизнес и по-добър живот</p>
         <p class="footer-text" style="color: var(--gold-main);">08XX XXX XXX | Офис Сливен, ул. Георги Сава Раковски 21</p>
         <div class="copyright">
-            © 2025 ЖК НОВА НАДЕЖДА | СЪЗДАДЕНО ЗА ПРЕВЪЗХОДСТВО
+            © 2025 ЖК НОВА НАДЕЖДА
         </div>
     </footer>
 </div>
@@ -493,24 +478,20 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
     const cursorOutline = document.getElementById("cursor-outline");
 
     window.addEventListener("mousemove", function(e) {
-        // Only run custom cursor logic if elements are visible (desktop)
         if (window.getComputedStyle(cursorDot).display === 'none') return;
 
         const posX = e.clientX;
         const posY = e.clientY;
 
-        // Dot follows instantly
         cursorDot.style.left = `${posX}px`;
         cursorDot.style.top = `${posY}px`;
 
-        // Outline follows with slight delay (animation in CSS)
         cursorOutline.animate({
             left: `${posX}px`,
             top: `${posY}px`
         }, { duration: 500, fill: "forwards" });
     });
 
-    // Hover effect for links to expand cursor
     const links = document.querySelectorAll('a, button');
     links.forEach(link => {
         link.addEventListener('mouseenter', () => {
@@ -539,16 +520,9 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
         }, 3000);
     });
 
-    // Language Switcher
-    function changeLang(langCode, element) {
-        const btnHtml = '<i class="ri-global-line"></i> ' + langCode + ' <i class="ri-arrow-down-s-line"></i>';
-        document.getElementById('current-lang-btn').innerHTML = btnHtml;
-        const options = document.querySelectorAll('.lang-option');
-        options.forEach(opt => opt.classList.remove('active'));
-        element.classList.add('active');
-    }
+    // Removed Language Switcher Functions
 
-    // Text Cycle Logic (Updated quotes array based on manager's request)
+    // Text Cycle Logic
     const quotes = [
         "Нова Надежда",
         "Подредено място",
