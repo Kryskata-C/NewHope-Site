@@ -1,39 +1,638 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Контакт - Нова Надежда</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        :root { --bg-main: #0c0b09; --gold-main: #d4af37; --text-white: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--gold-main); color: var(--bg-main); font-family: 'Roboto', sans-serif; min-height: 100vh; }
-        .back-nav { padding: 20px; max-width: 900px; margin: 0 auto; }
-        .back-nav a { color: black; text-decoration: none; font-family: 'Rajdhani'; font-weight: 700; font-size: 20px; }
-        .highlight-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; text-align: center; }
-        h1 { font-family: 'Rajdhani'; font-size: 32px; color: var(--bg-main); border-bottom: 2px solid var(--bg-main); display: inline-block; padding-bottom: 5px; margin-bottom: 20px; text-transform: uppercase; }
-        h2 { font-family: 'Rajdhani'; font-size: 24px; color: var(--bg-main); font-weight: 900; margin-bottom: 20px; }
-        p { font-size: 20px; color: #2a251e; font-weight: 500; margin-bottom: 25px; }
-        .btn-main { display: block; width: 100%; padding: 20px; margin: 15px 0; border-radius: 10px; text-align: center; text-decoration: none; font-family: 'Rajdhani'; font-weight: 700; font-size: 24px; text-transform: uppercase; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .btn-whatsapp { background-color: #25D366; color: white; border: 2px solid white; }
-        .btn-call-inverted { background-color: #ffffff; color: #000000; border: 2px solid #ffffff; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЖК Нова Надежда | Престижният Квартал на Сливен</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Rajdhani:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+<style>
+:root {
+    --bg-main: #050505;
+    --gold-main: #d4af37;
+    --gold-bright: #f9d763;
+    --gold-dim: #8a7122;
+    --glass: rgba(255, 255, 255, 0.02);
+    --glass-heavy: rgba(10, 10, 10, 0.7);
+    --glass-border: rgba(212, 175, 55, 0.15);
+    --text-white: #ffffff;
+    --wa-green: #25D366;
+}
+
+/* Default: Normal cursor */
+* { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-white);
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* --- CUSTOM CURSOR (Desktop Only) --- */
+@media (min-width: 992px) {
+    * { cursor: none; }
+    
+    .cursor-dot, .cursor-outline {
+        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none;
+        display: block;
+    }
+    .cursor-dot { width: 8px; height: 8px; background: var(--gold-bright); }
+    .cursor-outline {
+        width: 40px; height: 40px; border: 1px solid var(--gold-main);
+        transition: width 0.2s, height 0.2s, background-color 0.2s;
+    }
+    body:hover .cursor-outline { opacity: 1; }
+}
+
+/* Hide custom cursor on mobile */
+@media (max-width: 991px) {
+    .cursor-dot, .cursor-outline { display: none !important; }
+}
+
+/* --- CINEMATIC OVERLAYS --- */
+.noise-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50;
+    opacity: 0.05; background: url('https://grainy-gradients.vercel.app/noise.svg');
+}
+.vignette-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 49;
+    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8) 100%);
+}
+.grid-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;
+    background-image: 
+        linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+    background-size: 100px 100px;
+}
+
+/* --- DECORATIVE CORNERS --- */
+.corner-decor {
+    position: fixed; width: 150px; height: 150px; z-index: 48; pointer-events: none;
+    border: 1px solid var(--glass-border); opacity: 0.5;
+}
+.corner-tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+.corner-br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+.corner-decor::after {
+    content: ''; position: absolute; width: 10px; height: 10px; background: var(--gold-main);
+}
+.corner-tl::after { top: -5px; left: -5px; }
+.corner-br::after { bottom: -5px; right: -5px; }
+
+/* --- VIDEO BG --- */
+.video-background {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden;
+}
+.video-background video {
+    min-width: 100%; min-height: 100%; width: auto; height: auto;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    object-fit: cover; filter: brightness(0.25) grayscale(0.1);
+}
+
+/* --- PRELOADER --- */
+#preloader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-main); z-index: 10000;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    transition: opacity 1s ease;
+}
+.anim-container { position: relative; width: 300px; height: 100px; display: flex; align-items: flex-end; justify-content: center; }
+.growth-line { position: absolute; bottom: 10px; height: 2px; background: var(--gold-main); width: 0; animation: drawLine 1.5s forwards ease-in-out; }
+.pop-icon { color: var(--gold-main); font-size: 32px; position: absolute; bottom: 12px; transform: scale(0); opacity: 0; }
+.building-1 { left: 15%; animation: popUp 0.5s 0.8s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); }
+.tree-1 { left: 38%; animation: popUp 0.5s 1.0s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 22px; }
+.building-2 { left: 62%; animation: popUp 0.5s 1.2s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); }
+.tree-2 { left: 85%; animation: popUp 0.5s 1.4s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 22px; }
+.preloader-logo-img { height: 100px; width: auto; margin-top: 15px; opacity: 0; animation: fadeIn 1s 1.8s forwards; }
+
+@keyframes drawLine { to { width: 100%; } }
+@keyframes popUp { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1) translateY(-15px); opacity: 1; } }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* --- STICKY WHATSAPP --- */
+.sticky-wa {
+    position: fixed; bottom: 30px; right: 30px;
+    background-color: var(--wa-green); color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; z-index: 1000; box-shadow: 0 0 20px var(--wa-green);
+    text-decoration: none; border: 2px solid white; cursor: pointer;
+    transition: 0.3s;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(5px);
+}
+.sticky-wa i { font-size: 24px; margin-left: 10px; }
+.sticky-wa:hover { transform: scale(1.05); }
+
+/* --- HEADER --- */
+header {
+    width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; 
+    position: fixed; top: 0; z-index: 100; transition: 0.3s;
+    backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.header-logo { height: 80px; width: auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); transition: 0.3s; }
+.header-logo:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--gold-main)); }
+
+.header-controls { display: flex; align-items: center; gap: 30px; }
+
+/* Socials */
+.social-nav { display: flex; gap: 10px; }
+.social-nav a {
+    width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 18px; 
+    transition: 0.4s; background: var(--glass);
+}
+.social-nav a:hover { background: var(--gold-main); border-color: var(--gold-main); color: var(--bg-main); transform: translateY(-3px); }
+
+/* --- HERO SECTION --- */
+.hero {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; 
+    text-align: center; padding: 100px 20px 50px; position: relative; perspective: 1000px;
+}
+
+/* Floating Badge */
+.hero-badge {
+    position: absolute; top: 20%; right: 10%; width: 120px; height: 120px;
+    background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50%;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    backdrop-filter: blur(10px); animation: floatBadge 6s infinite ease-in-out;
+    z-index: 10; display: none;
+}
+.badge-text { font-family: 'Rajdhani'; font-size: 12px; text-transform: uppercase; color: var(--gold-main); margin-top: 5px; letter-spacing: 1px; }
+.badge-icon { font-size: 30px; color: var(--text-white); }
+@media(min-width: 1024px) { .hero-badge { display: flex; } }
+@keyframes floatBadge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+/* Main Titles */
+.hero-intro-tag {
+    font-family: 'Rajdhani'; font-weight: 700; letter-spacing: 3px; font-size: 14px;
+    color: var(--gold-main); text-transform: uppercase; margin-bottom: 10px;
+    opacity: 0; animation: fadeInUp 1s 3.5s forwards; border-bottom: 1px solid var(--gold-main); padding-bottom: 5px;
+}
+
+.hero h1 {
+    font-family: 'Rajdhani'; 
+    font-size: clamp(45px, 12vw, 150px); 
+    font-weight: 700; line-height: 0.85; text-transform: uppercase; margin-bottom: 10px;
+    color: white; text-shadow: 0 10px 50px rgba(0,0,0,0.8); opacity: 0; animation: fadeInUp 1s 4s forwards; position: relative; z-index: 2;
+}
+.hero-accent { color: transparent; -webkit-text-stroke: 2px var(--gold-main); position: relative; }
+.hero-accent::after {
+    content: 'НАДЕЖДА'; position: absolute; left: 0; top: 0; color: var(--gold-main); opacity: 0.5; filter: blur(20px); animation: glowBreath 3s infinite ease-in-out;
+}
+
+/* Prestige Subtitle */
+.hero-subtitle-prestige {
+    font-family: 'Rajdhani'; font-size: clamp(16px, 4vw, 24px); color: var(--text-white);
+    letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px;
+    opacity: 0; animation: fadeInUp 1s 4.2s forwards;
+}
+
+/* Dynamic Quote */
+.dynamic-quote-wrapper {
+    position: relative; height: 60px; display: flex; justify-content: center; align-items: center;
+    overflow: visible; margin-bottom: 10px; opacity: 0; animation: fadeInUp 1s 3.8s forwards;
+}
+.quote-text {
+    font-family: 'Great Vibes', cursive; font-size: clamp(24px, 5vw, 45px); color: var(--gold-bright);
+    position: relative; white-space: nowrap; opacity: 0; transform: translateY(10px); filter: blur(5px); transition: all 0.5s ease;
+}
+.quote-text.active { opacity: 1; transform: translateY(0); filter: blur(0px); }
+.golden-blade {
+    position: absolute; top: 10%; left: 0; height: 80%; width: 0%; 
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold-bright), var(--gold-dim));
+    box-shadow: 0 0 25px var(--gold-main); z-index: 10; border-radius: 4px;
+    transition: width 0.4s cubic-bezier(0.7, 0, 0.3, 1), left 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+}
+.golden-blade.wiping-in { left: 0; width: 100%; }
+.golden-blade.wiping-out { left: 100%; width: 0%; }
+.golden-blade.reset { transition: none; left: 0; width: 0; }
+
+/* Subtext & CTA */
+.hero-cta { margin-top: 30px; opacity: 0; animation: fadeInUp 1s 4.5s forwards; padding: 0 10px; }
+.cta-btn {
+    display: inline-block; padding: 15px 40px; margin-top: 20px;
+    border: 1px solid var(--gold-main); color: var(--gold-main); text-transform: uppercase; font-family: 'Rajdhani';
+    letter-spacing: 3px; font-weight: 700; text-decoration: none; transition: 0.4s; position: relative; overflow: hidden;
+}
+.cta-btn::before {
+    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; 
+    background: var(--gold-main); transition: 0.4s; z-index: -1;
+}
+.cta-btn:hover { color: black; cursor: pointer; }
+.cta-btn:hover::before { left: 0; }
+
+.scroll-indicator { position: absolute; bottom: 30px; font-size: 24px; color: var(--gold-main); animation: bounce 2s infinite; }
+
+/* --- INFINITE MARQUEE STRIP --- */
+.marquee-strip {
+    width: 100%; background: var(--gold-main); color: black; padding: 15px 0;
+    overflow: hidden; white-space: nowrap; position: relative; z-index: 20; transform: rotate(-1deg) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 2px solid white; border-bottom: 2px solid white;
+}
+.marquee-content { display: inline-block; animation: marquee 20s linear infinite; }
+.marquee-item {
+    font-family: 'Rajdhani'; font-weight: 700; font-size: 20px; text-transform: uppercase; margin: 0 30px; letter-spacing: 2px;
+}
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* --- DASHBOARD GRID --- */
+.dashboard { padding: 100px 5%; max-width: 1600px; margin: 0 auto; position: relative; z-index: 2; }
+.section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; }
+.section-title { font-family: 'Rajdhani'; font-size: 36px; color: white; display: flex; align-items: center; gap: 15px; }
+.section-subtitle { color: #888; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
+
+.nav-grid { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 30px; 
+}
+
+/* Unified Gold Design Cards */
+.nav-card {
+    background: linear-gradient(180deg, rgba(20,20,20,0.9) 0%, rgba(30,25,10,0.95) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(212, 175, 55, 0.05);
+    border-radius: 4px; padding: 80px 40px; text-decoration: none; position: relative; overflow: hidden;
+    transition: 0.5s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+    flex: 1 1 300px; max-width: 400px;
+}
+.nav-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold-main); 
+    transform: scaleX(0); transform-origin: left; transition: 0.5s;
+}
+.nav-card:hover { 
+    transform: translateY(-10px); border-color: var(--gold-main); 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 30px rgba(212, 175, 55, 0.1); cursor: pointer; 
+}
+.nav-card:hover::before { transform: scaleX(1); }
+
+.card-icon { font-size: 50px; color: var(--gold-main); margin-bottom: 30px; transition: 0.5s; }
+.nav-card:hover .card-icon { transform: scale(1.2) rotate(10deg); color: white; }
+.nav-card span { font-family: 'Rajdhani'; font-size: 24px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+.nav-card p { color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+.nav-card:hover p { color: var(--gold-main); }
+
+
+/* --- AMENITIES GRID (New & Massive) --- */
+.stats-container {
+    margin-top: 100px; padding: 60px; background: var(--glass); border: 1px solid var(--glass-border);
+    /* Changed to Grid to handle many items */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 40px;
+    position: relative;
+    text-align: left;
+}
+.stats-container::after {
+    content: ''; position: absolute; bottom: -10px; right: -10px; width: 50px; height: 50px;
+    border-right: 2px solid var(--gold-main); border-bottom: 2px solid var(--gold-main);
+}
+
+.stat-item { 
+    display: flex; flex-direction: column; align-items: flex-start; 
+    border-left: 1px solid rgba(212,175,55,0.2); padding-left: 20px; transition: 0.3s;
+}
+.stat-item:hover { border-left-color: var(--gold-main); transform: translateX(5px); }
+.stat-num { font-size: 30px; color: var(--gold-main); margin-bottom: 10px; } /* Icons */
+.stat-label { font-size: 11px; color: #ccc; text-transform: uppercase; letter-spacing: 2px; line-height: 1.4; font-weight: 500; }
+.stat-item:hover .stat-label { color: white; }
+
+/* --- FOOTER --- */
+footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient(to top, #000 20%, transparent); position: relative; z-index: 2; }
+.footer-logo { height: 60px; margin-bottom: 30px; opacity: 0.8; }
+.footer-text { margin-bottom: 20px; color: #666; letter-spacing: 1px; text-transform: uppercase; font-size: 12px; }
+.copyright { font-size: 11px; color: #333; letter-spacing: 1px; }
+
+/* ANIMATIONS */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+@keyframes glowBreath { 0%, 100% { opacity: 0.3; filter: blur(10px); } 50% { opacity: 0.8; filter: blur(25px); } }
+@keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+
+/* --- MOBILE & TABLET OPTIMIZATIONS --- */
+@media (max-width: 991px) {
+    header { 
+        flex-direction: row; 
+        justify-content: space-between; 
+        gap: 0; 
+        padding: 15px 5%; 
+        background: rgba(5,5,5,0.95); 
+    }
+    
+    .header-logo { height: 50px; }
+    .header-controls { flex-wrap: nowrap; gap: 10px; }
+    .social-nav a { width: 35px; height: 35px; font-size: 16px; }
+
+    .hero { padding-top: 120px; }
+    .hero h1 { line-height: 1; }
+    .hero-intro-tag { font-size: 11px; }
+    .hero-subtitle-prestige { font-size: 14px; letter-spacing: 2px; }
+
+    .dashboard { padding: 60px 5%; }
+    .nav-grid { gap: 20px; }
+    .nav-card { padding: 50px 20px; flex: 1 1 280px; }
+    
+    /* Grid adjustments for mobile stats */
+    .stats-container { margin-top: 60px; padding: 40px 20px; grid-template-columns: 1fr 1fr; gap: 30px 15px; }
+    .stat-item { padding-left: 10px; border-left: 2px solid rgba(212,175,55,0.1); }
+    .stat-num { font-size: 24px; }
+    
+    .corner-decor { width: 60px; height: 60px; }
+    .marquee-strip { transform: rotate(0deg); margin-top: 0; }
+}
+
+@media (max-width: 480px) {
+    .hero h1 { font-size: 48px; }
+    .quote-text { font-size: 22px; }
+    
+    .nav-card { padding: 40px 20px; min-height: 250px; }
+    .card-icon { font-size: 40px; margin-bottom: 20px; }
+    
+    /* Single column for stats on very small screens? Maybe 2 is still okay, but let's see. */
+    .stats-container { grid-template-columns: 1fr 1fr; } 
+    
+    .sticky-wa { bottom: 20px; right: 20px; padding: 10px 20px; font-size: 14px; }
+    .cta-btn { padding: 12px 30px; font-size: 14px; width: 100%; max-width: 300px; text-align: center; }
+}
+</style>
 </head>
 <body>
-    <div class="back-nav"><a href="index.html"><i class="ri-arrow-left-line"></i> НАЗАД КЪМ НАЧАЛО</a></div>
-    <div class="highlight-container">
-        <h1>СВЪРЖИ СЕ С НАС</h1>
-        <h2>Искаш информация, проверка на свободни парцели или среща на място?</h2>
-        <p>Свържи се с нас по най-лесния и удобен начин — по телефона или през WhatsApp. Ще ти покажем квартала, ще ти обясним всичко и ще ти помогнем да избереш най-подходящия имот.</p>
-        <div style="margin: 30px 0;">
-            <p style="margin-bottom: 5px; font-weight: bold;">📍 Офис Сливен</p>
-            <p>ул. Георги Сава Раковски 21</p>
-        </div>
-        <a href="tel:0888123456" class="btn-main btn-call-inverted"><i class="ri-phone-fill"></i> 08XX XXX XXX</a>
-        <a href="https://wa.me/359888123456" class="btn-main btn-whatsapp"><i class="ri-whatsapp-line"></i> WhatsApp – пиши или се обади</a>
-        <p style="margin-top: 30px; border-top: 1px solid black; padding-top: 20px;">Без формуляри. Без имейли. Без излишни стъпки.<br><strong>Един контакт – директна връзка с екипа на Нова Надежда.</strong></p>
+
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-outline" id="cursor-outline"></div>
+
+<div class="noise-overlay"></div>
+<div class="vignette-overlay"></div>
+<div class="grid-overlay"></div>
+<div class="corner-decor corner-tl"></div>
+<div class="corner-decor corner-br"></div>
+
+<a href="https://wa.me/359889212116" class="sticky-wa">
+    СВЪРЖИ СЕ С НАС <i class="ri-whatsapp-line"></i>
+</a>
+
+<div class="video-background">
+    <video autoplay muted loop playsinline>
+        <source src="video1.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div id="preloader">
+    <div class="anim-container">
+        <div class="growth-line"></div>
+        <i class="ri-building-2-fill pop-icon building-1"></i>
+        <i class="ri-tree-fill pop-icon tree-1"></i>
+        <i class="ri-building-4-fill pop-icon building-2"></i>
+        <i class="ri-plant-fill pop-icon tree-2"></i>
     </div>
+    <img src="logo.png" alt="Нова Надежда" class="preloader-logo-img">
+</div>
+
+<div id="main-content">
+    <header>
+        <img src="logo.png" alt="Нова Надежда" class="header-logo">
+        
+        <div class="header-controls">
+            <div class="social-nav">
+                <a href="#"><i class="ri-facebook-fill"></i></a>
+                <a href="#"><i class="ri-instagram-line"></i></a>
+                <a href="#"><i class="ri-youtube-fill"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+      
+        <div class="hero-intro-tag">ЗА ПЪРВИ ПЪТ В ЦЯЛА БЪЛГАРИЯ</div>
+
+        <div class="dynamic-quote-wrapper">
+            <div class="golden-blade" id="wiper"></div>
+            <div class="quote-text" id="quote-display">Нова Надежда</div>
+        </div>
+
+        <h1>НОВА <span class="hero-accent">НАДЕЖДА</span></h1>
+        
+        <div class="hero-subtitle-prestige">ПРЕСТИЖНИЯТ КВАРТАЛ НА СЛИВЕН</div>
+
+        <div class="hero-cta">
+             <p style="color: #ccc; letter-spacing: 2px; text-transform: uppercase; font-size: 14px; margin-bottom: 20px;">Нова Надежда – подредено място за престижен дом, бизнес и по-добър живот</p>
+             <p style="color: var(--gold-main); font-size: 12px; margin-bottom: 5px; text-transform: uppercase;">Ела да се срещнем</p>
+             <a href="plots.html" class="cta-btn">ИЗБЕРИ СИ ПАРЦЕЛ</a>
+        </div>
+
+        <i class="ri-arrow-down-s-line scroll-indicator"></i>
+    </section>
+
+    <div class="marquee-strip">
+        <div class="marquee-content">
+            <span class="marquee-item">ПРЕСТИЖЕН ДОМ <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
+            <span class="marquee-item">ПОДРЕДЕНО МЯСТО <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
+            <span class="marquee-item">ВЪЗМОЖНОСТИ ЗА БИЗНЕС <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
+            <span class="marquee-item">СИГУРНОСТ <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
+            <span class="marquee-item">ПО-ДОБЪР ЖИВОТ <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
+             <span class="marquee-item">ПРЕСТИЖЕН ДОМ <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
+            <span class="marquee-item">ПОДРЕДЕНО МЯСТО <i class="ri-checkbox-blank-circle-fill" style="font-size:8px; vertical-align:middle; margin:0 10px;"></i></span>
+        </div>
+    </div>
+
+    <section class="dashboard">
+        <div class="section-header">
+            <div class="section-title"><i class="ri-apps-2-line" style="color:var(--gold-main)"></i> НАВИГАЦИЯ</div>
+            <div class="section-subtitle">Изберете категория</div>
+        </div>
+
+        <nav class="nav-grid">
+            <a href="about.html" class="nav-card">
+                <i class="ri-community-line card-icon"></i>
+                <span>ЗА КВАРТАЛА</span>
+                <p>КВАРТАЛЪТ ЗА ПО‑ДОБЪР ЖИВОТ</p>
+            </a>
+            <a href="plots.html" class="nav-card">
+                <i class="ri-layout-grid-line card-icon"></i>
+                <span>КУПИ ПАРЦЕЛ (УПИ)</span>
+                <p>УРЕДЕНО И ГОТОВО МЯСТО</p>
+            </a>
+            <a href="media.html" class="nav-card">
+                <i class="ri-play-list-2-line card-icon"></i>
+                <span>ЗА НОВА НАДЕЖДА ВЕЧЕ СЕ ГОВОРИ</span>
+                <p>МЕДИИ И РЕПОРТАЖИ</p>
+            </a>
+            <a href="partners.html" class="nav-card">
+                <i class="ri-shake-hands-line card-icon"></i>
+                <span>ПАРТНЬОРИ</span>
+                <p>ВИЖ ПОВЕЧЕ ЗА ПАРТНЬОРИТЕ НИ</p>
+            </a>
+             <a href="contact.html" class="nav-card">
+                <i class="ri-customer-service-2-line card-icon"></i>
+                <span>СВЪРЖИ СЕ С НАС</span>
+                <p>ОФИС СЛИВЕН</p>
+            </a>
+        </nav>
+
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-road-map-fill"></i></div>
+                <span class="stat-label">АСФАЛТИРАНИ УЛИЦИ И ТРОТОАРИ</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-lightbulb-flash-fill"></i></div>
+                <span class="stat-label">ГАЗИФИКАЦИЯ И ТОК</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-drop-fill"></i></div>
+                <span class="stat-label">ВиК и КАНАЛИЗАЦИЯ</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-router-line"></i></div>
+                <span class="stat-label">ОПТИЧНА МРЕЖА ЗА ТЕЛЕВИЗИЯ И БЪРЗ ИНТЕРНЕТ</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-tree-fill"></i></div>
+                <span class="stat-label">ЗЕЛЕНИ ПЛОЩИ</span>
+            </div>
+            
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-parent-fill"></i></div>
+                <span class="stat-label">ДЕТСКА ГРАДИНА И ПЛОЩАДКИ</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-police-car-fill"></i></div>
+                <span class="stat-label">РПУ (ПОЛИЦИЯ)</span>
+            </div>
+             <div class="stat-item">
+                <div class="stat-num"><i class="ri-parking-box-fill"></i></div>
+                <span class="stat-label">ПОДЗЕМЕН ПАРКИНГ С 200 МЕСТА</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-hospital-line"></i></div>
+                <span class="stat-label">МЕДИЦИНСКИ ЦЕНТЪР</span>
+            </div>
+             <div class="stat-item">
+                <div class="stat-num"><i class="ri-user-heart-fill"></i></div>
+                <span class="stat-label">ЗЪБОЛЕКАРИ</span>
+            </div>
+             <div class="stat-item">
+                <div class="stat-num"><i class="ri-capsule-fill"></i></div>
+                <span class="stat-label">АПТЕКА</span>
+            </div>
+             <div class="stat-item">
+                <div class="stat-num"><i class="ri-store-2-fill"></i></div>
+                <span class="stat-label">МАГАЗИНИ И ОФИСИ</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <img src="logo.png" alt="Лого" class="footer-logo">
+        <p class="footer-text">Нова Надежда – подредено място за престижен дом, бизнес и по-добър живот</p>
+        <p class="footer-text" style="color: var(--gold-main);">0889 21 21 16 | Офис Сливен, ул. Георги Сава Раковски 21</p>
+        <div class="copyright">
+            © 2025 ЖК НОВА НАДЕЖДА
+        </div>
+    </footer>
+</div>
+
+<script>
+    // Cursor Logic
+    const cursorDot = document.getElementById("cursor-dot");
+    const cursorOutline = document.getElementById("cursor-outline");
+
+    window.addEventListener("mousemove", function(e) {
+        if (window.getComputedStyle(cursorDot).display === 'none') return;
+
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        cursorOutline.animate({
+            left: `${posX}px`,
+            top: `${posY}px`
+        }, { duration: 500, fill: "forwards" });
+    });
+
+    const links = document.querySelectorAll('a, button');
+    links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            if (window.getComputedStyle(cursorDot).display !== 'none') {
+                cursorOutline.style.transform = "translate(-50%, -50%) scale(1.5)";
+                cursorOutline.style.backgroundColor = "rgba(212, 175, 55, 0.1)";
+            }
+        });
+        link.addEventListener('mouseleave', () => {
+            if (window.getComputedStyle(cursorDot).display !== 'none') {
+                cursorOutline.style.transform = "translate(-50%, -50%) scale(1)";
+                cursorOutline.style.backgroundColor = "transparent";
+            }
+        });
+    });
+
+    // Preloader Logic
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                setTimeout(startTextCycle, 4000); 
+            }, 1000);
+        }, 3000);
+    });
+
+    // Text Cycle Logic
+    const quotes = [
+        "Нова Надежда",
+        "Подредено място",
+        "Престижен дом",
+        "Бизнес",
+        "По-добър живот"
+    ];
+
+    let currentQuoteIndex = 0;
+    const quoteElement = document.getElementById('quote-display');
+    const wiper = document.getElementById('wiper');
+
+    function startTextCycle() {
+        quoteElement.classList.add('active');
+        setInterval(() => {
+            cycleQuote();
+        }, 4000);
+    }
+
+    function cycleQuote() {
+        wiper.classList.remove('reset', 'wiping-out');
+        wiper.classList.add('wiping-in');
+
+        setTimeout(() => {
+            quoteElement.classList.remove('active'); 
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            quoteElement.textContent = quotes[currentQuoteIndex];
+
+            wiper.classList.add('wiping-out'); 
+            
+            setTimeout(() => {
+                quoteElement.classList.add('active');
+            }, 100);
+
+            setTimeout(() => {
+                wiper.classList.remove('wiping-in', 'wiping-out');
+                wiper.classList.add('reset');
+            }, 600); 
+
+        }, 400); 
+    }
+</script>
 </body>
 </html>
