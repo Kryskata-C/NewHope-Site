@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ЖК Нова Надежда | Премиум Жилищен Комплекс</title>
+<title>ЖК Нова Надежда | Престижният Квартал на Сливен</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Rajdhani:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@ body {
     .cursor-dot, .cursor-outline { display: none !important; }
 }
 
-/* --- CINEMATIC OVERLAYS (TEXTURE) --- */
+/* --- CINEMATIC OVERLAYS --- */
 .noise-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50;
     opacity: 0.05; background: url('https://grainy-gradients.vercel.app/noise.svg');
@@ -173,15 +173,28 @@ header {
 @keyframes floatBadge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
 /* Main Titles */
+.hero-intro-tag {
+    font-family: 'Rajdhani'; font-weight: 700; letter-spacing: 3px; font-size: 14px;
+    color: var(--gold-main); text-transform: uppercase; margin-bottom: 10px;
+    opacity: 0; animation: fadeInUp 1s 3.5s forwards; border-bottom: 1px solid var(--gold-main); padding-bottom: 5px;
+}
+
 .hero h1 {
     font-family: 'Rajdhani'; 
     font-size: clamp(45px, 12vw, 150px); 
-    font-weight: 700; line-height: 0.85; text-transform: uppercase; margin-bottom: 20px;
+    font-weight: 700; line-height: 0.85; text-transform: uppercase; margin-bottom: 10px;
     color: white; text-shadow: 0 10px 50px rgba(0,0,0,0.8); opacity: 0; animation: fadeInUp 1s 4s forwards; position: relative; z-index: 2;
 }
 .hero-accent { color: transparent; -webkit-text-stroke: 2px var(--gold-main); position: relative; }
 .hero-accent::after {
     content: 'НАДЕЖДА'; position: absolute; left: 0; top: 0; color: var(--gold-main); opacity: 0.5; filter: blur(20px); animation: glowBreath 3s infinite ease-in-out;
+}
+
+/* Prestige Subtitle */
+.hero-subtitle-prestige {
+    font-family: 'Rajdhani'; font-size: clamp(16px, 4vw, 24px); color: var(--text-white);
+    letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px;
+    opacity: 0; animation: fadeInUp 1s 4.2s forwards;
 }
 
 /* Dynamic Quote */
@@ -205,7 +218,7 @@ header {
 .golden-blade.reset { transition: none; left: 0; width: 0; }
 
 /* Subtext & CTA */
-.hero-cta { margin-top: 30px; opacity: 0; animation: fadeInUp 1s 4.2s forwards; padding: 0 10px; }
+.hero-cta { margin-top: 30px; opacity: 0; animation: fadeInUp 1s 4.5s forwards; padding: 0 10px; }
 .cta-btn {
     display: inline-block; padding: 15px 40px; margin-top: 20px;
     border: 1px solid var(--gold-main); color: var(--gold-main); text-transform: uppercase; font-family: 'Rajdhani';
@@ -220,6 +233,17 @@ header {
 
 .scroll-indicator { position: absolute; bottom: 30px; font-size: 24px; color: var(--gold-main); animation: bounce 2s infinite; }
 
+/* --- 🔥 IMPORTANT: NO INTRO OVERRIDES --- */
+/* If body has 'skip-intro', we remove all the animation delays so text appears instantly */
+body.skip-intro .hero-intro-tag,
+body.skip-intro .hero h1,
+body.skip-intro .hero-subtitle-prestige,
+body.skip-intro .dynamic-quote-wrapper,
+body.skip-intro .hero-cta {
+    animation-delay: 0s !important;
+    animation-duration: 0.8s; /* Make it appear slightly faster */
+}
+
 /* --- INFINITE MARQUEE STRIP --- */
 .marquee-strip {
     width: 100%; background: var(--gold-main); color: black; padding: 15px 0;
@@ -232,7 +256,7 @@ header {
 }
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* --- DASHBOARD GRID (UNIFIED GOLD DESIGN) --- */
+/* --- DASHBOARD GRID --- */
 .dashboard { padding: 100px 5%; max-width: 1600px; margin: 0 auto; position: relative; z-index: 2; }
 .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; }
 .section-title { font-family: 'Rajdhani'; font-size: 36px; color: white; display: flex; align-items: center; gap: 15px; }
@@ -245,37 +269,22 @@ header {
     gap: 30px; 
 }
 
-/* THE NEW CARD STYLE: UNIFIED & PREMIUM */
+/* Unified Gold Design Cards */
 .nav-card {
-    /* Gradient background: Dark at top, hint of gold at bottom */
     background: linear-gradient(180deg, rgba(20,20,20,0.9) 0%, rgba(30,25,10,0.95) 100%);
-    
-    /* Subtle Gold Border on ALL cards */
     border: 1px solid rgba(212, 175, 55, 0.3);
-    
-    /* Inner Golden Glow (The "little gold" touch) */
     box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(212, 175, 55, 0.05);
-
     border-radius: 4px; padding: 80px 40px; text-decoration: none; position: relative; overflow: hidden;
     transition: 0.5s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-    flex: 1 1 300px; 
-    max-width: 400px;
+    flex: 1 1 300px; max-width: 400px;
 }
-
-/* Card Hover Line (Gold) */
 .nav-card::before {
     content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold-main); 
     transform: scaleX(0); transform-origin: left; transition: 0.5s;
 }
-
-/* Hover Effects */
 .nav-card:hover { 
-    transform: translateY(-10px); 
-    /* Brighter border on hover */
-    border-color: var(--gold-main); 
-    /* Stronger shadow on hover */
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 30px rgba(212, 175, 55, 0.1); 
-    cursor: pointer; 
+    transform: translateY(-10px); border-color: var(--gold-main); 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 30px rgba(212, 175, 55, 0.1); cursor: pointer; 
 }
 .nav-card:hover::before { transform: scaleX(1); }
 
@@ -286,19 +295,28 @@ header {
 .nav-card:hover p { color: var(--gold-main); }
 
 
-/* --- STATS BAR REIMAGINED --- */
+/* --- AMENITIES GRID --- */
 .stats-container {
     margin-top: 100px; padding: 60px; background: var(--glass); border: 1px solid var(--glass-border);
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 40px;
     position: relative;
+    text-align: left;
 }
 .stats-container::after {
     content: ''; position: absolute; bottom: -10px; right: -10px; width: 50px; height: 50px;
     border-right: 2px solid var(--gold-main); border-bottom: 2px solid var(--gold-main);
 }
-.stat-item { text-align: left; }
-.stat-num { font-family: 'Rajdhani'; font-size: 50px; color: white; font-weight: 700; line-height: 1; text-shadow: 0 0 20px rgba(212,175,55,0.3); }
-.stat-label { font-size: 12px; color: var(--gold-main); text-transform: uppercase; letter-spacing: 3px; margin-top: 10px; display: block; }
+
+.stat-item { 
+    display: flex; flex-direction: column; align-items: flex-start; 
+    border-left: 1px solid rgba(212,175,55,0.2); padding-left: 20px; transition: 0.3s;
+}
+.stat-item:hover { border-left-color: var(--gold-main); transform: translateX(5px); }
+.stat-num { font-size: 30px; color: var(--gold-main); margin-bottom: 10px; }
+.stat-label { font-size: 11px; color: #ccc; text-transform: uppercase; letter-spacing: 2px; line-height: 1.4; font-weight: 500; }
+.stat-item:hover .stat-label { color: white; }
 
 /* --- FOOTER --- */
 footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient(to top, #000 20%, transparent); position: relative; z-index: 2; }
@@ -314,7 +332,6 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 
 /* --- MOBILE & TABLET OPTIMIZATIONS --- */
 @media (max-width: 991px) {
-    /* Fixed Slim Header */
     header { 
         flex-direction: row; 
         justify-content: space-between; 
@@ -329,13 +346,16 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 
     .hero { padding-top: 120px; }
     .hero h1 { line-height: 1; }
-    
+    .hero-intro-tag { font-size: 11px; }
+    .hero-subtitle-prestige { font-size: 14px; letter-spacing: 2px; }
+
     .dashboard { padding: 60px 5%; }
     .nav-grid { gap: 20px; }
     .nav-card { padding: 50px 20px; flex: 1 1 280px; }
     
-    .stats-container { margin-top: 60px; padding: 40px; justify-content: center; text-align: center; }
-    .stat-item { text-align: center; margin-bottom: 0; flex: 1 1 40%; }
+    .stats-container { margin-top: 60px; padding: 40px 20px; grid-template-columns: 1fr 1fr; gap: 30px 15px; }
+    .stat-item { padding-left: 10px; border-left: 2px solid rgba(212,175,55,0.1); }
+    .stat-num { font-size: 24px; }
     
     .corner-decor { width: 60px; height: 60px; }
     .marquee-strip { transform: rotate(0deg); margin-top: 0; }
@@ -345,20 +365,12 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
     .hero h1 { font-size: 48px; }
     .quote-text { font-size: 22px; }
     
-    .section-header { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 40px; }
-    .section-title { font-size: 28px; }
-    
     .nav-card { padding: 40px 20px; min-height: 250px; }
     .card-icon { font-size: 40px; margin-bottom: 20px; }
-    .nav-card span { font-size: 20px; }
     
-    .stats-container { padding: 30px 20px; gap: 30px; }
-    .stat-item { flex: 1 1 100%; } 
-    .stat-num { font-size: 42px; }
+    .stats-container { grid-template-columns: 1fr 1fr; } 
     
     .sticky-wa { bottom: 20px; right: 20px; padding: 10px 20px; font-size: 14px; }
-    .sticky-wa i { font-size: 20px; }
-    
     .cta-btn { padding: 12px 30px; font-size: 14px; width: 100%; max-width: 300px; text-align: center; }
 }
 </style>
@@ -374,7 +386,7 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 <div class="corner-decor corner-tl"></div>
 <div class="corner-decor corner-br"></div>
 
-<a href="https://wa.me/359888123456" class="sticky-wa">
+<a href="https://wa.me/359889212116" class="sticky-wa">
     СВЪРЖИ СЕ С НАС <i class="ri-whatsapp-line"></i>
 </a>
 
@@ -410,12 +422,16 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 
     <section class="hero">
       
+        <div class="hero-intro-tag">ЗА ПЪРВИ ПЪТ В ЦЯЛА БЪЛГАРИЯ</div>
+
         <div class="dynamic-quote-wrapper">
             <div class="golden-blade" id="wiper"></div>
             <div class="quote-text" id="quote-display">Нова Надежда</div>
         </div>
 
         <h1>НОВА <span class="hero-accent">НАДЕЖДА</span></h1>
+        
+        <div class="hero-subtitle-prestige">ПРЕСТИЖНИЯТ КВАРТАЛ НА СЛИВЕН</div>
 
         <div class="hero-cta">
              <p style="color: #ccc; letter-spacing: 2px; text-transform: uppercase; font-size: 14px; margin-bottom: 20px;">Нова Надежда – подредено място за престижен дом, бизнес и по-добър живот</p>
@@ -475,7 +491,7 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
         <div class="stats-container">
             <div class="stat-item">
                 <div class="stat-num"><i class="ri-road-map-fill"></i></div>
-                <span class="stat-label">АСФАЛТИРАНИ УЛИЦИ</span>
+                <span class="stat-label">АСФАЛТИРАНИ УЛИЦИ И ТРОТОАРИ</span>
             </div>
             <div class="stat-item">
                 <div class="stat-num"><i class="ri-lightbulb-flash-fill"></i></div>
@@ -486,12 +502,40 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
                 <span class="stat-label">ВиК и КАНАЛИЗАЦИЯ</span>
             </div>
             <div class="stat-item">
-                <div class="stat-num"><i class="ri-wifi-line"></i></div>
-                <span class="stat-label">ОПТИЧНА СВЪРЗАНОСТ</span>
+                <div class="stat-num"><i class="ri-router-line"></i></div>
+                <span class="stat-label">ОПТИЧНА МРЕЖА ЗА ТЕЛЕВИЗИЯ И БЪРЗ ИНТЕРНЕТ</span>
             </div>
             <div class="stat-item">
                 <div class="stat-num"><i class="ri-tree-fill"></i></div>
                 <span class="stat-label">ЗЕЛЕНИ ПЛОЩИ</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-parent-fill"></i></div>
+                <span class="stat-label">ДЕТСКА ГРАДИНА И ПЛОЩАДКИ</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-police-car-fill"></i></div>
+                <span class="stat-label">РПУ (ПОЛИЦИЯ)</span>
+            </div>
+             <div class="stat-item">
+                <div class="stat-num"><i class="ri-parking-box-fill"></i></div>
+                <span class="stat-label">ПОДЗЕМЕН ПАРКИНГ С 200 МЕСТА</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-hospital-line"></i></div>
+                <span class="stat-label">МЕДИЦИНСКИ ЦЕНТЪР</span>
+            </div>
+             <div class="stat-item">
+                <div class="stat-num"><i class="ri-user-heart-fill"></i></div>
+                <span class="stat-label">ЗЪБОЛЕКАРИ</span>
+            </div>
+             <div class="stat-item">
+                <div class="stat-num"><i class="ri-capsule-fill"></i></div>
+                <span class="stat-label">АПТЕКА</span>
+            </div>
+             <div class="stat-item">
+                <div class="stat-num"><i class="ri-store-2-fill"></i></div>
+                <span class="stat-label">МАГАЗИНИ И ОФИСИ</span>
             </div>
         </div>
     </section>
@@ -499,7 +543,7 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
     <footer>
         <img src="logo.png" alt="Лого" class="footer-logo">
         <p class="footer-text">Нова Надежда – подредено място за престижен дом, бизнес и по-добър живот</p>
-        <p class="footer-text" style="color: var(--gold-main);">08XX XXX XXX | Офис Сливен, ул. Георги Сава Раковски 21</p>
+        <p class="footer-text" style="color: var(--gold-main);">0889 21 21 16 | Офис Сливен, ул. Георги Сава Раковски 21</p>
         <div class="copyright">
             © 2025 ЖК НОВА НАДЕЖДА
         </div>
@@ -513,17 +557,11 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 
     window.addEventListener("mousemove", function(e) {
         if (window.getComputedStyle(cursorDot).display === 'none') return;
-
         const posX = e.clientX;
         const posY = e.clientY;
-
         cursorDot.style.left = `${posX}px`;
         cursorDot.style.top = `${posY}px`;
-
-        cursorOutline.animate({
-            left: `${posX}px`,
-            top: `${posY}px`
-        }, { duration: 500, fill: "forwards" });
+        cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
     });
 
     const links = document.querySelectorAll('a, button');
@@ -540,18 +578,6 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
                 cursorOutline.style.backgroundColor = "transparent";
             }
         });
-    });
-
-    // Preloader Logic
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-                setTimeout(startTextCycle, 4000); 
-            }, 1000);
-        }, 3000);
     });
 
     // Text Cycle Logic
@@ -596,6 +622,36 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 
         }, 400); 
     }
+
+    // --- MAIN INTRO LOGIC ---
+    window.addEventListener('load', () => {
+        const preloader = document.getElementById('preloader');
+        
+        // Check if user has already seen the intro in this session
+        const hasPlayed = sessionStorage.getItem('nh_intro_played') === '1';
+
+        if (hasPlayed) {
+            // USER HAS SEEN INTRO:
+            // 1. Hide Preloader immediately
+            preloader.style.display = 'none';
+            // 2. Add 'skip-intro' class to body to KILL CSS delays
+            document.body.classList.add('skip-intro');
+            // 3. Start the text cycle immediately
+            startTextCycle();
+            return;
+        }
+
+        // USER IS NEW (First Time):
+        sessionStorage.setItem('nh_intro_played', '1');
+
+        setTimeout(() => {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                setTimeout(startTextCycle, 4000); 
+            }, 1000);
+        }, 3000);
+    });
 </script>
 </body>
 </html>
