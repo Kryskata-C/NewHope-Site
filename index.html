@@ -293,15 +293,28 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 
 /* --- MOBILE & TABLET OPTIMIZATIONS (Boss Level Refinements) --- */
 @media (max-width: 991px) {
-    header { flex-direction: column; gap: 15px; padding: 20px 5%; background: rgba(5,5,5,0.95); }
-    .header-controls { flex-wrap: wrap; justify-content: center; gap: 15px; }
+    /* FIXED: Flex row specifically for header to prevent stacking */
+    header { 
+        flex-direction: row; 
+        justify-content: space-between; 
+        gap: 0; 
+        padding: 15px 5%; 
+        background: rgba(5,5,5,0.95); 
+    }
     
-    .hero { padding-top: 140px; }
+    /* Shrink Logo on mobile so it fits the row */
+    .header-logo { height: 50px; }
+    
+    .header-controls { flex-wrap: nowrap; gap: 10px; }
+    
+    /* Slightly smaller socials on mobile */
+    .social-nav a { width: 35px; height: 35px; font-size: 16px; }
+
+    .hero { padding-top: 120px; }
     .hero h1 { line-height: 1; }
     
     .dashboard { padding: 60px 5%; }
     .nav-grid { gap: 20px; }
-    /* Reduced padding for cards on tablet/mobile so they fit better */
     .nav-card { padding: 50px 20px; flex: 1 1 280px; }
     
     .stats-container { margin-top: 60px; padding: 40px; justify-content: center; text-align: center; }
@@ -324,14 +337,13 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
     .nav-card span { font-size: 20px; }
     
     .stats-container { padding: 30px 20px; gap: 30px; }
-    .stat-item { flex: 1 1 100%; } /* Stack 1 column on very small phones */
+    .stat-item { flex: 1 1 100%; } 
     .stat-num { font-size: 42px; }
     
     .sticky-wa { bottom: 20px; right: 20px; padding: 10px 20px; font-size: 14px; }
     .sticky-wa i { font-size: 20px; }
     
     .cta-btn { padding: 12px 30px; font-size: 14px; width: 100%; max-width: 300px; text-align: center; }
-    .header-logo { height: 60px; }
 }
 </style>
 </head>
