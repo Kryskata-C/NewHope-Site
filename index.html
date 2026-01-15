@@ -23,7 +23,7 @@
 }
 
 /* Default: Normal cursor */
-* { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+* { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
 
 body {
     background-color: var(--bg-main);
@@ -114,11 +114,11 @@ body {
 @keyframes popUp { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1) translateY(-15px); opacity: 1; } }
 @keyframes fadeIn { to { opacity: 1; } }
 
-/* --- STICKY WHATSAPP (UPDATED) --- */
+/* --- STICKY WHATSAPP --- */
 .sticky-wa {
     position: fixed; bottom: 30px; right: 30px;
     background-color: var(--wa-green); color: white;
-    padding: 10px 25px;
+    padding: 12px 25px;
     border-radius: 50px;
     display: flex; align-items: center; justify-content: center;
     font-size: 16px; z-index: 1000; box-shadow: 0 0 20px var(--wa-green);
@@ -128,31 +128,21 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
+    backdrop-filter: blur(5px);
 }
-.sticky-wa i {
-    font-size: 24px;
-    margin-left: 10px;
-}
+.sticky-wa i { font-size: 24px; margin-left: 10px; }
 .sticky-wa:hover { transform: scale(1.05); }
 
 /* --- HEADER --- */
 header {
     width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; 
     position: fixed; top: 0; z-index: 100; transition: 0.3s;
-    backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 .header-logo { height: 80px; width: auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); transition: 0.3s; }
 .header-logo:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--gold-main)); }
 
 .header-controls { display: flex; align-items: center; gap: 30px; }
-
-/* Status Indicator */
-.status-indicator {
-    display: flex; align-items: center; gap: 8px; font-family: 'Rajdhani'; font-size: 12px; 
-    color: var(--gold-main); letter-spacing: 2px; border: 1px solid var(--glass-border);
-    padding: 5px 15px; border-radius: 20px; background: var(--glass);
-}
-.status-dot { width: 8px; height: 8px; background: var(--wa-green); border-radius: 50%; box-shadow: 0 0 10px var(--wa-green); animation: pulse 2s infinite; }
 
 /* Socials */
 .social-nav { display: flex; gap: 10px; }
@@ -175,7 +165,7 @@ header {
     background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50%;
     display: flex; flex-direction: column; justify-content: center; align-items: center;
     backdrop-filter: blur(10px); animation: floatBadge 6s infinite ease-in-out;
-    z-index: 10; display: none; /* Hidden on mobile by default */
+    z-index: 10; display: none;
 }
 .badge-text { font-family: 'Rajdhani'; font-size: 12px; text-transform: uppercase; color: var(--gold-main); margin-top: 5px; letter-spacing: 1px; }
 .badge-icon { font-size: 30px; color: var(--text-white); }
@@ -185,8 +175,7 @@ header {
 /* Main Titles */
 .hero h1 {
     font-family: 'Rajdhani'; 
-    /* Responsive sizing for mobile */
-    font-size: clamp(45px, 10vw, 150px); 
+    font-size: clamp(45px, 12vw, 150px); 
     font-weight: 700; line-height: 0.85; text-transform: uppercase; margin-bottom: 20px;
     color: white; text-shadow: 0 10px 50px rgba(0,0,0,0.8); opacity: 0; animation: fadeInUp 1s 4s forwards; position: relative; z-index: 2;
 }
@@ -201,7 +190,7 @@ header {
     overflow: visible; margin-bottom: 10px; opacity: 0; animation: fadeInUp 1s 3.8s forwards;
 }
 .quote-text {
-    font-family: 'Great Vibes', cursive; font-size: clamp(24px, 4vw, 45px); color: var(--gold-bright);
+    font-family: 'Great Vibes', cursive; font-size: clamp(24px, 5vw, 45px); color: var(--gold-bright);
     position: relative; white-space: nowrap; opacity: 0; transform: translateY(10px); filter: blur(5px); transition: all 0.5s ease;
 }
 .quote-text.active { opacity: 1; transform: translateY(0); filter: blur(0px); }
@@ -216,7 +205,7 @@ header {
 .golden-blade.reset { transition: none; left: 0; width: 0; }
 
 /* Subtext & CTA */
-.hero-cta { margin-top: 30px; opacity: 0; animation: fadeInUp 1s 4.2s forwards; }
+.hero-cta { margin-top: 30px; opacity: 0; animation: fadeInUp 1s 4.2s forwards; padding: 0 10px; }
 .cta-btn {
     display: inline-block; padding: 15px 40px; margin-top: 20px;
     border: 1px solid var(--gold-main); color: var(--gold-main); text-transform: uppercase; font-family: 'Rajdhani';
@@ -243,17 +232,16 @@ header {
 }
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* --- DASHBOARD GRID (UPDATED FOR CENTERING) --- */
+/* --- DASHBOARD GRID --- */
 .dashboard { padding: 100px 5%; max-width: 1600px; margin: 0 auto; position: relative; z-index: 2; }
 .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; }
 .section-title { font-family: 'Rajdhani'; font-size: 36px; color: white; display: flex; align-items: center; gap: 15px; }
 .section-subtitle { color: #888; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
 
-/* Flex layout for aesthetic centering of 5 items */
 .nav-grid { 
     display: flex; 
     flex-wrap: wrap; 
-    justify-content: center; /* This centers the items in the row */
+    justify-content: center; 
     gap: 30px; 
 }
 .nav-card {
@@ -261,8 +249,8 @@ header {
     backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
     border-radius: 4px; padding: 80px 40px; text-decoration: none; position: relative; overflow: hidden;
     transition: 0.5s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-    flex: 1 1 300px; /* Flex basis ensures responsive sizing */
-    max-width: 400px; /* Prevents them from getting too wide */
+    flex: 1 1 300px; 
+    max-width: 400px;
 }
 .nav-card::before {
     content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold-main); 
@@ -303,28 +291,46 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 @keyframes glowBreath { 0%, 100% { opacity: 0.3; filter: blur(10px); } 50% { opacity: 0.8; filter: blur(25px); } }
 @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
 
-/* --- MOBILE & TABLET OPTIMIZATIONS --- */
+/* --- MOBILE & TABLET OPTIMIZATIONS (Boss Level Refinements) --- */
 @media (max-width: 991px) {
-    header { flex-direction: column; gap: 15px; padding: 20px 5%; background: rgba(5,5,5,0.9); }
+    header { flex-direction: column; gap: 15px; padding: 20px 5%; background: rgba(5,5,5,0.95); }
     .header-controls { flex-wrap: wrap; justify-content: center; gap: 15px; }
     
     .hero { padding-top: 140px; }
-    .hero h1 { font-size: 55px; line-height: 1; }
-    .quote-text { font-size: 26px; }
-    
-    .stats-container { flex-direction: column; align-items: center; text-align: center; padding: 40px 20px; }
-    .stat-item { text-align: center; margin-bottom: 20px; }
+    .hero h1 { line-height: 1; }
     
     .dashboard { padding: 60px 5%; }
-    .corner-decor { width: 60px; height: 60px; }
+    .nav-grid { gap: 20px; }
+    /* Reduced padding for cards on tablet/mobile so they fit better */
+    .nav-card { padding: 50px 20px; flex: 1 1 280px; }
     
+    .stats-container { margin-top: 60px; padding: 40px; justify-content: center; text-align: center; }
+    .stat-item { text-align: center; margin-bottom: 0; flex: 1 1 40%; }
+    
+    .corner-decor { width: 60px; height: 60px; }
     .marquee-strip { transform: rotate(0deg); margin-top: 0; }
 }
 
 @media (max-width: 480px) {
-    .hero h1 { font-size: 42px; }
-    .nav-card { padding: 50px 20px; }
-    .cta-btn { padding: 12px 25px; font-size: 14px; }
+    /* Precise Mobile Fits */
+    .hero h1 { font-size: 48px; }
+    .quote-text { font-size: 22px; }
+    
+    .section-header { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 40px; }
+    .section-title { font-size: 28px; }
+    
+    .nav-card { padding: 40px 20px; min-height: 250px; }
+    .card-icon { font-size: 40px; margin-bottom: 20px; }
+    .nav-card span { font-size: 20px; }
+    
+    .stats-container { padding: 30px 20px; gap: 30px; }
+    .stat-item { flex: 1 1 100%; } /* Stack 1 column on very small phones */
+    .stat-num { font-size: 42px; }
+    
+    .sticky-wa { bottom: 20px; right: 20px; padding: 10px 20px; font-size: 14px; }
+    .sticky-wa i { font-size: 20px; }
+    
+    .cta-btn { padding: 12px 30px; font-size: 14px; width: 100%; max-width: 300px; text-align: center; }
     .header-logo { height: 60px; }
 }
 </style>
@@ -519,8 +525,6 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
             }, 1000);
         }, 3000);
     });
-
-    // Removed Language Switcher Functions
 
     // Text Cycle Logic
     const quotes = [
