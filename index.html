@@ -232,7 +232,7 @@ header {
 }
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* --- DASHBOARD GRID --- */
+/* --- DASHBOARD GRID (UNIFIED GOLD DESIGN) --- */
 .dashboard { padding: 100px 5%; max-width: 1600px; margin: 0 auto; position: relative; z-index: 2; }
 .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; }
 .section-title { font-family: 'Rajdhani'; font-size: 36px; color: white; display: flex; align-items: center; gap: 15px; }
@@ -241,29 +241,50 @@ header {
 .nav-grid { 
     display: flex; 
     flex-wrap: wrap; 
-    justify-content: center; 
+    justify-content: center;
     gap: 30px; 
 }
+
+/* THE NEW CARD STYLE: UNIFIED & PREMIUM */
 .nav-card {
-    background: linear-gradient(145deg, rgba(20,20,20,0.6), rgba(5,5,5,0.8));
-    backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+    /* Gradient background: Dark at top, hint of gold at bottom */
+    background: linear-gradient(180deg, rgba(20,20,20,0.9) 0%, rgba(30,25,10,0.95) 100%);
+    
+    /* Subtle Gold Border on ALL cards */
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    
+    /* Inner Golden Glow (The "little gold" touch) */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(212, 175, 55, 0.05);
+
     border-radius: 4px; padding: 80px 40px; text-decoration: none; position: relative; overflow: hidden;
     transition: 0.5s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
     flex: 1 1 300px; 
     max-width: 400px;
 }
+
+/* Card Hover Line (Gold) */
 .nav-card::before {
     content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold-main); 
     transform: scaleX(0); transform-origin: left; transition: 0.5s;
 }
-.nav-card:hover { transform: translateY(-10px); border-color: var(--gold-bright); box-shadow: 0 20px 50px rgba(0,0,0,0.5); cursor: pointer; }
+
+/* Hover Effects */
+.nav-card:hover { 
+    transform: translateY(-10px); 
+    /* Brighter border on hover */
+    border-color: var(--gold-main); 
+    /* Stronger shadow on hover */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 30px rgba(212, 175, 55, 0.1); 
+    cursor: pointer; 
+}
 .nav-card:hover::before { transform: scaleX(1); }
 
 .card-icon { font-size: 50px; color: var(--gold-main); margin-bottom: 30px; transition: 0.5s; }
 .nav-card:hover .card-icon { transform: scale(1.2) rotate(10deg); color: white; }
 .nav-card span { font-family: 'Rajdhani'; font-size: 24px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
-.nav-card p { color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+.nav-card p { color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
 .nav-card:hover p { color: var(--gold-main); }
+
 
 /* --- STATS BAR REIMAGINED --- */
 .stats-container {
@@ -291,9 +312,9 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 @keyframes glowBreath { 0%, 100% { opacity: 0.3; filter: blur(10px); } 50% { opacity: 0.8; filter: blur(25px); } }
 @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
 
-/* --- MOBILE & TABLET OPTIMIZATIONS (Boss Level Refinements) --- */
+/* --- MOBILE & TABLET OPTIMIZATIONS --- */
 @media (max-width: 991px) {
-    /* FIXED: Flex row specifically for header to prevent stacking */
+    /* Fixed Slim Header */
     header { 
         flex-direction: row; 
         justify-content: space-between; 
@@ -302,12 +323,8 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
         background: rgba(5,5,5,0.95); 
     }
     
-    /* Shrink Logo on mobile so it fits the row */
     .header-logo { height: 50px; }
-    
     .header-controls { flex-wrap: nowrap; gap: 10px; }
-    
-    /* Slightly smaller socials on mobile */
     .social-nav a { width: 35px; height: 35px; font-size: 16px; }
 
     .hero { padding-top: 120px; }
@@ -325,7 +342,6 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 }
 
 @media (max-width: 480px) {
-    /* Precise Mobile Fits */
     .hero h1 { font-size: 48px; }
     .quote-text { font-size: 22px; }
     
