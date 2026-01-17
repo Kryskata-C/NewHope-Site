@@ -49,7 +49,7 @@ body {
     background: radial-gradient(circle, transparent 50%, #050505 100%);
 }
 
-/* --- 🧭 NAVIGATION --- */
+/* --- compass NAVIGATION --- */
 .nav-bar {
     padding: 30px 5%;
     position: relative; z-index: 100;
@@ -77,7 +77,6 @@ body {
     position: relative; z-index: 10;
 }
 
-/* Typography */
 h1 {
     font-family: 'Rajdhani'; font-size: clamp(40px, 8vw, 80px); 
     line-height: 1; font-weight: 700; color: var(--text-white);
@@ -156,9 +155,53 @@ p {
 
 #plots-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
 
+/* --- 👆 NEW INTERACTION HINT (HUD) --- */
+.interaction-hint {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--gold-main);
+    color: var(--gold-main);
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-family: 'Rajdhani';
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    z-index: 20;
+    pointer-events: none; /* Let clicks pass through */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    animation: floatHint 3s infinite ease-in-out;
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+.interaction-hint.hidden { opacity: 0; }
+
+.pulse-beacon {
+    width: 8px; height: 8px; background: #25D366; border-radius: 50%;
+    box-shadow: 0 0 10px #25D366;
+    animation: beaconFlash 1s infinite;
+}
+
+@keyframes floatHint {
+    0%, 100% { transform: translate(-50%, 0); box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+    50% { transform: translate(-50%, -5px); box-shadow: 0 0 35px rgba(212, 175, 55, 0.5); }
+}
+@keyframes beaconFlash { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
 /* --- ✨ INTERACTIVE PLOT STYLES --- */
 .plot-poly {
-    fill: transparent; stroke: transparent; stroke-width: 1px;
+    /* UPDATED: Tiny visible outline so people know shapes are there */
+    fill: rgba(212, 175, 55, 0.02); 
+    stroke: rgba(212, 175, 55, 0.3); 
+    stroke-width: 1px;
     transition: stroke 0.3s, filter 0.3s; cursor: pointer; vector-effect: non-scaling-stroke;
 }
 .plot-poly:hover {
@@ -213,6 +256,8 @@ p {
     .nav-bar { padding: 20px; }
     #info-card { width: 90%; left: 5% !important; top: auto !important; bottom: 20px; transform: translateY(20px); }
     #info-card.active { transform: translateY(0); }
+    /* Hide hint on mobile if it blocks view, or adjust */
+    .interaction-hint { font-size: 11px; padding: 5px 15px; width: 80%; justify-content: center; }
 }
 
 </style>
@@ -250,6 +295,12 @@ p {
 
 <div class="map-outer-wrapper">
     <div class="map-container">
+        <div class="interaction-hint" id="mapHint">
+            <div class="pulse-beacon"></div>
+            <span>СКАНИРАЙ: МИНИ С МИШКАТА ВЪРХУ ПАРЦЕЛ</span>
+            <i class="ri-cursor-line"></i>
+        </div>
+
         <div class="map-wrapper-inner">
             <img src="rotated_aligned.png" alt="Master Plan" id="master-map-img">
             
@@ -422,6 +473,7 @@ p {
     const img = document.getElementById('master-map-img');
     const svg = document.getElementById('plots-svg');
     const infoCard = document.getElementById('info-card');
+    const hintBadge = document.getElementById('mapHint');
     
     // Auto-Resize Logic
     img.onload = function() {
@@ -433,8 +485,18 @@ p {
     // --- INTERACTIVITY LOGIC ---
     const polys = document.querySelectorAll('.plot-poly');
     
+    // Hide hint after first interaction
+    let hasInteracted = false;
+    function hideHint() {
+        if (!hasInteracted) {
+            hintBadge.classList.add('hidden');
+            hasInteracted = true;
+        }
+    }
+
     polys.forEach(poly => {
         poly.addEventListener('mouseenter', (e) => {
+            hideHint();
             const upi = poly.getAttribute('data-upi');
             const data = plotsDB[upi];
             if (data) {
