@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Избор на Парцел | ЖК Нова Надежда</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Rajdhani:wght@300;500;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+<style>
+:root {
+    --bg-main: #050505;
+    --gold-main: #d4af37;
+    --gold-bright: #f9d763;
+    --gold-dim: #8a7122;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+
+body {
+    background-color: var(--bg-main);
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+}
+
+/* --- OVERLAYS --- */
+.noise-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50;
+    opacity: 0.05; background: url('https://grainy-gradients.vercel.app/noise.svg');
+}
+
+/* --- MAP STYLES --- */
+.map-section {
+    padding-top: 50px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; 
+}
+.map-container {
+    position: relative; width: 95%; max-width: 1600px;
+    border: 1px solid var(--gold-dim);
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    overflow: hidden; 
+    cursor: grab;
+}
+.map-wrapper-inner { position: relative; width: 100%; }
+
+#master-map-img {
+    width: 100%; height: auto; display: block; user-select: none;
+    filter: sepia(0.2) contrast(1.1) brightness(0.8);
+}
+
+#plots-svg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;
+}
+
+/* --- 🌟 THE NEW ANIMATION MAGIC 🌟 --- */
+
+/* 1. Base State (Invisible) */
+.plot-poly {
+    fill: transparent;
+    stroke: transparent;
+    stroke-width: 1px;
+    transition: stroke 0.3s, filter 0.3s;
+    cursor: pointer;
+    vector-effect: non-scaling-stroke;
+}
+
+/* 2. Hover State (Trigger Animation) */
+.plot-poly:hover {
+    /* Connects to the SVG Linear Gradient defined below */
+    fill: url(#gold-scan-gradient); 
+    
+    stroke: var(--gold-bright);
+    stroke-width: 3px;
+    
+    /* Neon Glow Effect */
+    filter: drop-shadow(0 0 10px var(--gold-main));
+    
+    /* Pulse Animation on the Border */
+    animation: borderPulse 2s infinite alternate;
+}
+
+@keyframes borderPulse {
+    0% { stroke-opacity: 1; stroke-width: 2px; }
+    100% { stroke-opacity: 0.5; stroke-width: 4px; }
+}
+
+/* --- INFO CARD --- */
+#info-card {
+    position: fixed; pointer-events: none; z-index: 1000;
+    width: 300px; background: rgba(10, 10, 10, 0.95);
+    border: 1px solid var(--gold-main); padding: 20px;
+    opacity: 0; transform: translateY(20px); transition: 0.2s;
+    backdrop-filter: blur(10px);
+}
+#info-card.active { opacity: 1; transform: translateY(0); }
+.info-title { font-family: 'Rajdhani'; font-size: 24px; color: var(--gold-main); font-weight: 700; display: block; margin-bottom: 10px;}
+.info-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; color: #ccc; }
+.info-val { color: white; font-weight: bold; }
+
+/* --- BUILDER TOOLS --- */
+#builder-controls {
+    display: block; position: fixed; bottom: 20px; left: 20px; z-index: 9999;
+    background: #222; padding: 15px; border: 1px solid var(--gold-main); color: white; width: 300px;
+}
+.builder-btn { 
+    background: var(--gold-main); color: #000; border: none; padding: 8px; 
+    cursor: pointer; margin-top: 5px; font-weight: bold; width: 100%; 
+}
+.magic-btn { background: #8a2be2; color: white; }
+
+</style>
+</head>
+<body>
+
+<div class="noise-overlay"></div>
+
+<div id="info-card">
+    <span class="info-title" id="card-upi">УПИ X</span>
+    <div class="info-row"><span>Площ:</span> <span class="info-val" id="card-area">0 m²</span></div>
+    <div class="info-row"><span>Вид:</span> <span class="info-val" id="card-type">-</span></div>
+    <div class="info-row"><span>РЗП:</span> <span class="info-val" id="card-rzp">0 m²</span></div>
+</div>
+
+<section class="map-section">
+    <div class="map-container">
+        <div class="map-wrapper-inner">
+            <img src="rotated_aligned.png" alt="Master Plan" id="master-map-img">
+            
+            <svg id="plots-svg" viewBox="0 0 1000 500" preserveAspectRatio="none">
+                
+                <defs>
+                    <linearGradient id="gold-scan-gradient" x1="0%" y1="0%" x2="200%" y2="200%">
+                        <stop offset="0%" stop-color="rgba(212, 175, 55, 0)" />
+                        
+                        <stop offset="40%" stop-color="rgba(212, 175, 55, 0.1)" />
+                        <stop offset="50%" stop-color="rgba(212, 175, 55, 0.6)" /> <stop offset="60%" stop-color="rgba(212, 175, 55, 0.1)" />
+                        
+                        <stop offset="100%" stop-color="rgba(212, 175, 55, 0)" />
+                        
+                        <animate attributeName="x1" from="-100%" to="100%" dur="1.5s" repeatCount="indefinite" />
+                        <animate attributeName="y1" from="-100%" to="100%" dur="1.5s" repeatCount="indefinite" />
+                        <animate attributeName="x2" from="0%" to="200%" dur="1.5s" repeatCount="indefinite" />
+                        <animate attributeName="y2" from="0%" to="200%" dur="1.5s" repeatCount="indefinite" />
+                    </linearGradient>
+                </defs>
+
+                <polygon class="plot-poly" data-upi="I" points="180,102 458,102 458,172 180,172"></polygon>
+                <polygon class="plot-poly" data-upi="II" points="179,197 305,197 305,249 179,249"></polygon>
+                <polygon class="plot-poly" data-upi="III" points="331,198 459,198 459,250 331,250"></polygon>
+                <polygon class="plot-poly" data-upi="IV" points="177,275 213,275 213,355 177,355"></polygon>
+                <polygon class="plot-poly" data-upi="V" points="238,274 273,274 273,353 238,353"></polygon>
+                <polygon class="plot-poly" data-upi="VI" points="299,271 339,271 339,353 299,353"></polygon>
+                <polygon class="plot-poly" data-upi="VII" points="361,274 397,274 397,353 361,353"></polygon>
+                <polygon class="plot-poly" data-upi="VIII" points="422,274 455,274 455,352 422,352"></polygon>
+                <polygon class="plot-poly" data-upi="IX" points="419,434 457,434 457,511 419,511"></polygon>
+                <polygon class="plot-poly" data-upi="X" points="359,431 396,431 396,509 359,509"></polygon>
+                <polygon class="plot-poly" data-upi="XI" points="299,432 334,432 334,508 299,508"></polygon>
+                <polygon class="plot-poly" data-upi="XII" points="236,430 275,430 275,509 236,509"></polygon>
+                <polygon class="plot-poly" data-upi="XIII" points="176,430 211,430 211,507 176,507"></polygon>
+                <polygon class="plot-poly" data-upi="XIV" points="175,534 230,534 230,626 175,626"></polygon>
+                <polygon class="plot-poly" data-upi="XV" points="254,589 278,589 278,627 254,627"></polygon>
+                <polygon class="plot-poly" data-upi="XVI" points="301,625 302,569 253,568 256,534 457,534 462,615 444,629"></polygon>
+                <polygon class="plot-poly" data-upi="XVII" points="577,628 577,572 533,574 530,614 545,627"></polygon>
+                <polygon class="plot-poly" data-upi="XVIII" points="603,583 645,583 645,628 603,628"></polygon>
+                <polygon class="plot-poly" data-upi="XIX" points="649,582 691,582 691,626 649,626"></polygon>
+                <polygon class="plot-poly" data-upi="XX" points="717,627 748,628 763,618 763,573 716,574"></polygon>
+                <polygon class="plot-poly" data-upi="XXI" points="702,508 758,508 758,551 702,551"></polygon>
+                <polygon class="plot-poly" data-upi="XXII" points="533,508 594,508 594,550 533,550"></polygon>
+                <polygon class="plot-poly" data-upi="XXIII" points="699,466 761,466 761,505 699,505"></polygon>
+                <polygon class="plot-poly" data-upi="XXIV" points="534,463 593,463 593,506 534,506"></polygon>
+                <polygon class="plot-poly" data-upi="XXV" points="534,400 595,400 595,439 534,439"></polygon>
+                <polygon class="plot-poly" data-upi="XXVI" points="700,401 759,401 759,441 700,441"></polygon>
+                <polygon class="plot-poly" data-upi="XXVII" points="700,356 762,356 762,398 700,398"></polygon>
+                <polygon class="plot-poly" data-upi="XXVIII" points="534,359 594,359 594,398 534,398"></polygon>
+                <polygon class="plot-poly" data-upi="XXIX" points="533,292 596,292 596,330 533,330"></polygon>
+                <polygon class="plot-poly" data-upi="XXX" points="700,291 761,291 761,332 700,332"></polygon>
+                <polygon class="plot-poly" data-upi="XXXI" points="699,247 761,247 761,288 699,288"></polygon>
+                <polygon class="plot-poly" data-upi="XXXII" points="535,248 596,248 596,288 535,288"></polygon>
+                <polygon class="plot-poly" data-upi="XXXIII" points="577,223 580,170 550,169 536,186 535,224"></polygon>
+                <polygon class="plot-poly" data-upi="XXXIV" points="604,169 648,169 648,215 604,215"></polygon>
+                <polygon class="plot-poly" data-upi="XXXV" points="648,170 695,170 695,214 648,214"></polygon>
+                <polygon class="plot-poly" data-upi="XXXVI" points="720,224 762,226 764,183 748,168 718,170"></polygon>
+                <polygon class="plot-poly" data-upi="XXXVII" points="880,223 836,223 835,185 848,168 881,169"></polygon>
+                <polygon class="plot-poly" data-upi="XXXVIII" points="904,171 949,171 949,218 904,218"></polygon>
+                <polygon class="plot-poly" data-upi="XXXIX" points="950,171 996,171 996,217 950,217"></polygon>
+                <polygon class="plot-poly" data-upi="XL" points="1018,223 1066,222 1067,182 1050,169 1018,172"></polygon>
+                <polygon class="plot-poly" data-upi="XLI" points="835,249 896,249 896,288 835,288"></polygon>
+                <polygon class="plot-poly" data-upi="XLII" points="702,247 762,247 762,287 702,287"></polygon>
+                <polygon class="plot-poly" data-upi="XLIII" points="535,293 597,293 597,333 535,333"></polygon>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<div id="builder-controls">
+    <h4>Builder Mode 🛠️</h4>
+    <p id="builder-info">Waiting...</p>
+    <div id="status-msg"></div>
+    <button class="builder-btn magic-btn" onclick="magicFixLast()">🪄 Magic Fix Shape</button>
+    <button class="builder-btn" onclick="copyAllGenerated()">📋 Copy ALL Generated</button>
+    <button class="builder-btn" style="background: #444; color: #fff; margin-top: 5px;" onclick="undoLastPoint()">↩️ Undo Point</button>
+</div>
+
+<script>
+    // --- DATABASE ---
+    const plotsDB = {
+        "I": { area: 1916, type: "Обществено обслужване", rzp: 2229.2 },
+        "II": { area: 769, type: "Обществено обслужване", rzp: 922.8 },
+        "III": { area: 772, type: "Обществено обслужване", rzp: 926.4 },
+        "IV": { area: 427, type: "Обществено обслужване", rzp: 512.4 },
+        "V": { area: 427, type: "Обществено обслужване", rzp: 512.4 },
+        "VI": { area: 427, type: "Обществено обслужване", rzp: 512.4 },
+        "VII": { area: 427, type: "Обществено обслужване", rzp: 512.4 },
+        "VIII": { area: 415, type: "Обществено обслужване", rzp: 498 },
+        "IX": { area: 419, type: "Обществено обслужване", rzp: 502.8 },
+        "X": { area: 427, type: "Обществено обслужване", rzp: 512.4 },
+        "XI": { area: 427, type: "Обществено обслужване", rzp: 512.4 },
+        "XII": { area: 427, type: "Обществено обслужване", rzp: 512.4 },
+        "XIII": { area: 428, type: "Обществено обслужване", rzp: 513.4 },
+        "XIV": { area: 615, type: "Обществено обслужване", rzp: 738 },
+        "XV": { area: 190, type: "Обществено обслужване", rzp: 228 },
+        "XVI": { area: 1562, type: "Обществено обслужване", rzp: 1874.4 },
+        "XVII": { area: 337, type: "Жилищно строителство", rzp: 404.4 },
+        "XVIII": { area: 300, type: "Жилищно строителство", rzp: 360 },
+        "XIX": { area: 300, type: "Жилищно строителство", rzp: 360 },
+        "XX": { area: 337, type: "Жилищно строителство", rzp: 404.4 },
+        "XXI": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXII": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXIII": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXIV": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXV": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXVI": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXVII": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXVIII": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXIX": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXX": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXXI": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXXII": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XXXIII": { area: 336, type: "Жилищно строителство", rzp: 403.2 },
+        "XXXIV": { area: 300, type: "Жилищно строителство", rzp: 360 },
+        "XXXV": { area: 300, type: "Жилищно строителство", rzp: 360 },
+        "XXXVI": { area: 336, type: "Жилищно строителство", rzp: 403.2 },
+        "XXXVII": { area: 336, type: "Жилищно строителство", rzp: 403.2 },
+        "XXXVIII": { area: 300, type: "Жилищно строителство", rzp: 360 },
+        "XXXIX": { area: 300, type: "Жилищно строителство", rzp: 360 },
+        "XL": { area: 336, type: "Жилищно строителство", rzp: 403.2 },
+        "XLI": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XLII": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XLIII": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XLIV": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XLV": { area: 2726, type: "Обществено обслужване", rzp: 2671.2 },
+        "XLVI": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XLVII": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "XLVIII": { area: 337, type: "Жилищно строителство", rzp: 404.4 },
+        "XLIX": { area: 300, type: "Жилищно строителство", rzp: 360 },
+        "L": { area: 300, type: "Жилищно строителство", rzp: 360 },
+        "LI": { area: 337, type: "Жилищно строителство", rzp: 404.4 },
+        "LII": { area: 337, type: "Жилищно строителство", rzp: 404.4 },
+        "LIII": { area: 300, type: "Жилищно строителство", rzp: 360 },
+        "LIV": { area: 300, type: "Жилищно строителство", rzp: 360 },
+        "LV": { area: 337, type: "Жилищно строителство", rzp: 404.4 },
+        "LVI": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "LVII": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "LVIII": { area: 363, type: "Жилищно строителство", rzp: 435.6 },
+        "LIX": { area: 322, type: "Жилищно строителство", rzp: 386.4 },
+        "LX": { area: 322, type: "Жилищно строителство", rzp: 386.4 },
+        "LXI": { area: 363, type: "Жилищно строителство", rzp: 435.6 },
+        "LXII": { area: 311, type: "Жилищно строителство", rzp: 373.2 },
+        "LXIII": { area: 311, type: "Жилищно строителство", rzp: 373.2 },
+        "LXIV": { area: 312, type: "Жилищно строителство", rzp: 374.4 },
+        "LXV": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "LXVI": { area: 312, type: "Жилищно строителство", rzp: 374.4 },
+        "LXVII": { area: 311, type: "Жилищно строителство", rzp: 373.2 },
+        "LXVIII": { area: 311, type: "Жилищно строителство", rzp: 373.2 },
+        "LXIX": { area: 339, type: "Жилищно строителство", rzp: 406.8 },
+        "LXX": { area: 454, type: "Жилищно строителство", rzp: 544.8 },
+        "LXXI": { area: 387, type: "Жилищно строителство", rzp: 464.4 },
+        "LXXII": { area: 376, type: "Жилищно строителство", rzp: 451.2 },
+        "LXXIII": { area: 389, type: "Жилищно строителство", rzp: 466.8 },
+        "LXXIV": { area: 386, type: "Жилищно строителство", rzp: 463.8 },
+        "LXXV": { area: 382, type: "Жилищно строителство", rzp: 458.4 },
+        "LXXVI": { area: 379, type: "Жилищно строителство", rzp: 454.8 },
+        "LXXVII": { area: 375, type: "Жилищно строителство", rzp: 450 },
+        "LXXVIII": { area: 3001, type: "Обществено обслужване", rzp: 3601.2 }
+    };
+
+    const img = document.getElementById('master-map-img');
+    const svg = document.getElementById('plots-svg');
+    const infoCard = document.getElementById('info-card');
+    
+    img.onload = function() {
+        const w = img.naturalWidth;
+        const h = img.naturalHeight;
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    };
+
+    // --- TOOLTIP ---
+    const polys = document.querySelectorAll('.plot-poly');
+    polys.forEach(poly => {
+        poly.addEventListener('mouseenter', (e) => {
+            const upi = poly.getAttribute('data-upi');
+            const data = plotsDB[upi];
+            if (data) {
+                document.getElementById('card-upi').textContent = `УПИ ${upi}`;
+                document.getElementById('card-area').textContent = data.area + ' m²';
+                document.getElementById('card-type').textContent = data.type;
+                document.getElementById('card-rzp').textContent = data.rzp + ' m²';
+                infoCard.classList.add('active');
+            }
+        });
+        poly.addEventListener('mousemove', (e) => {
+            const x = e.clientX + 20;
+            const y = e.clientY + 20;
+            infoCard.style.left = `${x}px`;
+            infoCard.style.top = `${y}px`;
+        });
+        poly.addEventListener('mouseleave', () => {
+            infoCard.classList.remove('active');
+        });
+    });
+
+    // --- BUILDER MODE ---
+    const BUILDER_MODE = true; 
+
+    if (BUILDER_MODE) {
+        document.getElementById('builder-controls').style.display = 'block';
+        
+        const plotKeys = Object.keys(plotsDB);
+        let currentIndex = 43; 
+        
+        let currentPoints = [];
+        let tempDots = []; 
+        let allGeneratedCode = ""; 
+
+        function updateBuilderUI() {
+            const nextUPI = plotKeys[currentIndex];
+            if(!nextUPI) {
+                document.getElementById('builder-info').innerHTML = "<b>ALL DONE! 🎉</b>";
+                return;
+            }
+            document.getElementById('builder-info').innerHTML = 
+                `MAPPING: <b style="color: yellow; font-size: 18px;">${nextUPI}</b><br>Points: ${currentPoints.length}`;
+        }
+        
+        updateBuilderUI();
+
+        svg.addEventListener('click', (e) => {
+            if (!plotKeys[currentIndex]) return;
+            const rect = svg.getBoundingClientRect();
+            const scaleX = img.naturalWidth / rect.width;
+            const scaleY = img.naturalHeight / rect.height;
+            const relX = (e.clientX - rect.left) * scaleX;
+            const relY = (e.clientY - rect.top) * scaleY;
+            
+            const pt = `${Math.round(relX)},${Math.round(relY)}`;
+            currentPoints.push(pt);
+            
+            const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            dot.setAttribute("cx", relX);
+            dot.setAttribute("cy", relY);
+            dot.setAttribute("r", 5);
+            dot.setAttribute("fill", "#00ff00");
+            dot.setAttribute("stroke", "black");
+            svg.appendChild(dot);
+            tempDots.push(dot);
+
+            updateBuilderUI();
+        });
+
+        window.magicFixLast = function() {
+            if(currentPoints.length !== 4) { alert("Magic Fix only works on 4-sided rectangles! 🛑"); return; }
+            let xs = currentPoints.map(p => parseInt(p.split(',')[0]));
+            let ys = currentPoints.map(p => parseInt(p.split(',')[1]));
+            let minX = Math.min(...xs), maxX = Math.max(...xs);
+            let minY = Math.min(...ys), maxY = Math.max(...ys);
+            
+            // Reorder to generic TL, TR, BR, BL order isn't guaranteed but box is fixed
+            const fixedPoints = [`${minX},${minY}`, `${maxX},${minY}`, `${maxX},${maxY}`, `${minX},${maxY}`];
+            currentPoints = fixedPoints;
+            
+            tempDots.forEach(dot => dot.remove());
+            tempDots = [];
+            fixedPoints.forEach(pt => {
+                const coords = pt.split(',');
+                const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                dot.setAttribute("cx", coords[0]); dot.setAttribute("cy", coords[1]);
+                dot.setAttribute("r", 5); dot.setAttribute("fill", "#8a2be2"); dot.setAttribute("stroke", "white");
+                svg.appendChild(dot);
+                tempDots.push(dot);
+            });
+            const status = document.getElementById('status-msg');
+            status.textContent = `SHAPE STRAIGHTENED! ✨`; status.style.color = "#a55eea";
+        };
+
+        window.undoLastPoint = function() {
+            if(currentPoints.length > 0) {
+                currentPoints.pop();
+                const lastDot = tempDots.pop();
+                if(lastDot) lastDot.remove();
+                updateBuilderUI();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.key === 'Enter') {
+                e.preventDefault(); 
+                if (currentPoints.length < 3) return;
+                const currentUPI = plotKeys[currentIndex];
+                const pointsString = currentPoints.join(' ');
+                const newPolyTag = `<polygon class="plot-poly" data-upi="${currentUPI}" points="${pointsString}"></polygon>`;
+                allGeneratedCode += newPolyTag + "\n";
+                navigator.clipboard.writeText(newPolyTag).then(() => {
+                    const status = document.getElementById('status-msg');
+                    status.textContent = `COPIED ${currentUPI}! ✅`; status.style.color = "#00ff00";
+                    setTimeout(() => status.textContent = "", 2000);
+                });
+                console.log(newPolyTag);
+                tempDots.forEach(dot => dot.remove());
+                tempDots = [];
+                currentPoints = [];
+                currentIndex++;
+                updateBuilderUI();
+            }
+        });
+
+        window.copyAllGenerated = function() {
+            if (!allGeneratedCode) { alert("Map something first!"); return; }
+            navigator.clipboard.writeText(allGeneratedCode).then(() => {
+                alert("COPIED ALL POLYGONS! \nNow paste them inside <svg>.");
+            });
+        }
+    }
+</script>
+</body>
+</html>

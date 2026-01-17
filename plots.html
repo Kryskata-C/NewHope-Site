@@ -1,68 +1,478 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Купи Парцел - Нова Надежда</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        :root { --bg-main: #0c0b09; --bg-card: #14120e; --gold-main: #d4af37; --text-white: #ffffff; --text-grey: #e0e0e0; --p-mobile: 20px; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg-main); color: var(--text-white); font-family: 'Roboto', sans-serif; }
-        .back-nav { padding: 20px; max-width: 900px; margin: 0 auto; }
-        .back-nav a { color: var(--gold-main); text-decoration: none; font-family: 'Rajdhani'; font-weight: 700; font-size: 20px; }
-        section { padding: 40px 20px; max-width: 900px; margin: 0 auto; }
-        h1 { font-family: 'Rajdhani'; font-size: 32px; color: var(--gold-main); border-bottom: 2px solid var(--gold-main); display: inline-block; padding-bottom: 5px; margin-bottom: 20px; text-transform: uppercase; }
-        h2 { font-family: 'Rajdhani'; font-size: 24px; color: white; margin-bottom: 20px; }
-        h3 { font-family: 'Rajdhani'; font-size: 22px; color: var(--gold-main); margin-top: 30px; }
-        p { font-size: var(--p-mobile); color: var(--text-grey); margin-bottom: 25px; }
-        .img-placeholder { width: 100%; height: 250px; border: 2px dashed var(--gold-main); background: rgba(212, 175, 55, 0.05); display: flex; align-items: center; justify-content: center; margin: 30px 0; border-radius: 10px; color: var(--gold-main); font-family: 'Rajdhani'; font-weight: 700; font-size: 20px; text-transform: uppercase; }
-        .map-container { border: 2px solid var(--gold-main); border-radius: 10px; overflow: hidden; margin: 30px 0; cursor: pointer; }
-        .map-placeholder { background: radial-gradient(circle, #2a251e 0%, #0c0b09 100%); min-height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; color: var(--gold-main); }
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: var(--bg-card); border: 2px solid var(--gold-main); padding: 30px; border-radius: 15px; width: 100%; max-width: 450px; text-align: center; position: relative; }
-        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 40px; color: var(--gold-main); cursor: pointer; }
-        .btn-main { display: block; width: 100%; padding: 20px; margin: 15px 0; border-radius: 10px; text-align: center; text-decoration: none; font-family: 'Rajdhani'; font-weight: 700; font-size: 24px; text-transform: uppercase; }
-        .btn-whatsapp { background-color: #25D366; color: white; border: 2px solid white; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Купи Парцел | ЖК Нова Надежда</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+<style>
+/* --- 💎 CORE LUXURY THEME --- */
+:root {
+    --bg-main: #050505;
+    --gold-main: #d4af37;
+    --gold-bright: #f9d763;
+    --gold-dim: #8a7122;
+    --text-white: #ffffff;
+    --text-grey: #b0b0b0;
+    --glass: rgba(15, 15, 15, 0.9);
+    --glass-border: rgba(212, 175, 55, 0.2);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-white);
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* --- 🌫️ ATMOSPHERE --- */
+.noise-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50;
+    opacity: 0.04; background: url('https://grainy-gradients.vercel.app/noise.svg');
+}
+.grid-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;
+    background-image: 
+        linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px), 
+        linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+}
+.vignette {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 49;
+    background: radial-gradient(circle, transparent 50%, #050505 100%);
+}
+
+/* --- 🧭 NAVIGATION --- */
+.nav-bar {
+    padding: 30px 5%;
+    position: relative; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.back-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 30px;
+    border: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.4);
+    color: var(--gold-main);
+    text-decoration: none;
+    font-family: 'Rajdhani'; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+    transition: 0.4s ease;
+    backdrop-filter: blur(10px);
+}
+.back-btn:hover {
+    background: var(--gold-main); color: #000;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+}
+
+/* --- 📄 CONTENT SECTION --- */
+.content-wrapper {
+    max-width: 1000px; margin: 0 auto; padding: 20px 20px 60px;
+    position: relative; z-index: 10;
+}
+
+/* Typography */
+h1 {
+    font-family: 'Rajdhani'; font-size: clamp(40px, 8vw, 80px); 
+    line-height: 1; font-weight: 700; color: var(--text-white);
+    text-transform: uppercase; margin-bottom: 20px;
+    opacity: 0; animation: fadeInUp 0.8s forwards;
+}
+.gold-text { color: var(--gold-main); text-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
+
+h2 {
+    font-family: 'Rajdhani'; font-size: clamp(18px, 4vw, 28px);
+    color: var(--text-grey); font-weight: 500; text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 40px; border-left: 3px solid var(--gold-main); padding-left: 20px;
+    opacity: 0; animation: fadeInUp 0.8s 0.2s forwards;
+}
+
+p {
+    font-size: 18px; color: #ccc; margin-bottom: 25px; max-width: 800px;
+    opacity: 0; animation: fadeInUp 0.8s 0.4s forwards;
+}
+
+/* Holographic Image Placeholder */
+.holo-frame {
+    width: 100%; height: 300px; margin: 40px 0;
+    border: 1px solid var(--glass-border);
+    background: 
+        linear-gradient(45deg, transparent 48%, var(--gold-main) 50%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, var(--gold-main) 50%, transparent 52%),
+        radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%);
+    background-size: 20px 20px, 20px 20px, 100% 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    opacity: 0; animation: fadeInUp 0.8s 0.5s forwards;
+}
+.holo-frame::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(212,175,55,0.1), transparent);
+    animation: scanline 3s infinite linear;
+}
+.holo-icon { font-size: 40px; color: var(--gold-main); margin-bottom: 10px; opacity: 0.8; }
+.holo-text { font-family: 'Rajdhani'; color: var(--gold-main); letter-spacing: 4px; text-transform: uppercase; font-size: 14px; }
+
+@keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- 🗺️ IRON MAN MAP CONTAINER --- */
+.map-header {
+    text-align: center; margin-top: 60px; margin-bottom: 30px;
+    font-family: 'Rajdhani'; color: var(--gold-main); font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
+    opacity: 0; animation: fadeInUp 0.8s 0.6s forwards;
+}
+
+.map-outer-wrapper {
+    display: flex; justify-content: center; width: 100%; padding-bottom: 100px;
+    opacity: 0; animation: fadeInUp 1s 0.8s forwards;
+}
+
+.map-container {
+    position: relative; width: 98%; max-width: 1600px;
+    border: 1px solid var(--gold-dim);
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    overflow: hidden; 
+    cursor: grab;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.map-container:hover { box-shadow: 0 0 80px rgba(212, 175, 55, 0.15); border-color: var(--gold-main); }
+.map-container:active { cursor: grabbing; }
+
+.map-wrapper-inner { position: relative; width: 100%; }
+
+#master-map-img {
+    width: 100%; height: auto; display: block; user-select: none;
+    /* Luxury Filter: Slightly darker, sepia tone */
+    filter: sepia(0.2) contrast(1.1) brightness(0.8) grayscale(0.2);
+    transition: 0.5s;
+}
+
+#plots-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
+
+/* --- ✨ INTERACTIVE PLOT STYLES --- */
+.plot-poly {
+    fill: transparent; stroke: transparent; stroke-width: 1px;
+    transition: stroke 0.3s, filter 0.3s; cursor: pointer; vector-effect: non-scaling-stroke;
+}
+.plot-poly:hover {
+    fill: url(#gold-scan-gradient); 
+    stroke: var(--gold-bright); stroke-width: 3px;
+    filter: drop-shadow(0 0 15px var(--gold-main));
+    animation: borderPulse 2s infinite alternate;
+}
+@keyframes borderPulse {
+    0% { stroke-opacity: 1; stroke-width: 2px; }
+    100% { stroke-opacity: 0.8; stroke-width: 4px; }
+}
+
+/* --- ℹ️ INFO CARD (HUD STYLE) --- */
+#info-card {
+    position: fixed; pointer-events: none; z-index: 1000;
+    width: 320px; background: rgba(5, 5, 5, 0.95);
+    border: 1px solid var(--gold-main); padding: 25px;
+    opacity: 0; transform: translateY(20px); transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+}
+#info-card::before {
+    content: ''; position: absolute; top: -1px; left: -1px; width: 10px; height: 10px; 
+    border-top: 2px solid var(--gold-bright); border-left: 2px solid var(--gold-bright);
+}
+#info-card.active { opacity: 1; transform: translateY(0); }
+
+.info-header { 
+    border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 15px; 
+    display: flex; justify-content: space-between; align-items: center; 
+}
+.info-title { font-family: 'Rajdhani'; font-size: 32px; color: var(--gold-main); font-weight: 700; line-height: 0.8; }
+.info-status { 
+    font-size: 10px; background: #25D366; color: #000; padding: 4px 8px; 
+    font-weight: 800; border-radius: 2px; text-transform: uppercase; letter-spacing: 1px;
+}
+
+.info-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 15px; color: #888; }
+.info-label { text-transform: uppercase; font-size: 11px; letter-spacing: 2px; }
+.info-val { color: white; font-weight: bold; font-family: 'Rajdhani'; font-size: 20px; }
+
+.cta-hint { 
+    margin-top: 15px; padding-top: 10px; border-top: 1px dashed #333;
+    font-size: 10px; color: var(--gold-dim); text-transform: uppercase; text-align: center; letter-spacing: 2px;
+}
+
+/* --- MOBILE --- */
+@media (max-width: 768px) {
+    h1 { font-size: 40px; }
+    h2 { font-size: 18px; }
+    .nav-bar { padding: 20px; }
+    #info-card { width: 90%; left: 5% !important; top: auto !important; bottom: 20px; transform: translateY(20px); }
+    #info-card.active { transform: translateY(0); }
+}
+
+</style>
 </head>
 <body>
-    <div class="back-nav"><a href="index.html"><i class="ri-arrow-left-line"></i> НАЗАД КЪМ НАЧАЛО</a></div>
-    <section id="plots">
-        <h1>ПОКУПКА НА ПАРЦЕЛ</h1>
-        <h2>Купи парцел в Нова Надежда – с готова инфраструктура</h2>
-        <p>В Нова Надежда можеш да притежаваш собствен парцел (УПИ), върху който да строиш веднага. Всички основни мрежи са изградени – ток, вода, канализация, газ и оптична свързаност.</p>
-        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА ПАРЦЕЛ</div>
-        <p>Тук можеш да изградиш дом, работилница, магазин, ресторант, кафене, офис или да съчетаеш жилище и бизнес в един имот. Кварталът е планиран така, че да дава свобода за развитие и ясни условия за бъдещето.</p>
-        <p>Това е възможност, която се появява рядко: нов квартал, подредена среда, готови УПИ, удобства наблизо и проект, който се развива бързо. Много хора вече избраха своите парцели, защото разбират стойността на подобна възможност.</p>
-        <p>Погледни картата на квартала по-долу, виж свободните парцели и избери мястото, което ще бъде твое.</p>
-        <h3 style="text-align: center; margin-top: 30px;">Избери своя парцел от скицата на квартала.</h3>
-        <div class="map-container" onclick="openModal()">
-            <div class="map-placeholder">
-                <i class="ri-map-2-line" style="font-size: 60px; margin-bottom: 20px;"></i>
-                <h3 style="margin: 0; color: white;">КАРТА (Кликни тук)</h3>
-            </div>
-        </div>
-    </section>
 
-    <div class="modal-overlay" id="plotModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 style="margin-bottom: 10px; color: var(--gold-main);">Парцeл № 14</h2>
-            <div style="background: green; color: white; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px;">Свободно</div>
-            <p style="color:white; font-size: 18px; margin-bottom: 5px;">Площ: 420 кв.м</p>
-            <p style="color:white; font-size: 18px;">Разгъната застроена площ (РЗП): 630 кв.м</p>
-            <hr style="border-color: #333; margin: 20px 0;">
-            <a href="https://wa.me/359888123456" class="btn-main btn-whatsapp">Уговори среща</a>
+<div class="noise-overlay"></div>
+<div class="grid-overlay"></div>
+<div class="vignette"></div>
+
+<nav class="nav-bar">
+    <img src="logo.png" alt="Nova Nadezhda" style="height: 50px;">
+    <a href="index.html" class="back-btn"><i class="ri-arrow-left-line"></i> НАЧАЛО</a>
+</nav>
+
+<section class="content-wrapper">
+    <h1>ПОКУПКА НА <span class="gold-text">ПАРЦЕЛ</span></h1>
+    <h2>В Нова Надежда – с готова инфраструктура</h2>
+    
+    <p>В "Нова Надежда" можеш да притежаваш собствен парцел (УПИ), върху който да строиш веднага. Всички основни мрежи са изградени – <strong style="color:white">ток, вода, канализация, газ и оптична свързаност.</strong></p>
+    
+    <div class="holo-frame">
+        <i class="ri-landscape-line holo-icon"></i>
+        <span class="holo-text">ВИЗУАЛИЗАЦИЯ НА ПАРЦЕЛ</span>
+        <span style="font-size: 10px; color: #555; margin-top: 5px;">SYSTEM LOADING...</span>
+    </div>
+    
+    <p>Тук можеш да изградиш дом, работилница, магазин, ресторант, кафене, офис или да съчетаеш жилище и бизнес в един имот. Кварталът е планиран така, че да дава свобода за развитие и ясни условия за бъдещето.</p>
+    <p>Това е възможност, която се появява рядко: нов квартал, подредена среда, готови УПИ, удобства наблизо и проект, който се развива бързо. Много хора вече избраха своите парцели, защото разбират стойността на подобна възможност.</p>
+    
+    <div class="map-header">
+        <i class="ri-map-pin-range-line"></i> ИЗБЕРИ СВОЯ ПАРЦЕЛ ОТ КАРТАТА
+    </div>
+</section>
+
+<div class="map-outer-wrapper">
+    <div class="map-container">
+        <div class="map-wrapper-inner">
+            <img src="rotated_aligned.png" alt="Master Plan" id="master-map-img">
+            
+            <svg id="plots-svg" viewBox="0 0 1000 500" preserveAspectRatio="none">
+                
+                <defs>
+                    <linearGradient id="gold-scan-gradient" x1="0%" y1="0%" x2="200%" y2="200%">
+                        <stop offset="0%" stop-color="rgba(212, 175, 55, 0)" />
+                        <stop offset="40%" stop-color="rgba(212, 175, 55, 0.1)" />
+                        <stop offset="50%" stop-color="rgba(212, 175, 55, 0.6)" /> <stop offset="60%" stop-color="rgba(212, 175, 55, 0.1)" />
+                        <stop offset="100%" stop-color="rgba(212, 175, 55, 0)" />
+                        <animate attributeName="x1" from="-100%" to="100%" dur="2s" repeatCount="indefinite" />
+                        <animate attributeName="y1" from="-100%" to="100%" dur="2s" repeatCount="indefinite" />
+                        <animate attributeName="x2" from="0%" to="200%" dur="2s" repeatCount="indefinite" />
+                        <animate attributeName="y2" from="0%" to="200%" dur="2s" repeatCount="indefinite" />
+                    </linearGradient>
+                </defs>
+
+                <polygon class="plot-poly" data-upi="I" points="180,102 458,102 458,172 180,172"></polygon>
+                <polygon class="plot-poly" data-upi="II" points="179,197 305,197 305,249 179,249"></polygon>
+                <polygon class="plot-poly" data-upi="III" points="331,198 459,198 459,250 331,250"></polygon>
+                <polygon class="plot-poly" data-upi="IV" points="177,275 213,275 213,355 177,355"></polygon>
+                <polygon class="plot-poly" data-upi="V" points="238,274 273,274 273,353 238,353"></polygon>
+                <polygon class="plot-poly" data-upi="VI" points="299,271 339,271 339,353 299,353"></polygon>
+                <polygon class="plot-poly" data-upi="VII" points="361,274 397,274 397,353 361,353"></polygon>
+                <polygon class="plot-poly" data-upi="VIII" points="422,274 455,274 455,352 422,352"></polygon>
+                <polygon class="plot-poly" data-upi="IX" points="419,434 457,434 457,511 419,511"></polygon>
+                <polygon class="plot-poly" data-upi="X" points="359,431 396,431 396,509 359,509"></polygon>
+                <polygon class="plot-poly" data-upi="XI" points="299,432 334,432 334,508 299,508"></polygon>
+                <polygon class="plot-poly" data-upi="XII" points="236,430 275,430 275,509 236,509"></polygon>
+                <polygon class="plot-poly" data-upi="XIII" points="176,430 211,430 211,507 176,507"></polygon>
+                <polygon class="plot-poly" data-upi="XIV" points="175,534 230,534 230,626 175,626"></polygon>
+                <polygon class="plot-poly" data-upi="XV" points="254,589 278,589 278,627 254,627"></polygon>
+                <polygon class="plot-poly" data-upi="XVI" points="301,625 302,569 253,568 256,534 457,534 462,615 444,629"></polygon>
+                <polygon class="plot-poly" data-upi="XVII" points="577,628 577,572 533,574 530,614 545,627"></polygon>
+                <polygon class="plot-poly" data-upi="XVIII" points="603,583 645,583 645,628 603,628"></polygon>
+                <polygon class="plot-poly" data-upi="XIX" points="649,582 691,582 691,626 649,626"></polygon>
+                <polygon class="plot-poly" data-upi="XX" points="717,627 748,628 763,618 763,573 716,574"></polygon>
+                <polygon class="plot-poly" data-upi="XXI" points="702,508 758,508 758,551 702,551"></polygon>
+                <polygon class="plot-poly" data-upi="XXII" points="533,508 594,508 594,550 533,550"></polygon>
+                <polygon class="plot-poly" data-upi="XXIII" points="699,466 761,466 761,505 699,505"></polygon>
+                <polygon class="plot-poly" data-upi="XXIV" points="534,463 593,463 593,506 534,506"></polygon>
+                <polygon class="plot-poly" data-upi="XXV" points="534,400 595,400 595,439 534,439"></polygon>
+                <polygon class="plot-poly" data-upi="XXVI" points="700,401 759,401 759,441 700,441"></polygon>
+                <polygon class="plot-poly" data-upi="XXVII" points="700,356 762,356 762,398 700,398"></polygon>
+                <polygon class="plot-poly" data-upi="XXVIII" points="534,359 594,359 594,398 534,398"></polygon>
+                <polygon class="plot-poly" data-upi="XXIX" points="533,292 596,292 596,330 533,330"></polygon>
+                <polygon class="plot-poly" data-upi="XXX" points="700,291 761,291 761,332 700,332"></polygon>
+                <polygon class="plot-poly" data-upi="XXXI" points="699,247 761,247 761,288 699,288"></polygon>
+                <polygon class="plot-poly" data-upi="XXXII" points="535,248 596,248 596,288 535,288"></polygon>
+                <polygon class="plot-poly" data-upi="XXXIII" points="577,223 580,170 550,169 536,186 535,224"></polygon>
+                <polygon class="plot-poly" data-upi="XXXIV" points="604,169 648,169 648,215 604,215"></polygon>
+                <polygon class="plot-poly" data-upi="XXXV" points="648,170 695,170 695,214 648,214"></polygon>
+                <polygon class="plot-poly" data-upi="XXXVI" points="720,224 762,226 764,183 748,168 718,170"></polygon>
+                <polygon class="plot-poly" data-upi="XXXVII" points="880,223 836,223 835,185 848,168 881,169"></polygon>
+                <polygon class="plot-poly" data-upi="XXXVIII" points="904,171 949,171 949,218 904,218"></polygon>
+                <polygon class="plot-poly" data-upi="XXXIX" points="950,171 996,171 996,217 950,217"></polygon>
+                <polygon class="plot-poly" data-upi="XL" points="1018,223 1066,222 1067,182 1050,169 1018,172"></polygon>
+                <polygon class="plot-poly" data-upi="XLI" points="835,249 896,249 896,288 835,288"></polygon>
+                <polygon class="plot-poly" data-upi="XLII" points="702,247 762,247 762,287 702,287"></polygon>
+                <polygon class="plot-poly" data-upi="XLIII" points="535,293 597,293 597,333 535,333"></polygon>
+            </svg>
         </div>
     </div>
+</div>
 
-    <script>
-        const modal = document.getElementById('plotModal');
-        function openModal() { modal.style.display = 'flex'; }
-        function closeModal() { modal.style.display = 'none'; }
-        window.onclick = function(event) { if (event.target == modal) { closeModal(); } }
-    </script>
+<div id="info-card">
+    <div class="info-header">
+        <span class="info-title" id="card-upi">УПИ X</span>
+        <span class="info-status">СВОБОДЕН</span>
+    </div>
+    <div class="info-row">
+        <span class="info-label">Площ</span>
+        <span class="info-val" id="card-area">0 m²</span>
+    </div>
+    <div class="info-row">
+        <span class="info-label">Предназначение</span>
+        <span class="info-val" id="card-type">-</span>
+    </div>
+    <div class="info-row">
+        <span class="info-label">Макс. РЗП</span>
+        <span class="info-val" id="card-rzp">0 m²</span>
+    </div>
+    <div class="cta-hint"><i class="ri-whatsapp-line"></i> КЛИКНИ ЗА ЗАПИТВАНЕ</div>
+</div>
+
+<script>
+    // --- PLOT DATA BASE ---
+    const plotsDB = {
+        "I": { area: 1916, type: "Обществено", rzp: 2229.2 },
+        "II": { area: 769, type: "Обществено", rzp: 922.8 },
+        "III": { area: 772, type: "Обществено", rzp: 926.4 },
+        "IV": { area: 427, type: "Обществено", rzp: 512.4 },
+        "V": { area: 427, type: "Обществено", rzp: 512.4 },
+        "VI": { area: 427, type: "Обществено", rzp: 512.4 },
+        "VII": { area: 427, type: "Обществено", rzp: 512.4 },
+        "VIII": { area: 415, type: "Обществено", rzp: 498 },
+        "IX": { area: 419, type: "Обществено", rzp: 502.8 },
+        "X": { area: 427, type: "Обществено", rzp: 512.4 },
+        "XI": { area: 427, type: "Обществено", rzp: 512.4 },
+        "XII": { area: 427, type: "Обществено", rzp: 512.4 },
+        "XIII": { area: 428, type: "Обществено", rzp: 513.4 },
+        "XIV": { area: 615, type: "Обществено", rzp: 738 },
+        "XV": { area: 190, type: "Обществено", rzp: 228 },
+        "XVI": { area: 1562, type: "Обществено", rzp: 1874.4 },
+        "XVII": { area: 337, type: "Жилищно", rzp: 404.4 },
+        "XVIII": { area: 300, type: "Жилищно", rzp: 360 },
+        "XIX": { area: 300, type: "Жилищно", rzp: 360 },
+        "XX": { area: 337, type: "Жилищно", rzp: 404.4 },
+        "XXI": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXII": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXIII": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXIV": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXV": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXVI": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXVII": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXVIII": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXIX": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXX": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXXI": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXXII": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XXXIII": { area: 336, type: "Жилищно", rzp: 403.2 },
+        "XXXIV": { area: 300, type: "Жилищно", rzp: 360 },
+        "XXXV": { area: 300, type: "Жилищно", rzp: 360 },
+        "XXXVI": { area: 336, type: "Жилищно", rzp: 403.2 },
+        "XXXVII": { area: 336, type: "Жилищно", rzp: 403.2 },
+        "XXXVIII": { area: 300, type: "Жилищно", rzp: 360 },
+        "XXXIX": { area: 300, type: "Жилищно", rzp: 360 },
+        "XL": { area: 336, type: "Жилищно", rzp: 403.2 },
+        "XLI": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XLII": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XLIII": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XLIV": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XLV": { area: 2726, type: "Обществено", rzp: 2671.2 },
+        "XLVI": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XLVII": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "XLVIII": { area: 337, type: "Жилищно", rzp: 404.4 },
+        "XLIX": { area: 300, type: "Жилищно", rzp: 360 },
+        "L": { area: 300, type: "Жилищно", rzp: 360 },
+        "LI": { area: 337, type: "Жилищно", rzp: 404.4 },
+        "LII": { area: 337, type: "Жилищно", rzp: 404.4 },
+        "LIII": { area: 300, type: "Жилищно", rzp: 360 },
+        "LIV": { area: 300, type: "Жилищно", rzp: 360 },
+        "LV": { area: 337, type: "Жилищно", rzp: 404.4 },
+        "LVI": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "LVII": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "LVIII": { area: 363, type: "Жилищно", rzp: 435.6 },
+        "LIX": { area: 322, type: "Жилищно", rzp: 386.4 },
+        "LX": { area: 322, type: "Жилищно", rzp: 386.4 },
+        "LXI": { area: 363, type: "Жилищно", rzp: 435.6 },
+        "LXII": { area: 311, type: "Жилищно", rzp: 373.2 },
+        "LXIII": { area: 311, type: "Жилищно", rzp: 373.2 },
+        "LXIV": { area: 312, type: "Жилищно", rzp: 374.4 },
+        "LXV": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "LXVI": { area: 312, type: "Жилищно", rzp: 374.4 },
+        "LXVII": { area: 311, type: "Жилищно", rzp: 373.2 },
+        "LXVIII": { area: 311, type: "Жилищно", rzp: 373.2 },
+        "LXIX": { area: 339, type: "Жилищно", rzp: 406.8 },
+        "LXX": { area: 454, type: "Жилищно", rzp: 544.8 },
+        "LXXI": { area: 387, type: "Жилищно", rzp: 464.4 },
+        "LXXII": { area: 376, type: "Жилищно", rzp: 451.2 },
+        "LXXIII": { area: 389, type: "Жилищно", rzp: 466.8 },
+        "LXXIV": { area: 386, type: "Жилищно", rzp: 463.8 },
+        "LXXV": { area: 382, type: "Жилищно", rzp: 458.4 },
+        "LXXVI": { area: 379, type: "Жилищно", rzp: 454.8 },
+        "LXXVII": { area: 375, type: "Жилищно", rzp: 450 },
+        "LXXVIII": { area: 3001, type: "Обществено", rzp: 3601.2 }
+    };
+
+    const img = document.getElementById('master-map-img');
+    const svg = document.getElementById('plots-svg');
+    const infoCard = document.getElementById('info-card');
+    
+    // Auto-Resize Logic
+    img.onload = function() {
+        const w = img.naturalWidth;
+        const h = img.naturalHeight;
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    };
+
+    // --- INTERACTIVITY LOGIC ---
+    const polys = document.querySelectorAll('.plot-poly');
+    
+    polys.forEach(poly => {
+        poly.addEventListener('mouseenter', (e) => {
+            const upi = poly.getAttribute('data-upi');
+            const data = plotsDB[upi];
+            if (data) {
+                document.getElementById('card-upi').textContent = `УПИ ${upi}`;
+                document.getElementById('card-area').textContent = data.area + ' m²';
+                document.getElementById('card-type').textContent = data.type;
+                document.getElementById('card-rzp').textContent = data.rzp + ' m²';
+                infoCard.classList.add('active');
+            }
+        });
+
+        poly.addEventListener('mousemove', (e) => {
+            // Keep card near mouse
+            const x = e.clientX + 20;
+            const y = e.clientY + 20;
+            
+            // Boundary checks (so card doesn't go off screen)
+            const cardWidth = 320;
+            const finalX = (x + cardWidth > window.innerWidth) ? x - cardWidth - 40 : x;
+            
+            infoCard.style.left = `${finalX}px`;
+            infoCard.style.top = `${y}px`;
+        });
+
+        poly.addEventListener('mouseleave', () => {
+            infoCard.classList.remove('active');
+        });
+
+        // Click Action -> Open WhatsApp
+        poly.addEventListener('click', (e) => {
+            const upi = poly.getAttribute('data-upi');
+            // Your Phone Number
+            const phone = "359889212116"; 
+            const text = `Здравейте, интересувам се от Парцел УПИ ${upi} в Нова Надежда.`;
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        });
+    });
+</script>
 </body>
 </html>
