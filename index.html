@@ -6,7 +6,7 @@
 <title>ЖК Нова Надежда | Престижният Квартал на Сливен</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Rajdhani:wght@300;500;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
@@ -18,7 +18,6 @@
     --glass: rgba(255, 255, 255, 0.02);
     --glass-border: rgba(212, 175, 55, 0.15);
     --text-white: #ffffff;
-    --wa-green: #25D366;
 }
 
 /* Default: Normal cursor reset */
@@ -32,126 +31,120 @@ body {
     position: relative;
 }
 
-/* --- CUSTOM CURSOR (Desktop Only) with GOLDEN MIST --- */
+/* --- CUSTOM CURSOR --- */
 @media (min-width: 992px) {
     * { cursor: none; }
-    
     .cursor-dot, .cursor-outline {
-        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none;
-        display: block;
+        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; display: block;
     }
     .cursor-dot { width: 8px; height: 8px; background: var(--gold-bright); box-shadow: 0 0 15px var(--gold-bright); }
-    
     .cursor-outline {
-        width: 50px; height: 50px; 
-        border: 1px solid rgba(212, 175, 55, 0.3);
+        width: 50px; height: 50px; border: 1px solid rgba(212, 175, 55, 0.3);
         transition: width 0.2s, height 0.2s, background-color 0.2s;
-        /* DELICATE GOLDEN MIST EFFECT */
         box-shadow: 0 0 40px 10px rgba(212, 175, 55, 0.15); 
         background: radial-gradient(circle, rgba(212, 175, 55, 0.02) 0%, transparent 60%);
         filter: blur(1px);
     }
     body:hover .cursor-outline { opacity: 1; }
 }
-
-@media (max-width: 991px) {
-    .cursor-dot, .cursor-outline { display: none !important; }
-}
+@media (max-width: 991px) { .cursor-dot, .cursor-outline { display: none !important; } }
 
 /* --- TEXTURES --- */
-.noise-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50;
-    opacity: 0.05; background: url('https://grainy-gradients.vercel.app/noise.svg');
-}
-.vignette-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 49;
-    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9) 100%);
-}
+.noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; opacity: 0.05; background: url('https://grainy-gradients.vercel.app/noise.svg'); }
+.vignette-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 49; background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9) 100%); }
 .grid-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;
-    background-image: 
-        linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
     background-size: 100px 100px;
 }
 
 /* --- CORNERS --- */
-.corner-decor {
-    position: fixed; width: 150px; height: 150px; z-index: 48; pointer-events: none;
-    border: 1px solid var(--glass-border); opacity: 0.5;
-}
+.corner-decor { position: fixed; width: 150px; height: 150px; z-index: 48; pointer-events: none; border: 1px solid var(--glass-border); opacity: 0.5; }
 .corner-tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
 .corner-br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
-.corner-decor::after {
-    content: ''; position: absolute; width: 10px; height: 10px; background: var(--gold-main);
-}
+.corner-decor::after { content: ''; position: absolute; width: 10px; height: 10px; background: var(--gold-main); }
 .corner-tl::after { top: -5px; left: -5px; }
 .corner-br::after { bottom: -5px; right: -5px; }
 
 /* --- VIDEO BACKGROUND --- */
-.video-background {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden;
-}
+.video-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
 .video-background video {
-    min-width: 100%; min-height: 100%; width: auto; height: auto;
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     object-fit: cover; filter: brightness(0.25) grayscale(0.1);
 }
 
-/* --- PRELOADER (BIGGER LOGO, 2S HOLD) --- */
+/* --- PRELOADER --- */
 #preloader {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--bg-main); z-index: 10000;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    transition: opacity 1s ease;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-main); z-index: 10000;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1s ease;
 }
 .anim-container { position: relative; width: 350px; height: 120px; display: flex; align-items: flex-end; justify-content: center; }
 .growth-line { position: absolute; bottom: 10px; height: 3px; background: var(--gold-main); width: 0; animation: drawLine 1.5s forwards ease-in-out; }
 .pop-icon { color: var(--gold-main); font-size: 40px; position: absolute; bottom: 12px; transform: scale(0); opacity: 0; }
-/* Popping icons animation */
 .building-1 { left: 15%; animation: popUp 0.5s 0.8s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); }
 .tree-1 { left: 38%; animation: popUp 0.5s 1.0s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 28px; }
 .building-2 { left: 62%; animation: popUp 0.5s 1.2s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); }
 .tree-2 { left: 85%; animation: popUp 0.5s 1.4s forwards cubic-bezier(0.17, 0.67, 0.83, 1.67); font-size: 28px; }
-/* Bigger Logo */
 .preloader-logo-img { height: 140px; width: auto; margin-top: 25px; opacity: 0; animation: fadeInScale 1s 1.8s forwards; }
 
 @keyframes drawLine { to { width: 100%; } }
 @keyframes popUp { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1) translateY(-15px); opacity: 1; } }
-@keyframes fadeInScale { 
-    0% { opacity: 0; transform: scale(0.9); } 
-    100% { opacity: 1; transform: scale(1.1); } /* "Coming towards you" */
-}
+@keyframes fadeInScale { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.1); } }
 
 /* --- HEADER --- */
 header {
-    width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; 
+    width: 100%; padding: 15px 5%; 
+    display: grid; 
+    grid-template-columns: auto 1fr auto; 
+    align-items: center; gap: 20px;
     position: fixed; top: 0; z-index: 100; transition: 0.3s;
     backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-.header-logo { height: 80px; width: auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); transition: 0.3s; }
+.header-logo { height: 100px; width: auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); transition: 0.3s; }
 .header-logo:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--gold-main)); }
 
-.header-controls { display: flex; align-items: center; gap: 30px; }
-.social-nav { display: flex; gap: 10px; }
-.social-nav a {
-    width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--glass-border);
-    display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 18px; 
-    transition: 0.4s; background: var(--glass);
+/* CENTER MENU */
+.header-menu { display: flex; justify-content: center; gap: 30px; }
+.header-link {
+    font-family: 'Rajdhani', sans-serif; color: white; text-decoration: none; text-transform: uppercase;
+    font-weight: 600; font-size: 14px; letter-spacing: 2px; position: relative; transition: 0.3s;
 }
-.social-nav a:hover { background: var(--gold-main); border-color: var(--gold-main); color: var(--bg-main); transform: translateY(-3px); }
+.header-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px; background: var(--gold-main); transition: 0.3s; }
+.header-link:hover { color: var(--gold-main); }
+.header-link:hover::after { width: 100%; }
+
+/* SOCIALS - ALWAYS COLORED */
+.header-controls { display: flex; align-items: center; }
+.social-nav { display: flex; gap: 12px; }
+.social-nav a {
+    width: 45px; height: 45px; 
+    border-radius: 50%; border: 1px solid transparent; /* Changed border logic */
+    display: flex; align-items: center; justify-content: center; 
+    color: white; text-decoration: none; font-size: 20px; 
+    transition: 0.4s; 
+}
+
+/* PERMANENT BRAND COLORS */
+.social-nav a.fb { background: #1877F2; border-color: #1877F2; }
+.social-nav a.insta { background: #E4405F; border-color: #E4405F; }
+.social-nav a.yt { background: #FF0000; border-color: #FF0000; }
+.social-nav a.tiktok { background: #000000; border-color: #25F4EE; color: #FE2C55; }
+
+/* HOVER EFFECTS - GLOW & LIFT */
+.social-nav a.fb:hover { transform: translateY(-3px); box-shadow: 0 0 15px #1877F2; }
+.social-nav a.insta:hover { transform: translateY(-3px); box-shadow: 0 0 15px #E4405F; }
+.social-nav a.yt:hover { transform: translateY(-3px); box-shadow: 0 0 15px #FF0000; }
+.social-nav a.tiktok:hover { transform: translateY(-3px); box-shadow: -2px -2px 10px #25F4EE, 2px 2px 10px #FE2C55; }
+
 
 /* --- HERO SECTION --- */
 .hero {
     min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; 
-    text-align: center; padding: 120px 20px 50px; position: relative; perspective: 1000px;
+    text-align: center; padding: 140px 20px 50px; position: relative; perspective: 1000px;
 }
-
-/* ROTATING TEXT WRAPPER (Gold Plate) */
 .dynamic-quote-wrapper {
     position: relative; height: 60px; display: flex; justify-content: center; align-items: center;
     overflow: visible; margin-bottom: 15px; opacity: 0; animation: fadeInUp 1s 3.5s forwards;
-    /* Gold Plate Background */
     background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
     padding: 0 60px; border-top: 1px solid rgba(212, 175, 55, 0.3); border-bottom: 1px solid rgba(212, 175, 55, 0.3);
 }
@@ -161,8 +154,6 @@ header {
     position: relative; white-space: nowrap; opacity: 0; transform: translateY(10px); filter: blur(5px); transition: all 0.5s ease;
 }
 .quote-text.active { opacity: 1; transform: translateY(0); filter: blur(0px); }
-
-/* Golden Blade Animation */
 .golden-blade {
     position: absolute; top: 10%; left: 0; height: 80%; width: 0%; 
     background: linear-gradient(90deg, var(--gold-dim), var(--gold-bright), var(--gold-dim));
@@ -173,121 +164,88 @@ header {
 .golden-blade.wiping-out { left: 100%; width: 0%; }
 .golden-blade.reset { transition: none; left: 0; width: 0; }
 
-/* MAIN TITLE */
 .hero h1 {
-    font-family: 'Rajdhani'; 
-    font-size: clamp(50px, 13vw, 160px); 
+    font-family: 'Rajdhani'; font-size: clamp(50px, 13vw, 160px); 
     font-weight: 700; line-height: 0.85; text-transform: uppercase; margin-bottom: 15px;
-    /* CHANGED: Text is now Solid Gold, not white */
-    color: var(--gold-main); 
-    text-shadow: 0 10px 50px rgba(0,0,0,0.8); opacity: 0; animation: fadeInUp 1s 4s forwards; position: relative; z-index: 2;
+    color: var(--gold-main); text-shadow: 0 10px 50px rgba(0,0,0,0.8); 
+    opacity: 0; animation: fadeInUp 1s 4s forwards; position: relative; z-index: 2;
 }
 .hero-accent { color: transparent; -webkit-text-stroke: 2px var(--gold-bright); position: relative; }
 .hero-accent::after {
     content: 'НАДЕЖДА'; position: absolute; left: 0; top: 0; color: var(--gold-bright); opacity: 0.5; filter: blur(20px); animation: glowBreath 3s infinite ease-in-out;
 }
-
-/* SUBTITLE */
 .hero-subtitle-prestige {
     font-family: 'Rajdhani'; font-size: clamp(16px, 4vw, 24px); color: var(--text-white);
     letter-spacing: 4px; text-transform: uppercase; margin-bottom: 25px; font-weight: 500;
     opacity: 0; animation: fadeInUp 1s 4.2s forwards;
 }
 
-/* CTA AREA */
-.hero-cta { margin-top: 30px; opacity: 0; animation: fadeInUp 1s 4.5s forwards; padding: 0 10px; }
-.hero-cta p {
-    color: #bbb; letter-spacing: 2px; text-transform: uppercase; font-size: 13px; margin-bottom: 20px;
-}
-/* Clickable Map Link */
+/* CTA AREA & PRICE TAG */
+.hero-cta { margin-top: 30px; opacity: 0; animation: fadeInUp 1s 4.5s forwards; padding: 0 10px; display: flex; flex-direction: column; align-items: center;}
+.hero-cta p { color: #bbb; letter-spacing: 2px; text-transform: uppercase; font-size: 13px; margin-bottom: 20px; }
 .map-link {
-    color: var(--gold-bright); font-size: 14px; margin-bottom: 10px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;
+    color: var(--gold-bright); font-size: 14px; margin-bottom: 20px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;
     text-decoration: none; border-bottom: 1px dashed var(--gold-main); transition: 0.3s;
 }
 .map-link:hover { color: white; border-color: white; }
 
+.price-badge {
+    font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 15px;
+    background: linear-gradient(90deg, #d4af37, #f9d763, #d4af37); -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-transform: uppercase; letter-spacing: 2px; position: relative; animation: shineText 3s infinite linear; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+}
+.price-badge::before {
+    content: 'ЦЕНИ ОТ 399 €'; position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+    color: var(--gold-bright); opacity: 0.7; filter: blur(8px); z-index: -1; animation: pulseGlow 2s infinite ease-in-out;
+}
+@keyframes shineText { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+@keyframes pulseGlow { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
+
 .cta-btn {
-    display: inline-block; padding: 18px 50px; margin-top: 25px;
+    display: inline-block; padding: 18px 50px; 
     border: 1px solid var(--gold-main); color: var(--gold-main); text-transform: uppercase; font-family: 'Rajdhani';
     letter-spacing: 3px; font-weight: 700; text-decoration: none; transition: 0.4s; position: relative; overflow: hidden;
     background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
 }
-.cta-btn::before {
-    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; 
-    background: var(--gold-main); transition: 0.4s; z-index: -1;
-}
+.cta-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--gold-main); transition: 0.4s; z-index: -1; }
 .cta-btn:hover { color: black; cursor: pointer; }
 .cta-btn:hover::before { left: 0; }
-
 .scroll-indicator { position: absolute; bottom: 30px; font-size: 24px; color: var(--gold-main); animation: bounce 2s infinite; }
 
-/* --- DASHBOARD GRID (CLEAN & GOLD) --- */
+/* --- DASHBOARD GRID --- */
 .dashboard { padding: 100px 5%; max-width: 1600px; margin: 0 auto; position: relative; z-index: 2; }
-
-/* Centered Layout */
-.nav-grid { 
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; 
-}
-
-/* Card Style */
+.nav-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
 .nav-card {
     background: linear-gradient(180deg, rgba(20,20,20,0.9) 0%, rgba(30,25,10,0.95) 100%);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border-radius: 4px; padding: 70px 30px; 
-    text-decoration: none; position: relative; overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-radius: 4px; padding: 70px 30px; text-decoration: none; position: relative; overflow: hidden;
     transition: 0.5s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
     flex: 1 1 320px; max-width: 450px;
 }
-.nav-card::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold-main); 
-    transform: scaleX(0); transform-origin: left; transition: 0.5s;
-}
-.nav-card:hover { 
-    transform: translateY(-10px); border-color: var(--gold-main); 
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 30px rgba(212, 175, 55, 0.1); 
-}
+.nav-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold-main); transform: scaleX(0); transform-origin: left; transition: 0.5s; }
+.nav-card:hover { transform: translateY(-10px); border-color: var(--gold-main); box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 30px rgba(212, 175, 55, 0.1); }
 .nav-card:hover::before { transform: scaleX(1); }
-
-/* HUGE GOLD ICONS */
 .card-icon { font-size: 70px; color: var(--gold-main); margin-bottom: 25px; transition: 0.5s; }
 .nav-card:hover .card-icon { transform: scale(1.1); color: white; }
 .nav-card span { font-family: 'Rajdhani'; font-size: 26px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 3px; }
-
-/* GOLD HIGHLIGHT CARD (Buy Plot) */
-.nav-card.gold-highlight {
-    background: linear-gradient(135deg, var(--gold-dim), var(--gold-main));
-    border: 1px solid var(--gold-bright);
-}
+.nav-card.gold-highlight { background: linear-gradient(135deg, var(--gold-dim), var(--gold-main)); border: 1px solid var(--gold-bright); }
 .nav-card.gold-highlight .card-icon { color: #111; }
 .nav-card.gold-highlight span { color: #050505; text-shadow: none; font-weight: 800; }
-.nav-card.gold-highlight:hover .card-icon { color: white; transform: scale(1.1) rotate(0deg); }
+.nav-card.gold-highlight:hover .card-icon { color: white; }
 .nav-card.gold-highlight:hover span { color: white; }
 
-
-/* --- AMENITIES GRID (THE BIG LIST) --- */
+/* --- AMENITIES GRID --- */
 .stats-container {
     margin-top: 100px; padding: 80px 50px; background: rgba(5,5,5,0.8); border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    display: grid;
-    /* Responsive Grid Logic */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 60px 40px;
-    position: relative;
-    text-align: left;
+    backdrop-filter: blur(10px); display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 60px 40px; position: relative; text-align: left;
 }
-/* Corner accents for the amenities box */
 .stats-container::before { content: ''; position: absolute; top: -1px; left: -1px; width: 30px; height: 30px; border-top: 2px solid var(--gold-main); border-left: 2px solid var(--gold-main); }
 .stats-container::after { content: ''; position: absolute; bottom: -1px; right: -1px; width: 30px; height: 30px; border-bottom: 2px solid var(--gold-main); border-right: 2px solid var(--gold-main); }
-
-.stat-item { 
-    display: flex; flex-direction: column; align-items: flex-start; transition: 0.3s;
-}
+.stat-item { display: flex; flex-direction: column; align-items: flex-start; transition: 0.3s; }
 .stat-item:hover { transform: translateY(-5px); }
-
-/* BIG GOLDEN ICONS */
 .stat-num { font-size: 45px; color: var(--gold-main); margin-bottom: 15px; display: block; }
-.stat-label { font-family: 'Rajdhani'; font-size: 14px; color: #ddd; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; line-height: 1.4; }
+.stat-label { font-family: 'Rajdhani'; font-size: 17px; color: #ddd; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; line-height: 1.5; }
 .stat-item:hover .stat-label { color: var(--gold-bright); }
 
 /* --- FOOTER --- */
@@ -297,39 +255,29 @@ footer { padding: 80px 5% 40px; text-align: center; background: linear-gradient(
 .copyright { font-size: 11px; color: #333; letter-spacing: 1px; margin-top: 30px; }
 
 /* ANIMATIONS & OVERRIDES */
-body.skip-intro .dynamic-quote-wrapper,
-body.skip-intro .hero h1,
-body.skip-intro .hero-subtitle-prestige,
-body.skip-intro .hero-cta {
-    animation-delay: 0s !important;
-    animation-duration: 0.8s;
-}
-
+body.skip-intro .dynamic-quote-wrapper, body.skip-intro .hero h1, body.skip-intro .hero-subtitle-prestige, body.skip-intro .hero-cta { animation-delay: 0s !important; animation-duration: 0.8s; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 @keyframes glowBreath { 0%, 100% { opacity: 0.3; filter: blur(10px); } 50% { opacity: 0.8; filter: blur(25px); } }
 
 /* --- MOBILE & TABLET --- */
 @media (max-width: 991px) {
-    header { flex-direction: row; justify-content: space-between; padding: 15px 5%; background: rgba(5,5,5,0.95); }
-    .header-logo { height: 50px; }
+    header { grid-template-columns: 1fr auto; padding: 15px 5%; background: rgba(5,5,5,0.95); }
+    .header-menu { display: none; } 
+    .header-logo { height: 60px; }
     .hero { padding-top: 130px; }
     .hero h1 { font-size: 60px; line-height: 1; }
     .quote-text { font-size: 20px; }
-    
     .nav-card { padding: 50px 20px; flex: 1 1 100%; max-width: 100%; }
-    
     .stats-container { padding: 40px 20px; gap: 40px 20px; grid-template-columns: 1fr 1fr; }
     .stat-num { font-size: 35px; }
-    .stat-label { font-size: 11px; }
-    
+    .stat-label { font-size: 13px; }
     .corner-decor { width: 50px; height: 50px; }
 }
 @media (max-width: 480px) {
     .hero h1 { font-size: 48px; }
     .stats-container { grid-template-columns: 1fr; text-align: center; }
     .stat-item { align-items: center; }
-    .sticky-wa { bottom: 20px; right: 20px; padding: 10px 20px; font-size: 14px; }
     .cta-btn { width: 100%; padding: 15px; }
 }
 </style>
@@ -344,10 +292,6 @@ body.skip-intro .hero-cta {
 <div class="grid-overlay"></div>
 <div class="corner-decor corner-tl"></div>
 <div class="corner-decor corner-br"></div>
-
-<a href="https://wa.me/359889212116" class="sticky-wa">
-    СВЪРЖИ СЕ С НАС <i class="ri-whatsapp-line"></i>
-</a>
 
 <div class="video-background">
     <video autoplay muted loop playsinline>
@@ -369,11 +313,21 @@ body.skip-intro .hero-cta {
 <div id="main-content">
     <header>
         <img src="logo.png" alt="Нова Надежда" class="header-logo">
+        
+        <nav class="header-menu">
+            <a href="about.html" class="header-link">ЗА КВАРТАЛА</a>
+            <a href="plots.html" class="header-link">КУПИ ПАРЦЕЛ</a>
+            <a href="media.html" class="header-link">МЕДИЯ</a>
+            <a href="partners.html" class="header-link">ПАРТНЬОРИ</a>
+            <a href="contact.html" class="header-link">КОНТАКТИ</a>
+        </nav>
+
         <div class="header-controls">
             <div class="social-nav">
-                <a href="#"><i class="ri-facebook-fill"></i></a>
-                <a href="#"><i class="ri-instagram-line"></i></a>
-                <a href="#"><i class="ri-youtube-fill"></i></a>
+                <a href="#" class="fb"><i class="ri-facebook-fill"></i></a>
+                <a href="#" class="insta"><i class="ri-instagram-line"></i></a>
+                <a href="#" class="yt"><i class="ri-youtube-fill"></i></a>
+                <a href="#" class="tiktok"><i class="ri-tiktok-fill"></i></a>
             </div>
         </div>
     </header>
@@ -391,7 +345,10 @@ body.skip-intro .hero-cta {
 
         <div class="hero-cta">
              <p>Нова Надежда – подредено място за престижен дом, бизнес и по-добър живот</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=ул.%20Георги%20Сава%20Раковски%2021%2C%20Сливен%2C%20България" target="_blank" class="map-link">
+             
+             <div class="price-badge">ЦЕНИ ОТ 399 €</div>
+
+             <a href="https://www.google.com/maps/search/?api=1&query=ул.%20Георги%20Сава%20Раковски%2021%2C%20Сливен%2C%20България" target="_blank" class="map-link">
                 <i class="ri-map-pin-line"></i> Ела да се срещнем
              </a>
              <br>
@@ -415,7 +372,7 @@ body.skip-intro .hero-cta {
             
             <a href="media.html" class="nav-card">
                 <i class="ri-play-circle-line card-icon"></i>
-                <span>ЗА НОВА НАДЕЖДА ВЕЧЕ СЕ ГОВОРИ</span>
+                <span>ЗА НОВА НАДЕЖДА СЕ ГОВОРИ...</span>
             </a>
             
             <a href="partners.html" class="nav-card">
@@ -521,7 +478,7 @@ body.skip-intro .hero-cta {
         });
     });
 
-    // The FULL List from the chat
+    // The FULL List
     const quotes = [
         "ЗА ПЪРВИ ПЪТ В ЦЯЛА БЪЛГАРИЯ",
         "УПИ ПАРЦЕЛИ",
@@ -547,7 +504,6 @@ body.skip-intro .hero-cta {
 
     function startTextCycle() {
         quoteElement.classList.add('active');
-        // Faster cycle (2.5s)
         setInterval(() => {
             cycleQuote();
         }, 2500);
@@ -590,14 +546,13 @@ body.skip-intro .hero-cta {
 
         sessionStorage.setItem('nh_intro_played', '1');
 
-        // Extended hold time for preloader (Logo + 2s)
         setTimeout(() => {
             preloader.style.opacity = '0';
             setTimeout(() => {
                 preloader.style.display = 'none';
                 setTimeout(startTextCycle, 4000); 
             }, 1000);
-        }, 4500); // 4.5s total preloader time
+        }, 4500);
     });
 </script>
 </body>
