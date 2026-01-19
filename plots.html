@@ -299,12 +299,14 @@ p {
 /* --- STICKY WHATSAPP --- */
 .sticky-wa {
     position: fixed; bottom: 30px; right: 30px; z-index: 1000;
-    background: var(--wa-green); color: white; width: 60px; height: 60px;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 30px; text-decoration: none; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+    background: var(--wa-green); color: white; padding: 12px 20px;
+    border-radius: 50px; display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-size: 24px; text-decoration: none; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
     transition: 0.3s; animation: pulseWA 3s infinite;
+    font-family: 'Rajdhani', sans-serif; font-weight: 700;
 }
-.sticky-wa:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); }
+.sticky-wa span { font-size: 16px; letter-spacing: 1px; text-transform: uppercase; }
+.sticky-wa:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); }
 @keyframes pulseWA { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
 /* --- FOOTER --- */
@@ -443,7 +445,8 @@ footer {
     #info-card { width: 90%; left: 5% !important; top: auto !important; bottom: 20px; transform: translateY(20px); }
     #info-card.active { transform: translateY(0); }
     .interaction-hint { font-size: 11px; padding: 5px 15px; width: 80%; justify-content: center; }
-    .sticky-wa { width: 50px; height: 50px; font-size: 24px; bottom: 20px; right: 20px; }
+    .sticky-wa { padding: 10px 16px; font-size: 20px; bottom: 20px; right: 20px; }
+    .sticky-wa span { font-size: 14px; }
 }
 
 </style>
@@ -461,6 +464,7 @@ footer {
 
 <a href="https://wa.me/359889212116" class="sticky-wa" target="_blank">
     <i class="ri-whatsapp-line"></i>
+    <span>Пиши ни</span>
 </a>
 
 <header>
@@ -469,7 +473,7 @@ footer {
     <nav class="header-menu">
         <a href="about.html" class="header-link">ЗА КВАРТАЛА</a>
         <a href="plots.html" class="header-link active">КУПИ ПАРЦЕЛ</a>
-        <a href="media.html" class="header-link">МЕДИЯ</a>
+        <a href="media.html" class="header-link">МЕДИИ</a>
         <a href="partners.html" class="header-link">ПАРТНЬОРИ</a>
     </nav>
 

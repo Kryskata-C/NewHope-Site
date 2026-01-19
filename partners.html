@@ -90,6 +90,19 @@ body {
 .corner-tl::after { top: -5px; left: -5px; }
 .corner-br::after { bottom: -5px; right: -5px; }
 
+/* --- WHATSAPP --- */
+.sticky-wa {
+    position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+    background: #25D366; color: white; padding: 12px 20px;
+    border-radius: 50px; display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-size: 24px; text-decoration: none; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+    transition: 0.3s; animation: pulseWA 3s infinite;
+    font-family: 'Rajdhani', sans-serif; font-weight: 700;
+}
+.sticky-wa span { font-size: 16px; letter-spacing: 1px; text-transform: uppercase; }
+.sticky-wa:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); }
+@keyframes pulseWA { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
 /* --- HEADER --- */
 header {
     width: 100%; padding: 15px 5%;
@@ -610,6 +623,8 @@ footer {
     .footer-social-links { justify-content: center; }
     .footer-bottom { flex-direction: column; gap: 20px; }
     .corner-decor { width: 50px; height: 50px; }
+    .sticky-wa { padding: 10px 16px; font-size: 20px; bottom: 20px; right: 20px; }
+    .sticky-wa span { font-size: 14px; }
 }
 
 @media (max-width: 480px) {
@@ -630,13 +645,18 @@ footer {
 <div class="corner-decor corner-tl"></div>
 <div class="corner-decor corner-br"></div>
 
+<a href="https://wa.me/359889212116" class="sticky-wa" target="_blank">
+    <i class="ri-whatsapp-line"></i>
+    <span>Пиши ни</span>
+</a>
+
 <header>
     <a href="index.html"><img src="logo.png" alt="Нова Надежда" class="header-logo"></a>
 
     <nav class="header-menu">
         <a href="about.html" class="header-link">ЗА КВАРТАЛА</a>
         <a href="plots.html" class="header-link">КУПИ ПАРЦЕЛ</a>
-        <a href="media.html" class="header-link">МЕДИЯ</a>
+        <a href="media.html" class="header-link">МЕДИИ</a>
         <a href="partners.html" class="header-link active">ПАРТНЬОРИ</a>
     </nav>
 
@@ -664,7 +684,7 @@ footer {
             <div class="partner-card" data-partner>
                 <div class="partner-card-inner">
                     <div class="partner-logo-wrap">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Coat_of_arms_of_Sliven.svg/800px-Coat_of_arms_of_Sliven.svg.png" alt="Община Сливен" class="partner-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Coat_of_arms_of_Sliven.svg" alt="Община Сливен" class="partner-logo">
                     </div>
                     <h3 class="partner-name">Община Сливен</h3>
                     <div class="partner-details">
@@ -680,7 +700,7 @@ footer {
             <div class="partner-card" data-partner>
                 <div class="partner-card-inner">
                     <div class="partner-logo-wrap">
-                        <img src="https://img.icons8.com/ios-filled/150/d4af37/architecture.png" alt="Ташкови" class="partner-logo">
+                        <img src="https://cdn-icons-png.flaticon.com/512/619/619034.png" alt="Ташкови" class="partner-logo">
                     </div>
                     <h3 class="partner-name">Ташкови</h3>
                     <div class="partner-details">
@@ -696,7 +716,7 @@ footer {
             <div class="partner-card" data-partner>
                 <div class="partner-card-inner">
                     <div class="partner-logo-wrap">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/A1_Telekom_Austria_Group_logo_2017.svg/1200px-A1_Telekom_Austria_Group_logo_2017.svg.png" alt="A1" class="partner-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/A1_Telekom_Austria_Group_logo_2017.svg" alt="A1" class="partner-logo">
                     </div>
                     <h3 class="partner-name">A1 България</h3>
                     <div class="partner-details">
@@ -712,7 +732,7 @@ footer {
             <div class="partner-card" data-partner>
                 <div class="partner-card-inner">
                     <div class="partner-logo-wrap">
-                        <img src="https://img.icons8.com/ios-filled/150/d4af37/commercial.png" alt="Госпожа Реклама" class="partner-logo">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1998/1998087.png" alt="Госпожа Реклама" class="partner-logo">
                     </div>
                     <h3 class="partner-name">Госпожа Реклама</h3>
                     <div class="partner-details">

@@ -330,12 +330,14 @@ footer { padding: 80px 5% 40px; text-align: center; background: linear-gradient(
 /* --- WHATSAPP BUTTON --- */
 .sticky-wa {
     position: fixed; bottom: 30px; right: 30px; z-index: 1000;
-    background: #25D366; color: white; width: 60px; height: 60px;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 30px; text-decoration: none; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+    background: #25D366; color: white; padding: 12px 20px;
+    border-radius: 50px; display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-size: 24px; text-decoration: none; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
     transition: 0.3s; animation: pulseWA 3s infinite;
+    font-family: 'Rajdhani', sans-serif; font-weight: 700;
 }
-.sticky-wa:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); }
+.sticky-wa span { font-size: 16px; letter-spacing: 1px; text-transform: uppercase; }
+.sticky-wa:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); }
 @keyframes pulseWA { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
 /* ANIMATIONS & OVERRIDES */
@@ -363,7 +365,8 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
     .stats-container { grid-template-columns: 1fr; text-align: center; }
     .stat-item { align-items: center; }
     .cta-btn { width: 100%; padding: 15px; }
-    .sticky-wa { width: 50px; height: 50px; font-size: 24px; bottom: 20px; right: 20px; }
+    .sticky-wa { padding: 10px 16px; font-size: 20px; bottom: 20px; right: 20px; }
+    .sticky-wa span { font-size: 14px; }
 }
 </style>
 </head>
@@ -380,6 +383,7 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
 
 <a href="https://wa.me/359889212116" class="sticky-wa" target="_blank">
     <i class="ri-whatsapp-line"></i>
+    <span>Пиши ни</span>
 </a>
 
 <div class="video-background">
@@ -406,7 +410,7 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
         <nav class="header-menu">
             <a href="about.html" class="header-link">ЗА КВАРТАЛА</a>
             <a href="plots.html" class="header-link">КУПИ ПАРЦЕЛ</a>
-            <a href="media.html" class="header-link">МЕДИЯ</a>
+            <a href="media.html" class="header-link">МЕДИИ</a>
             <a href="partners.html" class="header-link">ПАРТНЬОРИ</a>
         </nav>
 
