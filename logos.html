@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo Assets - Nova Nadejda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        /* DEFAULT: Green Screen (Best for Gold removal) */
+        background-color: #00FF00; 
+        font-family: 'Rajdhani', sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 100px; /* Space between logos */
+        cursor: pointer; /* Indicates clickable */
+    }
+
+    /* COLORS */
+    :root {
+        --gold-main: #d4af37;
+    }
+
+    .logo-container {
+        font-size: 100px; /* Huge for High Res Screenshot */
+        line-height: 0.85;
+        font-weight: 800;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    /* --- STYLES --- */
+
+    /* 1. SOLID TEXT */
+    .solid {
+        color: var(--gold-main);
+    }
+
+    /* 2. HOLLOW TEXT (Outline Only, No Fill) */
+    .hollow {
+        color: transparent;
+        -webkit-text-stroke: 3px var(--gold-main);
+    }
+
+    /* REMOVE ALL SHADOWS FOR CLEAN CUTOUT */
+    h1, span {
+        text-shadow: none !important;
+        filter: none !important;
+    }
+
+</style>
+</head>
+<body>
+
+    <div class="logo-container">
+        <span class="solid">НОВА</span>
+        <span class="hollow">НАДЕЖДА</span>
+    </div>
+
+    <div class="logo-container">
+        <span class="solid">НОВА</span>
+        <span class="solid">НАДЕЖДА</span>
+    </div>
+
+    <div class="logo-container">
+        <span class="hollow">НОВА</span>
+        <span class="hollow">НАДЕЖДА</span>
+    </div>
+
+    <script>
+        const body = document.body;
+        const colors = ['#00FF00', '#000000', '#FFFFFF', 'transparent'];
+        let colorIndex = 0;
+
+        // Click anywhere to change background
+        window.addEventListener('click', () => {
+            colorIndex = (colorIndex + 1) % colors.length;
+            body.style.backgroundColor = colors[colorIndex];
+            console.log(`Background changed to: ${colors[colorIndex]}`);
+        });
+    </script>
+
+</body>
+</html>
