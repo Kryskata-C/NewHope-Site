@@ -1,125 +1,1063 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>За Квартала - Нова Надежда</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>За Квартала | ЖК Нова Надежда</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-    <style>
-        :root {
-            --bg-main: #0c0b09; 
-            --bg-card: #14120e;
-            --gold-main: #d4af37; 
-            --text-white: #ffffff;
-            --text-grey: #e0e0e0;
-            --h1-mobile: 32px;
-            --p-mobile: 20px;
-            --p-line-height: 1.5;
-        }
+<style>
+:root {
+    --bg-main: #050505;
+    --gold-main: #d4af37;
+    --gold-bright: #f9d763;
+    --gold-dim: #8a7122;
+    --glass: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(212, 175, 55, 0.15);
+    --text-white: #ffffff;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-white);
-            font-family: 'Roboto', sans-serif;
-            overflow-x: hidden;
-            line-height: var(--p-line-height);
-        }
+body {
+    background-color: var(--bg-main);
+    color: var(--text-white);
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
 
-        .back-nav {
-            padding: 20px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+/* --- CUSTOM CURSOR --- */
+@media (min-width: 992px) {
+    * { cursor: none; }
+    .cursor-dot, .cursor-outline {
+        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; display: block;
+    }
+    .cursor-dot {
+        width: 6px; height: 6px;
+        background: var(--gold-bright);
+        box-shadow: 0 0 12px var(--gold-bright), 0 0 24px rgba(212, 175, 55, 0.4);
+        transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    }
+    .cursor-dot.hovering {
+        transform: translate(-50%, -50%) scale(1.5);
+        box-shadow: 0 0 20px var(--gold-bright), 0 0 40px rgba(212, 175, 55, 0.6);
+    }
+    .cursor-outline {
+        width: 40px; height: 40px;
+        border: 1.5px solid rgba(212, 175, 55, 0.4);
+        background: transparent;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.3s ease,
+                    background-color 0.3s ease,
+                    box-shadow 0.3s ease,
+                    opacity 0.3s ease;
+        box-shadow: 0 0 20px 5px rgba(212, 175, 55, 0.08);
+        opacity: 0.8;
+    }
+    .cursor-outline.hovering {
+        transform: translate(-50%, -50%) scale(1.6);
+        border-color: var(--gold-main);
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+        box-shadow: 0 0 30px 8px rgba(212, 175, 55, 0.2);
+        opacity: 1;
+    }
+    .cursor-outline.clicking {
+        transform: translate(-50%, -50%) scale(0.8);
+        border-color: var(--gold-bright);
+        background: radial-gradient(circle, rgba(249, 215, 99, 0.2) 0%, transparent 60%);
+    }
+}
+@media (max-width: 991px) { .cursor-dot, .cursor-outline { display: none !important; } }
 
-        .back-nav a {
-            color: var(--gold-main);
-            text-decoration: none;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 700;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+/* --- TEXTURES --- */
+.noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; opacity: 0.05; background: url('https://grainy-gradients.vercel.app/noise.svg'); }
+.vignette-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 49; background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9) 100%); }
+.grid-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;
+    background-image: linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+    background-size: 100px 100px;
+}
 
-        h1, h2, h3 {
-            font-family: 'Rajdhani', sans-serif;
-            text-transform: uppercase;
-            color: var(--gold-main);
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
-        
-        h1 { font-size: var(--h1-mobile); font-weight: 700; border-bottom: 2px solid var(--gold-main); display: inline-block; padding-bottom: 5px; }
-        h2 { font-size: 24px; color: white; }
+/* --- CORNERS --- */
+.corner-decor { position: fixed; width: 150px; height: 150px; z-index: 48; pointer-events: none; border: 1px solid var(--glass-border); opacity: 0.5; }
+.corner-tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+.corner-br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+.corner-decor::after { content: ''; position: absolute; width: 10px; height: 10px; background: var(--gold-main); }
+.corner-tl::after { top: -5px; left: -5px; }
+.corner-br::after { bottom: -5px; right: -5px; }
 
-        p {
-            font-size: var(--p-mobile);
-            color: var(--text-grey);
-            margin-bottom: 25px;
-        }
+/* --- HEADER --- */
+header {
+    width: 100%; padding: 15px 5%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center; gap: 20px;
+    position: fixed; top: 0; z-index: 100; transition: 0.3s;
+    backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.header-logo { height: 100px; width: auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); transition: 0.3s; }
+.header-logo:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--gold-main)); }
 
-        .gold-text { color: var(--gold-main); }
-        
-        section {
-            padding: 40px 20px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+.header-menu { display: flex; justify-content: center; gap: 30px; }
+.header-link {
+    font-family: 'Rajdhani', sans-serif; color: white; text-decoration: none; text-transform: uppercase;
+    font-weight: 600; font-size: 14px; letter-spacing: 2px; position: relative; transition: 0.3s;
+}
+.header-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px; background: var(--gold-main); transition: 0.3s; }
+.header-link:hover { color: var(--gold-main); }
+.header-link:hover::after { width: 100%; }
+.header-link.active { color: var(--gold-main); }
+.header-link.active::after { width: 100%; }
 
-        .img-placeholder {
-            width: 100%;
-            height: 250px;
-            border: 2px dashed var(--gold-main);
-            background: rgba(212, 175, 55, 0.05);
-            display: flex; align-items: center; justify-content: center;
-            margin: 30px 0;
-            border-radius: 10px;
-            color: var(--gold-main);
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 700;
-            font-size: 20px;
-            text-transform: uppercase;
-        }
+.header-controls { display: flex; align-items: center; }
+.social-nav { display: flex; gap: 12px; }
+.social-nav a {
+    width: 45px; height: 45px;
+    border-radius: 50%; border: 1px solid transparent;
+    display: flex; align-items: center; justify-content: center;
+    color: white; text-decoration: none; font-size: 20px;
+    transition: 0.4s;
+}
 
-        @media (min-width: 768px) {
-            h1 { font-size: 48px; }
-        }
-    </style>
+.social-nav a.fb { background: #1877F2; border-color: #1877F2; }
+.social-nav a.insta { background: #E4405F; border-color: #E4405F; }
+.social-nav a.yt { background: #FF0000; border-color: #FF0000; }
+.social-nav a.tiktok { background: #000000; border-color: #25F4EE; color: #FE2C55; }
+
+.social-nav a.fb:hover { transform: translateY(-3px); box-shadow: 0 0 15px #1877F2; }
+.social-nav a.insta:hover { transform: translateY(-3px); box-shadow: 0 0 15px #E4405F; }
+.social-nav a.yt:hover { transform: translateY(-3px); box-shadow: 0 0 15px #FF0000; }
+.social-nav a.tiktok:hover { transform: translateY(-3px); box-shadow: -2px -2px 10px #25F4EE, 2px 2px 10px #FE2C55; }
+
+/* --- WHATSAPP --- */
+.sticky-wa {
+    position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+    background: #25D366; color: white; width: 60px; height: 60px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 30px; text-decoration: none; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+    transition: 0.3s; animation: pulseWA 3s infinite;
+}
+.sticky-wa:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); }
+@keyframes pulseWA { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+/* --- HERO SECTION --- */
+.page-hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 160px 20px 100px;
+    position: relative;
+    background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+}
+
+.hero-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 25px;
+    border: 1px solid var(--gold-main);
+    background: rgba(212, 175, 55, 0.1);
+    margin-bottom: 30px;
+    opacity: 0; animation: fadeInUp 1s 0.2s forwards;
+}
+
+.hero-badge span {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.page-hero h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(36px, 8vw, 80px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--text-white);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeInUp 1s 0.4s forwards;
+    line-height: 1.1;
+}
+
+.page-hero h1 .gold { color: var(--gold-main); }
+
+.hero-subtitle {
+    font-size: clamp(18px, 3vw, 24px);
+    color: #888;
+    max-width: 700px;
+    line-height: 1.7;
+    margin-bottom: 50px;
+    opacity: 0;
+    animation: fadeInUp 1s 0.6s forwards;
+}
+
+.hero-cta {
+    opacity: 0;
+    animation: fadeInUp 1s 0.8s forwards;
+}
+
+.btn-primary {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 18px 45px;
+    background: transparent;
+    border: 2px solid var(--gold-main);
+    color: var(--gold-main);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--gold-main);
+    transition: 0.4s;
+    z-index: -1;
+}
+
+.btn-primary:hover {
+    color: #000;
+}
+
+.btn-primary:hover::before {
+    left: 0;
+}
+
+.scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    color: var(--gold-main);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeInUp 1s 1s forwards;
+}
+
+.scroll-hint i {
+    font-size: 24px;
+    animation: bounce 2s infinite;
+}
+
+/* --- CONTENT SECTIONS --- */
+.content-section {
+    padding: 120px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.section-label {
+    display: inline-block;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    padding-left: 40px;
+    position: relative;
+}
+
+.section-label::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    width: 30px; height: 1px;
+    background: var(--gold-main);
+}
+
+.content-section h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--text-white);
+    line-height: 1.2;
+    margin-bottom: 40px;
+}
+
+.content-section h2 .gold { color: var(--gold-main); }
+
+.content-section p {
+    font-size: 18px;
+    color: #aaa;
+    line-height: 1.9;
+    margin-bottom: 30px;
+    max-width: 900px;
+}
+
+.content-section p strong {
+    color: var(--text-white);
+}
+
+/* --- IMAGE BLOCKS --- */
+.image-block {
+    width: 100%;
+    height: 500px;
+    margin: 60px 0;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.image-block img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7) contrast(1.1);
+    transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.image-block:hover img {
+    transform: scale(1.05);
+    filter: brightness(0.8) contrast(1.1);
+}
+
+.image-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(5,5,5,0.8) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.image-block .caption {
+    position: absolute;
+    bottom: 30px; left: 30px;
+    z-index: 2;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* Corner accents on images */
+.image-block::after {
+    content: '';
+    position: absolute;
+    top: 20px; left: 20px;
+    width: 50px; height: 50px;
+    border-top: 2px solid var(--gold-main);
+    border-left: 2px solid var(--gold-main);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.image-corner-br {
+    position: absolute;
+    bottom: 20px; right: 20px;
+    width: 50px; height: 50px;
+    border-bottom: 2px solid var(--gold-main);
+    border-right: 2px solid var(--gold-main);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* --- FEATURES GRID --- */
+.features-section {
+    padding: 120px 5%;
+    background: linear-gradient(180deg, transparent 0%, rgba(212, 175, 55, 0.03) 50%, transparent 100%);
+}
+
+.features-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 80px;
+}
+
+.features-header h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 20px;
+}
+
+.features-header p {
+    font-size: 18px;
+    color: #888;
+    line-height: 1.7;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: rgba(10,10,10,0.8);
+    border: 1px solid var(--glass-border);
+    padding: 40px 30px;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--gold-main);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.feature-card:hover {
+    border-color: var(--gold-main);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+.feature-icon {
+    font-size: 40px;
+    color: var(--gold-main);
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-white);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.feature-card p {
+    font-size: 15px;
+    color: #888;
+    line-height: 1.7;
+}
+
+/* --- QUOTE SECTION --- */
+.quote-section {
+    padding: 150px 5%;
+    text-align: center;
+    position: relative;
+}
+
+.quote-section::before {
+    content: '"';
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 200px;
+    color: rgba(212, 175, 55, 0.1);
+    position: absolute;
+    top: 50px; left: 50%;
+    transform: translateX(-50%);
+    line-height: 1;
+}
+
+.quote-text {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--text-white);
+    line-height: 1.4;
+    max-width: 900px;
+    margin: 0 auto 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.quote-text .gold { color: var(--gold-main); }
+
+.quote-author {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+/* --- VISION SECTION --- */
+.vision-section {
+    padding: 120px 5%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.vision-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.vision-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.vision-number {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 60px;
+    font-weight: 800;
+    color: var(--gold-main);
+    line-height: 1;
+    opacity: 0.3;
+    min-width: 80px;
+}
+
+.vision-content h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 15px;
+}
+
+.vision-content p {
+    font-size: 17px;
+    color: #999;
+    line-height: 1.8;
+}
+
+/* --- CTA SECTION --- */
+.cta-section {
+    padding: 150px 5%;
+    text-align: center;
+    background: linear-gradient(180deg, transparent 0%, rgba(212, 175, 55, 0.05) 100%);
+    position: relative;
+}
+
+.cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--text-white);
+    line-height: 1.2;
+    margin-bottom: 30px;
+}
+
+.cta-content h2 .gold { color: var(--gold-main); }
+
+.cta-content p {
+    font-size: 18px;
+    color: #888;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+/* --- FOOTER --- */
+footer {
+    padding: 80px 5% 40px;
+    background: linear-gradient(to top, #000 20%, transparent);
+    position: relative;
+    z-index: 2;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo {
+    height: 80px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.footer-tagline {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: 1px;
+}
+
+.footer-contact h4,
+.footer-social h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.footer-contact p {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-contact i {
+    color: var(--gold-main);
+    font-size: 16px;
+}
+
+.footer-social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social-links a {
+    width: 45px; height: 45px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-main);
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.footer-social-links a:hover {
+    background: var(--gold-main);
+    color: #000;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright {
+    font-size: 12px;
+    color: #444;
+    letter-spacing: 1px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 30px;
+}
+
+.footer-links a {
+    color: #555;
+    font-size: 12px;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--gold-main);
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+/* Scroll animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 991px) {
+    header { grid-template-columns: 1fr auto; padding: 15px 5%; background: rgba(5,5,5,0.95); }
+    .header-menu { display: none; }
+    .header-logo { height: 60px; }
+    .page-hero { padding: 140px 20px 80px; min-height: 90vh; }
+    .content-section { padding: 80px 5%; }
+    .image-block { height: 350px; }
+    .features-section { padding: 80px 5%; }
+    .vision-item { flex-direction: column; gap: 15px; }
+    .vision-number { font-size: 40px; min-width: auto; }
+    .footer-content { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+    .footer-brand { align-items: center; }
+    .footer-social-links { justify-content: center; }
+    .footer-bottom { flex-direction: column; gap: 20px; }
+    .corner-decor { width: 50px; height: 50px; }
+    .sticky-wa { width: 50px; height: 50px; font-size: 24px; bottom: 20px; right: 20px; }
+}
+
+@media (max-width: 480px) {
+    .page-hero h1 { font-size: 32px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .quote-text { font-size: 22px; }
+    .btn-primary { width: 100%; justify-content: center; }
+}
+</style>
 </head>
 <body>
 
-    <nav class="back-nav">
-        <a href="/"><i class="ri-arrow-left-line"></i> НАЗАД КЪМ НАЧАЛО</a>
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-outline" id="cursor-outline"></div>
+
+<div class="noise-overlay"></div>
+<div class="vignette-overlay"></div>
+<div class="grid-overlay"></div>
+<div class="corner-decor corner-tl"></div>
+<div class="corner-decor corner-br"></div>
+
+<a href="https://wa.me/359889212116" class="sticky-wa" target="_blank">
+    <i class="ri-whatsapp-line"></i>
+</a>
+
+<header>
+    <a href="index.html"><img src="logo.png" alt="Нова Надежда" class="header-logo"></a>
+
+    <nav class="header-menu">
+        <a href="about.html" class="header-link active">ЗА КВАРТАЛА</a>
+        <a href="plots.html" class="header-link">КУПИ ПАРЦЕЛ</a>
+        <a href="media.html" class="header-link">МЕДИЯ</a>
+        <a href="partners.html" class="header-link">ПАРТНЬОРИ</a>
     </nav>
 
-    <section id="about">
-        <h1>ЗА КВАРТАЛА</h1>
-        
-        <h2>Нова Надежда – кварталът за <span class="gold-text">по-добър живот</span></h2>
+    <div class="header-controls">
+        <div class="social-nav">
+            <a href="#" class="fb"><i class="ri-facebook-fill"></i></a>
+            <a href="#" class="insta"><i class="ri-instagram-line"></i></a>
+            <a href="#" class="yt"><i class="ri-youtube-fill"></i></a>
+            <a href="#" class="tiktok"><i class="ri-tiktok-fill"></i></a>
+        </div>
+    </div>
+</header>
 
-        <p>В продължение на десетилетия тази част на Сливен беше забравена. Улиците се рушаха, липсваха услуги, а хората свикнаха с мисълта, че тук промяна няма да дойде. Място, което всички подминаваха с усещането, че нищо няма да се промени към по-добро.</p>
-        
-        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА КВАРТАЛ</div>
+<main>
+    <!-- HERO -->
+    <section class="page-hero">
+        <div class="hero-badge">
+            <i class="ri-map-pin-line"></i>
+            <span>гр. Сливен, България</span>
+        </div>
 
-        <p>Днес тук се изгражда най-мащабният нов жилищен квартал в Сливен. Нова Надежда е подреден и модерен район, създаден за хора, които искат да живеят по-добре – спокойно, удобно и сигурно. Готовата инфраструктура дава свободата веднага да проектираш и построиш това, което си планирал – дом, бизнес или съчетание от двете.</p>
+        <h1>Нова <span class="gold">Надежда</span><br>Кварталът за по-добър живот</h1>
 
-        <p>Кварталът обединява жилищна зона и нова градска среда: здравен център с десетки лекарски кабинети, лаборатория, аптека, магазини, търговски обекти, кооперативен пазар, заведения, салони за услуги, сервизи, административни сгради, полицейско управление за сигурност в квартала и детска градина за най-малките, както и стотици паркоместа. Това е място, което предлага всичко необходимо за ежедневния живот на едно място.</p>
+        <p class="hero-subtitle">Най-мащабният нов жилищен проект в Сливен през последните десетилетия. Квартал, изграден от нулата с ясна цел: да създаде подредена, сигурна и функционална среда за живот, работа и развитие.</p>
 
-        <div class="img-placeholder"><i class="ri-image-add-line"></i> СНИМКА ИНФРАСТРУКТУРА</div>
+        <div class="hero-cta">
+            <a href="#story" class="btn-primary">
+                Виж повече <i class="ri-arrow-down-line"></i>
+            </a>
+        </div>
 
-        <p>Нова Надежда е проект със сърце. Той се изгражда за хора, които дълго време не са имали възможност да притежават собствен имот, да развият бизнес или да осигурят по-добри условия за семейството си. Това не е просто квартал — това е шанс. Шанс за собственост, развитие и стабилност.</p>
-
-        <h2 style="text-align: center; margin-top: 40px; border-bottom: none;">Тук можеш да построиш дом, бизнес и бъдеще. <br><span class="gold-text">ЗА ПО-ДОБЪР ЖИВОТ</span></h2>
-        <p style="text-align: center;">Нова Надежда показва какво означава да се работи за по-добър живот на хора, които твърде дълго не са били чути.</p>
+        <div class="scroll-hint">
+            <span>Скролни надолу</span>
+            <i class="ri-arrow-down-double-line"></i>
+        </div>
     </section>
 
+    <!-- STORY SECTION -->
+    <section class="content-section" id="story">
+        <span class="section-label reveal">Нашата история</span>
+        <h2 class="reveal">Мястото, което <span class="gold">промени всичко</span></h2>
+
+        <p class="reveal">В продължение на десетилетия тази част на Сливен остана извън фокуса на развитието. Инфраструктурата се рушеше, услугите липсваха, а хората постепенно свикнаха с мисълта, че тук промяна няма да се случи.</p>
+
+        <p class="reveal">Район, който се подминаваше – не защото няма потенциал, а защото никой не беше поел отговорността да направи невъзможното.</p>
+
+        <div class="image-block reveal">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200" alt="Модерна архитектура">
+            <div class="image-corner-br"></div>
+            <span class="caption">Визия за бъдещето</span>
+        </div>
+
+        <p class="reveal"><strong>Днес това се променя.</strong> Нова Надежда е проектът, който замисля не като поредното строителство, а като цялостна градска структура, в която всичко необходимо за ежедневието е планирано предварително.</p>
+    </section>
+
+    <!-- INFRASTRUCTURE SECTION -->
+    <section class="content-section">
+        <span class="section-label reveal">Инфраструктура</span>
+        <h2 class="reveal">Изградена основа за <span class="gold">незабавно строителство</span></h2>
+
+        <p class="reveal">Основата на Нова Надежда е напълно изградена инфраструктура. Нови асфалтирани улици, улично осветление, електрификация, водопровод, канализация, газификация и модерна оптична мрежа са реализирани като единен завършен процес.</p>
+
+        <div class="image-block reveal">
+            <img src="https://images.unsplash.com/photo-1590650153855-d9e808231d41?w=1200" alt="Инфраструктура">
+            <div class="image-corner-br"></div>
+            <span class="caption">Готова инфраструктура</span>
+        </div>
+
+        <p class="reveal">Това означава <strong>яснота, ред и възможност за незабавно строителство</strong> – без чакане, без временни решения и без допълнителни процедури.</p>
+
+        <p class="reveal">Готовата инфраструктура дава свобода. Свобода веднага да проектираш и построиш това, което си планирал – собствен дом, бизнес обект или съчетание от двете. Всеки имот стъпва върху стабилна основа, която позволява дългосрочно планиране и сигурност.</p>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features-section">
+        <div class="features-header reveal">
+            <h2>Всичко на <span class="gold">едно място</span></h2>
+            <p>Кварталът съчетава жилищна среда с пълноценна градска функция. Среда, в която ежедневните нужди са на едно място и животът е по-лесен и подреден.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <i class="ri-hospital-line feature-icon"></i>
+                <h3>Здравен център</h3>
+                <p>Десетки лекарски кабинети, лаборатория и аптека за грижа за здравето на цялото семейство.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="ri-store-3-line feature-icon"></i>
+                <h3>Търговска зона</h3>
+                <p>Магазини, кооперативен пазар, заведения и салони за услуги на една ръка разстояние.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="ri-parent-line feature-icon"></i>
+                <h3>Детска градина</h3>
+                <p>Грижа за най-малките в сърцето на квартала, без нужда от дълги пътувания.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="ri-shield-check-line feature-icon"></i>
+                <h3>Полицейско управление</h3>
+                <p>Районно управление за сигурност и спокойствие на всички жители.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="ri-parking-box-line feature-icon"></i>
+                <h3>Стотици паркоместа</h3>
+                <p>Достатъчно пространство за паркиране без стрес и загуба на време.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="ri-router-line feature-icon"></i>
+                <h3>Оптична мрежа</h3>
+                <p>Модерна свързаност с високоскоростен интернет и HD телевизия.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUOTE SECTION -->
+    <section class="quote-section">
+        <p class="quote-text reveal">
+            Нова Надежда не е проект, създаден на парче. Това е квартал с ясна визия – <span class="gold">ред, сигурност, достъп до услуги</span> и възможност за развитие.
+        </p>
+        <span class="quote-author reveal">Философията на квартала</span>
+    </section>
+
+    <!-- IMAGE BREAK -->
+    <div class="image-block reveal" style="max-width: 1400px; margin: 0 auto; height: 600px;">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400" alt="Модерен дом">
+        <div class="image-corner-br"></div>
+        <span class="caption">Вашият бъдещ дом</span>
+    </div>
+
+    <!-- VISION SECTION -->
+    <section class="vision-section">
+        <span class="section-label reveal">Възможности</span>
+        <h2 class="reveal" style="font-family: 'Rajdhani', sans-serif; font-size: clamp(32px, 5vw, 48px); margin-bottom: 60px;">Това не е просто нов квартал</h2>
+
+        <div class="vision-item reveal">
+            <span class="vision-number">01</span>
+            <div class="vision-content">
+                <h3>Възможност за стабилност</h3>
+                <p>Среда, в която собствеността има стойност, а инвестицията е защитена от хаотично застрояване и липса на планиране.</p>
+            </div>
+        </div>
+
+        <div class="vision-item reveal">
+            <span class="vision-number">02</span>
+            <div class="vision-content">
+                <h3>Възможност за развитие</h3>
+                <p>Нова Надежда е проект със сърце. Той се изгражда за хора, които дълго време не са имали реален шанс да притежават собствен имот, да развият бизнес или да осигурят по-добри условия за своето семейство.</p>
+            </div>
+        </div>
+
+        <div class="vision-item reveal">
+            <span class="vision-number">03</span>
+            <div class="vision-content">
+                <h3>Възможност за бъдеще</h3>
+                <p>Тук собствеността не е абстрактна цел, а постижима реалност. Нова Надежда показва какво означава да се работи целенасочено за по-добър живот – с план, с отговорност и с мисъл за хората.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="cta-content reveal">
+            <h2>Готови ли сте за <span class="gold">промяна</span>?</h2>
+            <p>Свържете се с нас и научете как можете да станете част от Нова Надежда. Нашият екип е готов да отговори на всички ваши въпроси.</p>
+            <a href="contact.html" class="btn-primary">
+                Свържете се с нас <i class="ri-arrow-right-line"></i>
+            </a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <img src="logo.png" alt="Нова Надежда" class="footer-logo">
+            <p class="footer-tagline">Подредено място за престижен дом, бизнес и по-добър живот</p>
+        </div>
+
+        <div class="footer-contact">
+            <h4>Контакти</h4>
+            <p><i class="ri-phone-line"></i> 0889 21 21 16</p>
+            <p><i class="ri-map-pin-line"></i> ул. Георги Сава Раковски 21, Сливен</p>
+            <p><i class="ri-mail-line"></i> info@novanadejda.bg</p>
+        </div>
+
+        <div class="footer-social">
+            <h4>Последвайте ни</h4>
+            <div class="footer-social-links">
+                <a href="#"><i class="ri-facebook-fill"></i></a>
+                <a href="#"><i class="ri-instagram-line"></i></a>
+                <a href="#"><i class="ri-youtube-fill"></i></a>
+                <a href="#"><i class="ri-tiktok-fill"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p class="copyright">© 2025 ЖК НОВА НАДЕЖДА. Всички права запазени.</p>
+        <div class="footer-links">
+            <a href="#">Политика за поверителност</a>
+            <a href="#">Условия за ползване</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // --- CUSTOM CURSOR ---
+    const cursorDot = document.getElementById("cursor-dot");
+    const cursorOutline = document.getElementById("cursor-outline");
+    let mouseX = 0, mouseY = 0;
+    let outlineX = 0, outlineY = 0;
+
+    window.addEventListener("mousemove", function(e) {
+        if (window.getComputedStyle(cursorDot).display === 'none') return;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+    });
+
+    function animateOutline() {
+        if (window.getComputedStyle(cursorDot).display === 'none') {
+            requestAnimationFrame(animateOutline);
+            return;
+        }
+        outlineX += (mouseX - outlineX) * 0.15;
+        outlineY += (mouseY - outlineY) * 0.15;
+        cursorOutline.style.left = `${outlineX}px`;
+        cursorOutline.style.top = `${outlineY}px`;
+        requestAnimationFrame(animateOutline);
+    }
+    animateOutline();
+
+    // Hover effects
+    const interactiveElements = document.querySelectorAll('a, button, .feature-card, .btn-primary, .social-nav a');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            if (window.getComputedStyle(cursorDot).display !== 'none') {
+                cursorDot.classList.add('hovering');
+                cursorOutline.classList.add('hovering');
+            }
+        });
+        el.addEventListener('mouseleave', () => {
+            cursorDot.classList.remove('hovering');
+            cursorOutline.classList.remove('hovering');
+        });
+    });
+
+    // Click effect
+    window.addEventListener('mousedown', () => {
+        if (window.getComputedStyle(cursorDot).display !== 'none') {
+            cursorOutline.classList.add('clicking');
+        }
+    });
+    window.addEventListener('mouseup', () => {
+        cursorOutline.classList.remove('clicking');
+    });
+
+    // --- SCROLL REVEAL ANIMATIONS ---
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(el => {
+        revealObserver.observe(el);
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>

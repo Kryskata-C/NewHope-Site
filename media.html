@@ -1,48 +1,1144 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Медии - Нова Надежда</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        :root { --bg-main: #0c0b09; --bg-card: #14120e; --gold-main: #d4af37; --text-white: #ffffff; --text-grey: #e0e0e0; --p-mobile: 20px; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg-main); color: var(--text-white); font-family: 'Roboto', sans-serif; }
-        .back-nav { padding: 20px; max-width: 900px; margin: 0 auto; }
-        .back-nav a { color: var(--gold-main); text-decoration: none; font-family: 'Rajdhani'; font-weight: 700; font-size: 20px; }
-        section { padding: 40px 20px; max-width: 900px; margin: 0 auto; }
-        h1 { font-family: 'Rajdhani'; font-size: 32px; color: var(--gold-main); border-bottom: 2px solid var(--gold-main); display: inline-block; padding-bottom: 5px; margin-bottom: 20px; text-transform: uppercase; }
-        p { font-size: var(--p-mobile); color: var(--text-grey); margin-bottom: 25px; }
-        .img-placeholder { width: 100%; height: 250px; border: 2px dashed var(--gold-main); background: rgba(212, 175, 55, 0.05); display: flex; align-items: center; justify-content: center; margin: 30px 0; border-radius: 10px; color: var(--gold-main); font-family: 'Rajdhani'; font-weight: 700; font-size: 20px; text-transform: uppercase; }
-        .media-link { display: flex; align-items: center; gap: 15px; background: var(--bg-card); border: 1px solid #333; padding: 20px; margin-bottom: 15px; text-decoration: none; color: white; border-radius: 8px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Медия | ЖК Нова Надежда</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+<style>
+:root {
+    --bg-main: #050505;
+    --gold-main: #d4af37;
+    --gold-bright: #f9d763;
+    --gold-dim: #8a7122;
+    --glass: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(212, 175, 55, 0.15);
+    --text-white: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-white);
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* --- CUSTOM CURSOR --- */
+@media (min-width: 992px) {
+    * { cursor: none; }
+    .cursor-dot, .cursor-outline {
+        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; display: block;
+    }
+    .cursor-dot {
+        width: 6px; height: 6px;
+        background: var(--gold-bright);
+        box-shadow: 0 0 12px var(--gold-bright), 0 0 24px rgba(212, 175, 55, 0.4);
+        transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    }
+    .cursor-dot.hovering {
+        transform: translate(-50%, -50%) scale(1.5);
+        box-shadow: 0 0 20px var(--gold-bright), 0 0 40px rgba(212, 175, 55, 0.6);
+    }
+    .cursor-outline {
+        width: 40px; height: 40px;
+        border: 1.5px solid rgba(212, 175, 55, 0.4);
+        background: transparent;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.3s ease,
+                    background-color 0.3s ease,
+                    box-shadow 0.3s ease,
+                    opacity 0.3s ease;
+        box-shadow: 0 0 20px 5px rgba(212, 175, 55, 0.08);
+        opacity: 0.8;
+    }
+    .cursor-outline.hovering {
+        transform: translate(-50%, -50%) scale(1.6);
+        border-color: var(--gold-main);
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+        box-shadow: 0 0 30px 8px rgba(212, 175, 55, 0.2);
+        opacity: 1;
+    }
+    .cursor-outline.clicking {
+        transform: translate(-50%, -50%) scale(0.8);
+        border-color: var(--gold-bright);
+        background: radial-gradient(circle, rgba(249, 215, 99, 0.2) 0%, transparent 60%);
+    }
+}
+@media (max-width: 991px) { .cursor-dot, .cursor-outline { display: none !important; } }
+
+/* --- TEXTURES --- */
+.noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; opacity: 0.05; background: url('https://grainy-gradients.vercel.app/noise.svg'); }
+.vignette-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 49; background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9) 100%); }
+.grid-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;
+    background-image: linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+    background-size: 100px 100px;
+}
+
+/* --- CORNERS --- */
+.corner-decor { position: fixed; width: 150px; height: 150px; z-index: 48; pointer-events: none; border: 1px solid var(--glass-border); opacity: 0.5; }
+.corner-tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+.corner-br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+.corner-decor::after { content: ''; position: absolute; width: 10px; height: 10px; background: var(--gold-main); }
+.corner-tl::after { top: -5px; left: -5px; }
+.corner-br::after { bottom: -5px; right: -5px; }
+
+/* --- HEADER --- */
+header {
+    width: 100%; padding: 15px 5%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center; gap: 20px;
+    position: fixed; top: 0; z-index: 100; transition: 0.3s;
+    backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.header-logo { height: 100px; width: auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); transition: 0.3s; }
+.header-logo:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--gold-main)); }
+
+.header-menu { display: flex; justify-content: center; gap: 30px; }
+.header-link {
+    font-family: 'Rajdhani', sans-serif; color: white; text-decoration: none; text-transform: uppercase;
+    font-weight: 600; font-size: 14px; letter-spacing: 2px; position: relative; transition: 0.3s;
+}
+.header-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px; background: var(--gold-main); transition: 0.3s; }
+.header-link:hover { color: var(--gold-main); }
+.header-link:hover::after { width: 100%; }
+.header-link.active { color: var(--gold-main); }
+.header-link.active::after { width: 100%; }
+
+.header-controls { display: flex; align-items: center; }
+.social-nav { display: flex; gap: 12px; }
+.social-nav a {
+    width: 45px; height: 45px;
+    border-radius: 50%; border: 1px solid transparent;
+    display: flex; align-items: center; justify-content: center;
+    color: white; text-decoration: none; font-size: 20px;
+    transition: 0.4s;
+}
+
+.social-nav a.fb { background: #1877F2; border-color: #1877F2; }
+.social-nav a.insta { background: #E4405F; border-color: #E4405F; }
+.social-nav a.yt { background: #FF0000; border-color: #FF0000; }
+.social-nav a.tiktok { background: #000000; border-color: #25F4EE; color: #FE2C55; }
+
+.social-nav a.fb:hover { transform: translateY(-3px); box-shadow: 0 0 15px #1877F2; }
+.social-nav a.insta:hover { transform: translateY(-3px); box-shadow: 0 0 15px #E4405F; }
+.social-nav a.yt:hover { transform: translateY(-3px); box-shadow: 0 0 15px #FF0000; }
+.social-nav a.tiktok:hover { transform: translateY(-3px); box-shadow: -2px -2px 10px #25F4EE, 2px 2px 10px #FE2C55; }
+
+/* --- WHATSAPP --- */
+.sticky-wa {
+    position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+    background: #25D366; color: white; width: 60px; height: 60px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 30px; text-decoration: none; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+    transition: 0.3s; animation: pulseWA 3s infinite;
+}
+.sticky-wa:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); }
+@keyframes pulseWA { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+/* --- HERO SECTION --- */
+.page-hero {
+    min-height: 70vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 180px 20px 100px;
+    position: relative;
+    background: radial-gradient(ellipse at center bottom, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+}
+
+.hero-icon {
+    font-size: 60px;
+    color: var(--gold-main);
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeInUp 1s 0.2s forwards;
+}
+
+.page-hero h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(36px, 8vw, 72px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--text-white);
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeInUp 1s 0.4s forwards;
+    line-height: 1.1;
+}
+
+.page-hero h1 .gold { color: var(--gold-main); }
+
+.hero-subtitle {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: #888;
+    max-width: 800px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeInUp 1s 0.6s forwards;
+}
+
+.hero-tagline {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px;
+    color: var(--gold-bright);
+    font-style: italic;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeInUp 1s 0.8s forwards;
+}
+
+/* --- FEATURED SECTION --- */
+.featured-section {
+    padding: 100px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-label {
+    display: inline-block;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+}
+
+.section-header h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+/* Featured Media Grid */
+.featured-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.featured-main {
+    position: relative;
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.featured-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.5);
+    transition: all 0.6s ease;
+}
+
+.featured-main:hover img {
+    transform: scale(1.05);
+    filter: brightness(0.6);
+}
+
+.featured-main .play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px; height: 100px;
+    background: rgba(212, 175, 55, 0.9);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    color: #000;
+    transition: all 0.4s ease;
+    z-index: 2;
+}
+
+.featured-main:hover .play-btn {
+    transform: translate(-50%, -50%) scale(1.1);
+    background: var(--gold-bright);
+    box-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
+}
+
+.featured-main .content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(5,5,5,0.95) 0%, transparent 100%);
+    z-index: 2;
+}
+
+.featured-main .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #FF0000;
+    color: white;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+
+.featured-main h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.featured-main p {
+    color: #aaa;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Featured Side */
+.featured-side {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.featured-card {
+    position: relative;
+    height: calc(50% - 15px);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    text-decoration: none;
+}
+
+.featured-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.4);
+    transition: all 0.5s ease;
+}
+
+.featured-card:hover img {
+    transform: scale(1.1);
+    filter: brightness(0.5);
+}
+
+.featured-card .content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 25px;
+    background: linear-gradient(to top, rgba(5,5,5,0.95) 0%, transparent 100%);
+}
+
+.featured-card .badge {
+    display: inline-block;
+    padding: 5px 12px;
+    background: var(--gold-main);
+    color: #000;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.featured-card h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    transition: color 0.3s;
+}
+
+.featured-card:hover h4 {
+    color: var(--gold-bright);
+}
+
+/* --- MEDIA CATEGORIES --- */
+.media-categories {
+    padding: 100px 5%;
+    background: linear-gradient(180deg, transparent 0%, rgba(212, 175, 55, 0.03) 50%, transparent 100%);
+}
+
+.categories-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 80px;
+}
+
+.categories-header h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 20px;
+}
+
+.categories-header p {
+    color: #888;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.category-card {
+    background: rgba(10,10,10,0.8);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 50px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+    background: var(--card-color, var(--gold-main));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.category-card:hover {
+    border-color: var(--card-color, var(--gold-main));
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+
+.category-card:hover::before {
+    transform: scaleX(1);
+}
+
+.category-icon {
+    width: 80px; height: 80px;
+    margin: 0 auto 25px;
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    color: var(--card-color, var(--gold-main));
+    transition: all 0.4s ease;
+}
+
+.category-card:hover .category-icon {
+    background: var(--card-color, var(--gold-main));
+    color: #000;
+    transform: scale(1.1);
+}
+
+.category-card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-white);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.category-card p {
+    color: #888;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.category-card .count {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Card colors */
+.category-card.tv { --card-color: #FF0000; }
+.category-card.radio { --card-color: #8B5CF6; }
+.category-card.online { --card-color: #3B82F6; }
+
+/* --- MEDIA TIMELINE --- */
+.timeline-section {
+    padding: 100px 5%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.timeline-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.timeline-header h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.timeline {
+    position: relative;
+    padding-left: 50px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px; top: 0;
+    width: 2px; height: 100%;
+    background: linear-gradient(to bottom, var(--gold-main), transparent);
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 50px;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s ease;
+}
+
+.timeline-item.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -38px; top: 5px;
+    width: 16px; height: 16px;
+    background: var(--gold-main);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.timeline-date {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.timeline-content {
+    background: rgba(10,10,10,0.8);
+    border: 1px solid var(--glass-border);
+    padding: 25px;
+    border-radius: 8px;
+    transition: all 0.4s ease;
+}
+
+.timeline-item:hover .timeline-content {
+    border-color: var(--gold-main);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.timeline-content h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 10px;
+}
+
+.timeline-content p {
+    color: #888;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.timeline-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gold-main);
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.timeline-link:hover {
+    color: var(--gold-bright);
+}
+
+.timeline-link i {
+    transition: transform 0.3s;
+}
+
+.timeline-link:hover i {
+    transform: translateX(5px);
+}
+
+/* --- CTA SECTION --- */
+.cta-section {
+    padding: 150px 5%;
+    text-align: center;
+    background: linear-gradient(180deg, transparent 0%, rgba(212, 175, 55, 0.05) 100%);
+    position: relative;
+}
+
+.cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    color: var(--text-white);
+    line-height: 1.2;
+    margin-bottom: 30px;
+}
+
+.cta-content h2 .gold { color: var(--gold-main); }
+
+.cta-content p {
+    font-size: 18px;
+    color: #888;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+.btn-primary {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 18px 45px;
+    background: transparent;
+    border: 2px solid var(--gold-main);
+    color: var(--gold-main);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--gold-main);
+    transition: 0.4s;
+    z-index: -1;
+}
+
+.btn-primary:hover {
+    color: #000;
+}
+
+.btn-primary:hover::before {
+    left: 0;
+}
+
+/* --- FOOTER --- */
+footer {
+    padding: 80px 5% 40px;
+    background: linear-gradient(to top, #000 20%, transparent);
+    position: relative;
+    z-index: 2;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo {
+    height: 80px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.footer-tagline {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: 1px;
+}
+
+.footer-contact h4,
+.footer-social h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.footer-contact p {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-contact i {
+    color: var(--gold-main);
+    font-size: 16px;
+}
+
+.footer-social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social-links a {
+    width: 45px; height: 45px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-main);
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.footer-social-links a:hover {
+    background: var(--gold-main);
+    color: #000;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright {
+    font-size: 12px;
+    color: #444;
+    letter-spacing: 1px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 30px;
+}
+
+.footer-links a {
+    color: #555;
+    font-size: 12px;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--gold-main);
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 991px) {
+    header { grid-template-columns: 1fr auto; padding: 15px 5%; background: rgba(5,5,5,0.95); }
+    .header-menu { display: none; }
+    .header-logo { height: 60px; }
+    .page-hero { padding: 150px 20px 80px; min-height: 60vh; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .featured-main { height: 400px; }
+    .featured-side { flex-direction: row; }
+    .featured-card { height: 250px; }
+    .categories-grid { grid-template-columns: 1fr; gap: 20px; }
+    .footer-content { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+    .footer-brand { align-items: center; }
+    .footer-social-links { justify-content: center; }
+    .footer-bottom { flex-direction: column; gap: 20px; }
+    .corner-decor { width: 50px; height: 50px; }
+    .sticky-wa { width: 50px; height: 50px; font-size: 24px; bottom: 20px; right: 20px; }
+}
+
+@media (max-width: 600px) {
+    .featured-side { flex-direction: column; }
+    .featured-card { height: 200px; }
+    .timeline { padding-left: 40px; }
+    .timeline::before { left: 15px; }
+    .timeline-item::before { left: -33px; width: 12px; height: 12px; }
+}
+
+@media (max-width: 480px) {
+    .page-hero h1 { font-size: 32px; }
+    .btn-primary { width: 100%; justify-content: center; }
+}
+</style>
 </head>
 <body>
-    <div class="back-nav"><a href="index.html"><i class="ri-arrow-left-line"></i> НАЗАД КЪМ НАЧАЛО</a></div>
-    <section>
-        <h1>КАКВО ГОВОРЯТ ЗА НАС</h1>
-        <p>Нова Надежда привлича вниманието на медиите и на хора от цяла България. Проектът се следи с интерес – как се развива и как една забравена зона се превръща в място с живот, ред и възможности.</p>
-        <p>Тук събираме най-важните статии, репортажи и видеа за проекта. Материали, които показват как Нова Надежда се възприема отвън и защо се превръща в пример за развитие.</p>
-        <div class="img-placeholder"><i class="ri-play-circle-line"></i> ВИДЕО РЕПОРТАЖ</div>
-        <p>Разгледай какво казват за нас.</p>
-        <div style="margin-top: 30px;">
-            <a href="#" class="media-link">
-                <i class="ri-youtube-fill" style="color: red; font-size: 30px;"></i>
-                <div>
-                    <strong>Видео Репортаж</strong>
-                    <div style="font-size: 14px; color: #888;">Виж как се променя кварталът</div>
+
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-outline" id="cursor-outline"></div>
+
+<div class="noise-overlay"></div>
+<div class="vignette-overlay"></div>
+<div class="grid-overlay"></div>
+<div class="corner-decor corner-tl"></div>
+<div class="corner-decor corner-br"></div>
+
+<a href="https://wa.me/359889212116" class="sticky-wa" target="_blank">
+    <i class="ri-whatsapp-line"></i>
+</a>
+
+<header>
+    <a href="index.html"><img src="logo.png" alt="Нова Надежда" class="header-logo"></a>
+
+    <nav class="header-menu">
+        <a href="about.html" class="header-link">ЗА КВАРТАЛА</a>
+        <a href="plots.html" class="header-link">КУПИ ПАРЦЕЛ</a>
+        <a href="media.html" class="header-link active">МЕДИЯ</a>
+        <a href="partners.html" class="header-link">ПАРТНЬОРИ</a>
+    </nav>
+
+    <div class="header-controls">
+        <div class="social-nav">
+            <a href="#" class="fb"><i class="ri-facebook-fill"></i></a>
+            <a href="#" class="insta"><i class="ri-instagram-line"></i></a>
+            <a href="#" class="yt"><i class="ri-youtube-fill"></i></a>
+            <a href="#" class="tiktok"><i class="ri-tiktok-fill"></i></a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- HERO -->
+    <section class="page-hero">
+        <i class="ri-broadcast-line hero-icon"></i>
+        <h1>За Нова Надежда<br><span class="gold">вече се говори</span></h1>
+        <p class="hero-subtitle">Нова Надежда привлича вниманието не само в Сливен, но и в цяла България. Медиите, репортерите и всички, които следят развитието на града, коментират как се променя мястото и какво ново се изгражда тук.</p>
+        <p class="hero-tagline">"Разгледай какво се говори за нас... понякога дори преди ние да го кажем."</p>
+    </section>
+
+    <!-- FEATURED MEDIA -->
+    <section class="featured-section">
+        <div class="section-header reveal">
+            <span class="section-label">Избрано</span>
+            <h2>Най-новите материали</h2>
+        </div>
+
+        <div class="featured-grid reveal">
+            <a href="#" class="featured-main">
+                <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200" alt="Видео репортаж">
+                <div class="play-btn"><i class="ri-play-fill"></i></div>
+                <div class="content">
+                    <span class="badge"><i class="ri-youtube-fill"></i> Видео</span>
+                    <h3>Нова Надежда: Кварталът, който променя Сливен</h3>
+                    <p>Ексклузивен видео репортаж за най-мащабния жилищен проект в града през последните десетилетия.</p>
                 </div>
             </a>
-            <a href="#" class="media-link">
-                <i class="ri-article-line" style="color: white; font-size: 30px;"></i>
-                <div>
-                    <strong>Статия в Новините</strong>
-                    <div style="font-size: 14px; color: #888;">Инвестиция за милиони</div>
+
+            <div class="featured-side">
+                <a href="#" class="featured-card">
+                    <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600" alt="Статия">
+                    <div class="content">
+                        <span class="badge">Статия</span>
+                        <h4>Инвестиция за милиони в Сливен</h4>
+                    </div>
+                </a>
+
+                <a href="#" class="featured-card">
+                    <img src="https://images.unsplash.com/photo-1560439514-4e9645039924?w=600" alt="Интервю">
+                    <div class="content">
+                        <span class="badge">Интервю</span>
+                        <h4>Визията зад проекта</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEDIA CATEGORIES -->
+    <section class="media-categories">
+        <div class="categories-header reveal">
+            <h2>Медийно покритие</h2>
+            <p>Тук събираме най-интересните материали – статии, видеа, репортажи и мнения от телевизии, радио и онлайн издания.</p>
+        </div>
+
+        <div class="categories-grid">
+            <div class="category-card tv reveal">
+                <div class="category-icon">
+                    <i class="ri-tv-2-line"></i>
                 </div>
+                <h3>Телевизия</h3>
+                <p>Репортажи и новинарски емисии от национални и регионални телевизии.</p>
+                <span class="count">4 материала</span>
+            </div>
+
+            <div class="category-card radio reveal">
+                <div class="category-icon">
+                    <i class="ri-radio-2-line"></i>
+                </div>
+                <h3>Радио</h3>
+                <p>Интервюта и предавания от популярни радиостанции в България.</p>
+                <span class="count">2 материала</span>
+            </div>
+
+            <div class="category-card online reveal">
+                <div class="category-icon">
+                    <i class="ri-global-line"></i>
+                </div>
+                <h3>Онлайн медии</h3>
+                <p>Статии и публикации от водещи новинарски сайтове и портали.</p>
+                <span class="count">6 материала</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline-section">
+        <div class="timeline-header reveal">
+            <span class="section-label">Хронология</span>
+            <h2>Медийна история</h2>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="timeline-date">Януари 2025</span>
+                <div class="timeline-content">
+                    <h4>bTV Новините: "Нов квартал променя Сливен"</h4>
+                    <p>Национална телевизия отразява старта на проекта и първите изградени улици в Нова Надежда.</p>
+                    <a href="#" class="timeline-link">Гледай репортажа <i class="ri-arrow-right-line"></i></a>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-date">Декември 2024</span>
+                <div class="timeline-content">
+                    <h4>Регионална телевизия: Интервю с инвеститорите</h4>
+                    <p>Ексклузивно интервю за визията, плановете и бъдещето на квартала.</p>
+                    <a href="#" class="timeline-link">Виж интервюто <i class="ri-arrow-right-line"></i></a>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-date">Ноември 2024</span>
+                <div class="timeline-content">
+                    <h4>Dnevnik.bg: "Инвестиция за милиони в Сливен"</h4>
+                    <p>Водещо онлайн издание публикува подробен анализ на проекта.</p>
+                    <a href="#" class="timeline-link">Прочети статията <i class="ri-arrow-right-line"></i></a>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-date">Октомври 2024</span>
+                <div class="timeline-content">
+                    <h4>Радио FM+: Сутрешен блок</h4>
+                    <p>Разговор на живо за възможностите и предимствата на Нова Надежда.</p>
+                    <a href="#" class="timeline-link">Слушай записа <i class="ri-arrow-right-line"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="cta-content reveal">
+            <h2>Имате въпроси за <span class="gold">медийно партньорство</span>?</h2>
+            <p>Ако сте журналист или медия и искате да научите повече за Нова Надежда, свържете се с нас за интервю или информация.</p>
+            <a href="contact.html" class="btn-primary">
+                Свържете се с нас <i class="ri-arrow-right-line"></i>
             </a>
         </div>
     </section>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <img src="logo.png" alt="Нова Надежда" class="footer-logo">
+            <p class="footer-tagline">Подредено място за престижен дом, бизнес и по-добър живот</p>
+        </div>
+
+        <div class="footer-contact">
+            <h4>Контакти</h4>
+            <p><i class="ri-phone-line"></i> 0889 21 21 16</p>
+            <p><i class="ri-map-pin-line"></i> ул. Георги Сава Раковски 21, Сливен</p>
+            <p><i class="ri-mail-line"></i> info@novanadejda.bg</p>
+        </div>
+
+        <div class="footer-social">
+            <h4>Последвайте ни</h4>
+            <div class="footer-social-links">
+                <a href="#"><i class="ri-facebook-fill"></i></a>
+                <a href="#"><i class="ri-instagram-line"></i></a>
+                <a href="#"><i class="ri-youtube-fill"></i></a>
+                <a href="#"><i class="ri-tiktok-fill"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p class="copyright">© 2025 ЖК НОВА НАДЕЖДА. Всички права запазени.</p>
+        <div class="footer-links">
+            <a href="#">Политика за поверителност</a>
+            <a href="#">Условия за ползване</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // --- CUSTOM CURSOR ---
+    const cursorDot = document.getElementById("cursor-dot");
+    const cursorOutline = document.getElementById("cursor-outline");
+    let mouseX = 0, mouseY = 0;
+    let outlineX = 0, outlineY = 0;
+
+    window.addEventListener("mousemove", function(e) {
+        if (window.getComputedStyle(cursorDot).display === 'none') return;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+    });
+
+    function animateOutline() {
+        if (window.getComputedStyle(cursorDot).display === 'none') {
+            requestAnimationFrame(animateOutline);
+            return;
+        }
+        outlineX += (mouseX - outlineX) * 0.15;
+        outlineY += (mouseY - outlineY) * 0.15;
+        cursorOutline.style.left = `${outlineX}px`;
+        cursorOutline.style.top = `${outlineY}px`;
+        requestAnimationFrame(animateOutline);
+    }
+    animateOutline();
+
+    // Hover effects
+    const interactiveElements = document.querySelectorAll('a, button, .category-card, .featured-main, .featured-card, .btn-primary, .social-nav a');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            if (window.getComputedStyle(cursorDot).display !== 'none') {
+                cursorDot.classList.add('hovering');
+                cursorOutline.classList.add('hovering');
+            }
+        });
+        el.addEventListener('mouseleave', () => {
+            cursorDot.classList.remove('hovering');
+            cursorOutline.classList.remove('hovering');
+        });
+    });
+
+    // Click effect
+    window.addEventListener('mousedown', () => {
+        if (window.getComputedStyle(cursorDot).display !== 'none') {
+            cursorOutline.classList.add('clicking');
+        }
+    });
+    window.addEventListener('mouseup', () => {
+        cursorOutline.classList.remove('clicking');
+    });
+
+    // --- SCROLL REVEAL ANIMATIONS ---
+    const revealElements = document.querySelectorAll('.reveal');
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(el => {
+        revealObserver.observe(el);
+    });
+
+    // Timeline animation with stagger
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('active');
+                }, index * 200);
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    timelineItems.forEach(item => {
+        timelineObserver.observe(item);
+    });
+</script>
 </body>
 </html>

@@ -50,31 +50,103 @@ body {
     background: radial-gradient(circle, transparent 50%, #050505 100%);
 }
 
-/* --- 🧭 NAVIGATION --- */
-.nav-bar {
-    padding: 30px 5%;
-    position: relative; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
+/* --- CUSTOM CURSOR --- */
+@media (min-width: 992px) {
+    * { cursor: none; }
+    .cursor-dot, .cursor-outline {
+        position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; display: block;
+    }
+    .cursor-dot {
+        width: 6px; height: 6px;
+        background: var(--gold-bright);
+        box-shadow: 0 0 12px var(--gold-bright), 0 0 24px rgba(212, 175, 55, 0.4);
+        transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    }
+    .cursor-dot.hovering {
+        transform: translate(-50%, -50%) scale(1.5);
+        box-shadow: 0 0 20px var(--gold-bright), 0 0 40px rgba(212, 175, 55, 0.6);
+    }
+    .cursor-outline {
+        width: 40px; height: 40px;
+        border: 1.5px solid rgba(212, 175, 55, 0.4);
+        background: transparent;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.3s ease,
+                    background-color 0.3s ease,
+                    box-shadow 0.3s ease,
+                    opacity 0.3s ease;
+        box-shadow: 0 0 20px 5px rgba(212, 175, 55, 0.08);
+        opacity: 0.8;
+    }
+    .cursor-outline.hovering {
+        transform: translate(-50%, -50%) scale(1.6);
+        border-color: var(--gold-main);
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+        box-shadow: 0 0 30px 8px rgba(212, 175, 55, 0.2);
+        opacity: 1;
+    }
+    .cursor-outline.clicking {
+        transform: translate(-50%, -50%) scale(0.8);
+        border-color: var(--gold-bright);
+        background: radial-gradient(circle, rgba(249, 215, 99, 0.2) 0%, transparent 60%);
+    }
 }
-.back-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 12px 30px;
-    border: 1px solid var(--glass-border);
-    background: rgba(0,0,0,0.4);
-    color: var(--gold-main);
-    text-decoration: none;
-    font-family: 'Rajdhani'; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
-    transition: 0.4s ease;
-    backdrop-filter: blur(10px);
+@media (max-width: 991px) { .cursor-dot, .cursor-outline { display: none !important; } }
+
+/* --- CORNERS --- */
+.corner-decor { position: fixed; width: 150px; height: 150px; z-index: 48; pointer-events: none; border: 1px solid var(--glass-border); opacity: 0.5; }
+.corner-tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+.corner-br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+.corner-decor::after { content: ''; position: absolute; width: 10px; height: 10px; background: var(--gold-main); }
+.corner-tl::after { top: -5px; left: -5px; }
+.corner-br::after { bottom: -5px; right: -5px; }
+
+/* --- HEADER --- */
+header {
+    width: 100%; padding: 15px 5%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center; gap: 20px;
+    position: fixed; top: 0; z-index: 100; transition: 0.3s;
+    backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-.back-btn:hover {
-    background: var(--gold-main); color: #000;
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+.header-logo { height: 100px; width: auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); transition: 0.3s; }
+.header-logo:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--gold-main)); }
+
+.header-menu { display: flex; justify-content: center; gap: 30px; }
+.header-link {
+    font-family: 'Rajdhani', sans-serif; color: white; text-decoration: none; text-transform: uppercase;
+    font-weight: 600; font-size: 14px; letter-spacing: 2px; position: relative; transition: 0.3s;
 }
+.header-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px; background: var(--gold-main); transition: 0.3s; }
+.header-link:hover { color: var(--gold-main); }
+.header-link:hover::after { width: 100%; }
+.header-link.active { color: var(--gold-main); }
+.header-link.active::after { width: 100%; }
+
+.header-controls { display: flex; align-items: center; }
+.social-nav { display: flex; gap: 12px; }
+.social-nav a {
+    width: 45px; height: 45px;
+    border-radius: 50%; border: 1px solid transparent;
+    display: flex; align-items: center; justify-content: center;
+    color: white; text-decoration: none; font-size: 20px;
+    transition: 0.4s;
+}
+
+.social-nav a.fb { background: #1877F2; border-color: #1877F2; }
+.social-nav a.insta { background: #E4405F; border-color: #E4405F; }
+.social-nav a.yt { background: #FF0000; border-color: #FF0000; }
+.social-nav a.tiktok { background: #000000; border-color: #25F4EE; color: #FE2C55; }
+
+.social-nav a.fb:hover { transform: translateY(-3px); box-shadow: 0 0 15px #1877F2; }
+.social-nav a.insta:hover { transform: translateY(-3px); box-shadow: 0 0 15px #E4405F; }
+.social-nav a.yt:hover { transform: translateY(-3px); box-shadow: 0 0 15px #FF0000; }
+.social-nav a.tiktok:hover { transform: translateY(-3px); box-shadow: -2px -2px 10px #25F4EE, 2px 2px 10px #FE2C55; }
 
 /* --- 📄 CONTENT SECTION --- */
 .content-wrapper {
-    max-width: 1000px; margin: 0 auto; padding: 20px 20px 40px;
+    max-width: 1000px; margin: 0 auto; padding: 160px 20px 40px;
     position: relative; z-index: 10;
 }
 
@@ -236,20 +308,138 @@ p {
 @keyframes pulseWA { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
 /* --- FOOTER --- */
-footer { padding: 80px 5% 40px; text-align: center; background: linear-gradient(to top, #000 20%, transparent); position: relative; z-index: 2; margin-top: 50px; }
-.footer-logo { height: 70px; margin-bottom: 20px; opacity: 0.9; }
-.footer-text { margin-bottom: 15px; color: #666; letter-spacing: 1px; text-transform: uppercase; font-size: 12px; }
-.footer-phone { font-family: 'Rajdhani'; font-size: 28px; color: var(--gold-main); font-weight: 700; margin: 20px 0; display: block; text-decoration: none; }
-.social-links { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
-.social-links a { width: 40px; height: 40px; border: 1px solid var(--glass-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: 0.3s; background: rgba(255,255,255,0.05); }
-.social-links a:hover { background: var(--gold-main); color: black; transform: translateY(-5px); }
-.copyright { font-size: 11px; color: #333; letter-spacing: 1px; margin-top: 30px; }
+footer {
+    padding: 80px 5% 40px;
+    background: linear-gradient(to top, #000 20%, transparent);
+    position: relative;
+    z-index: 2;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo {
+    height: 80px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.footer-tagline {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: 1px;
+}
+
+.footer-contact h4,
+.footer-social h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.footer-contact p {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-contact i {
+    color: var(--gold-main);
+    font-size: 16px;
+}
+
+.footer-social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social-links a {
+    width: 45px; height: 45px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-main);
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.footer-social-links a:hover {
+    background: var(--gold-main);
+    color: #000;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright {
+    font-size: 12px;
+    color: #444;
+    letter-spacing: 1px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 30px;
+}
+
+.footer-links a {
+    color: #555;
+    font-size: 12px;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--gold-main);
+}
 
 /* --- MOBILE --- */
+@media (max-width: 991px) {
+    header { grid-template-columns: 1fr auto; padding: 15px 5%; background: rgba(5,5,5,0.95); }
+    .header-menu { display: none; }
+    .header-logo { height: 60px; }
+    .content-wrapper { padding-top: 120px; }
+    .corner-decor { width: 50px; height: 50px; }
+    .footer-content { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+    .footer-brand { align-items: center; }
+    .footer-social-links { justify-content: center; }
+    .footer-bottom { flex-direction: column; gap: 20px; }
+}
+
 @media (max-width: 768px) {
     h1 { font-size: 40px; }
     h2 { font-size: 18px; }
-    .nav-bar { padding: 20px; }
     #info-card { width: 90%; left: 5% !important; top: auto !important; bottom: 20px; transform: translateY(20px); }
     #info-card.active { transform: translateY(0); }
     .interaction-hint { font-size: 11px; padding: 5px 15px; width: 80%; justify-content: center; }
@@ -260,18 +450,38 @@ footer { padding: 80px 5% 40px; text-align: center; background: linear-gradient(
 </head>
 <body>
 
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-outline" id="cursor-outline"></div>
+
 <div class="noise-overlay"></div>
 <div class="grid-overlay"></div>
 <div class="vignette"></div>
+<div class="corner-decor corner-tl"></div>
+<div class="corner-decor corner-br"></div>
 
 <a href="https://wa.me/359889212116" class="sticky-wa" target="_blank">
     <i class="ri-whatsapp-line"></i>
 </a>
 
-<nav class="nav-bar">
-    <img src="logo.png" alt="Nova Nadezhda" style="height: 50px;">
-    <a href="index.html" class="back-btn"><i class="ri-arrow-left-line"></i> НАЧАЛО</a>
-</nav>
+<header>
+    <a href="index.html"><img src="logo.png" alt="Нова Надежда" class="header-logo"></a>
+
+    <nav class="header-menu">
+        <a href="about.html" class="header-link">ЗА КВАРТАЛА</a>
+        <a href="plots.html" class="header-link active">КУПИ ПАРЦЕЛ</a>
+        <a href="media.html" class="header-link">МЕДИЯ</a>
+        <a href="partners.html" class="header-link">ПАРТНЬОРИ</a>
+    </nav>
+
+    <div class="header-controls">
+        <div class="social-nav">
+            <a href="#" class="fb"><i class="ri-facebook-fill"></i></a>
+            <a href="#" class="insta"><i class="ri-instagram-line"></i></a>
+            <a href="#" class="yt"><i class="ri-youtube-fill"></i></a>
+            <a href="#" class="tiktok"><i class="ri-tiktok-fill"></i></a>
+        </div>
+    </div>
+</header>
 
 <section class="content-wrapper">
     <h1>ПОКУПКА НА <span class="gold-text">ПАРЦЕЛ</span></h1>
@@ -393,19 +603,36 @@ footer { padding: 80px 5% 40px; text-align: center; background: linear-gradient(
 </div>
 
 <footer>
-    <img src="logo.png" alt="Лого" class="footer-logo">
-    <p class="footer-text">Нова Надежда – подредено място за престижен дом, бизнес и по-добър живот</p>
-    <a href="tel:0889212116" class="footer-phone">0889 21 21 16</a>
-    <p class="footer-text">Офис Сливен, ул. Георги Сава Раковски 21</p>
-    
-    <div class="social-links">
-        <a href="#"><i class="ri-facebook-fill"></i></a>
-        <a href="#"><i class="ri-instagram-line"></i></a>
-        <a href="#"><i class="ri-youtube-fill"></i></a>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <img src="logo.png" alt="Нова Надежда" class="footer-logo">
+            <p class="footer-tagline">Подредено място за престижен дом, бизнес и по-добър живот</p>
+        </div>
+
+        <div class="footer-contact">
+            <h4>Контакти</h4>
+            <p><i class="ri-phone-line"></i> 0889 21 21 16</p>
+            <p><i class="ri-map-pin-line"></i> ул. Георги Сава Раковски 21, Сливен</p>
+            <p><i class="ri-mail-line"></i> info@novanadejda.bg</p>
+        </div>
+
+        <div class="footer-social">
+            <h4>Последвайте ни</h4>
+            <div class="footer-social-links">
+                <a href="#"><i class="ri-facebook-fill"></i></a>
+                <a href="#"><i class="ri-instagram-line"></i></a>
+                <a href="#"><i class="ri-youtube-fill"></i></a>
+                <a href="#"><i class="ri-tiktok-fill"></i></a>
+            </div>
+        </div>
     </div>
 
-    <div class="copyright">
-        © 2025 ЖК НОВА НАДЕЖДА
+    <div class="footer-bottom">
+        <p class="copyright">© 2025 ЖК НОВА НАДЕЖДА. Всички права запазени.</p>
+        <div class="footer-links">
+            <a href="#">Политика за поверителност</a>
+            <a href="#">Условия за ползване</a>
+        </div>
     </div>
 </footer>
 
@@ -551,11 +778,63 @@ footer { padding: 80px 5% 40px; text-align: center; background: linear-gradient(
         poly.addEventListener('click', (e) => {
             const upi = poly.getAttribute('data-upi');
             // Your Phone Number
-            const phone = "359889212116"; 
+            const phone = "359889212116";
             const text = `Здравейте, интересувам се от Парцел УПИ ${upi} в Нова Надежда.`;
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
             window.open(url, '_blank');
         });
+    });
+
+    // --- CUSTOM CURSOR ---
+    const cursorDot = document.getElementById("cursor-dot");
+    const cursorOutline = document.getElementById("cursor-outline");
+    let mouseX = 0, mouseY = 0;
+    let outlineX = 0, outlineY = 0;
+
+    window.addEventListener("mousemove", function(e) {
+        if (window.getComputedStyle(cursorDot).display === 'none') return;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+    });
+
+    function animateOutline() {
+        if (window.getComputedStyle(cursorDot).display === 'none') {
+            requestAnimationFrame(animateOutline);
+            return;
+        }
+        outlineX += (mouseX - outlineX) * 0.15;
+        outlineY += (mouseY - outlineY) * 0.15;
+        cursorOutline.style.left = `${outlineX}px`;
+        cursorOutline.style.top = `${outlineY}px`;
+        requestAnimationFrame(animateOutline);
+    }
+    animateOutline();
+
+    // Hover effects
+    const interactiveElements = document.querySelectorAll('a, button, .plot-poly, .social-nav a, .header-link');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            if (window.getComputedStyle(cursorDot).display !== 'none') {
+                cursorDot.classList.add('hovering');
+                cursorOutline.classList.add('hovering');
+            }
+        });
+        el.addEventListener('mouseleave', () => {
+            cursorDot.classList.remove('hovering');
+            cursorOutline.classList.remove('hovering');
+        });
+    });
+
+    // Click effect
+    window.addEventListener('mousedown', () => {
+        if (window.getComputedStyle(cursorDot).display !== 'none') {
+            cursorOutline.classList.add('clicking');
+        }
+    });
+    window.addEventListener('mouseup', () => {
+        cursorOutline.classList.remove('clicking');
     });
 </script>
 </body>
