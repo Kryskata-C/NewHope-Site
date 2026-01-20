@@ -25,6 +25,10 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--bg-main);
     color: var(--text-white);
@@ -124,8 +128,110 @@ header {
 .header-link.active { color: var(--gold-main); }
 .header-link.active::after { width: 100%; }
 
-.header-controls { display: flex; align-items: center; }
+.header-controls { display: flex; align-items: center; gap: 15px; }
 .social-nav { display: flex; gap: 12px; }
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    width: 45px; height: 45px;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+.mobile-menu-toggle span {
+    width: 22px; height: 2px;
+    background: var(--gold-main);
+    transition: all 0.3s ease;
+}
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(5, 5, 5, 0.98);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mobile-menu.active {
+    opacity: 1;
+    visibility: visible;
+}
+.mobile-menu a {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-white);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+}
+.mobile-menu.active a {
+    opacity: 1;
+    transform: translateY(0);
+}
+.mobile-menu.active a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu.active a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu.active a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu.active a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu a:hover, .mobile-menu a.active {
+    color: var(--gold-main);
+}
+.mobile-menu-socials {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease 0.3s;
+}
+.mobile-menu.active .mobile-menu-socials {
+    opacity: 1;
+    transform: translateY(0);
+}
+.mobile-menu-socials a {
+    width: 50px; height: 50px;
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: var(--gold-main);
+    transition: all 0.3s ease;
+}
+.mobile-menu-socials a:hover {
+    background: var(--gold-main);
+    color: #000;
+    border-color: var(--gold-main);
+}
 .social-nav a {
     width: 45px; height: 45px;
     border-radius: 50%; border: 1px solid transparent;
@@ -431,6 +537,8 @@ footer {
     header { grid-template-columns: 1fr auto; padding: 15px 5%; background: rgba(5,5,5,0.95); }
     .header-menu { display: none; }
     .header-logo { height: 60px; }
+    .mobile-menu-toggle { display: flex; }
+    .social-nav { display: none; }
     .content-wrapper { padding-top: 120px; }
     .corner-decor { width: 50px; height: 50px; }
     .footer-content { grid-template-columns: 1fr; text-align: center; gap: 40px; }
@@ -484,8 +592,26 @@ footer {
             <a href="#" class="yt"><i class="ri-youtube-fill"></i></a>
             <a href="#" class="tiktok"><i class="ri-tiktok-fill"></i></a>
         </div>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </div>
 </header>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="about.html">За Квартала</a>
+    <a href="plots.html" class="active">Купи Парцел</a>
+    <a href="media.html">Медии</a>
+    <a href="partners.html">Партньори</a>
+    <div class="mobile-menu-socials">
+        <a href="#"><i class="ri-facebook-fill"></i></a>
+        <a href="#"><i class="ri-instagram-line"></i></a>
+        <a href="#"><i class="ri-youtube-fill"></i></a>
+        <a href="#"><i class="ri-tiktok-fill"></i></a>
+    </div>
+</div>
 
 <section class="content-wrapper">
     <h1>ПОКУПКА НА <span class="gold-text">ПАРЦЕЛ</span></h1>
@@ -839,6 +965,25 @@ footer {
     });
     window.addEventListener('mouseup', () => {
         cursorOutline.classList.remove('clicking');
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
     });
 </script>
 </body>
