@@ -294,7 +294,7 @@ header.scrolled .header-logo {
 
 /* --- HERO SECTION --- */
 .hero {
-    min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; align-items: center;
     text-align: center; padding: 140px 20px 50px; position: relative; perspective: 1000px;
     overflow: hidden;
 }
@@ -1084,18 +1084,21 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
             });
         }
 
-        // Parallax effect on hero elements
-        const heroElements = document.querySelectorAll('.first-time-badge, .hero h1, .hero-subtitle-prestige');
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            if (scrollY < window.innerHeight) {
-                heroElements.forEach((el, index) => {
-                    const speed = 0.1 + (index * 0.05);
-                    el.style.transform = `translateY(${scrollY * speed}px)`;
-                    el.style.opacity = 1 - (scrollY / (window.innerHeight * 0.8));
-                });
-            }
-        });
+        // Parallax effect on hero elements (desktop only — causes glitchy scroll on mobile)
+        if (window.innerWidth > 991) {
+            const heroElements = document.querySelectorAll('.first-time-badge, .hero h1, .hero-subtitle-prestige');
+            const cachedHeight = window.innerHeight;
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                if (scrollY < cachedHeight) {
+                    heroElements.forEach((el, index) => {
+                        const speed = 0.1 + (index * 0.05);
+                        el.style.transform = `translateY(${scrollY * speed}px)`;
+                        el.style.opacity = 1 - (scrollY / (cachedHeight * 0.8));
+                    });
+                }
+            });
+        }
 
         // Nav card radial glow follow effect
         document.querySelectorAll('.nav-card').forEach(card => {
