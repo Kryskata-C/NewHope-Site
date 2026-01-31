@@ -717,7 +717,8 @@ footer {
 
 /* --- RESPONSIVE --- */
 @media (max-width: 991px) {
-    .noise-overlay, .vignette-overlay, .grid-overlay { height: 200vh; height: 200dvh; }
+    html { height: 100%; overflow: hidden; }
+    body { height: 100%; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
 
     header { grid-template-columns: 1fr auto; padding: 12px 4%; background: rgba(5,5,5,0.95); }
     .header-menu { display: none; }
