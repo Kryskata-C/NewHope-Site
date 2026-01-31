@@ -322,48 +322,64 @@ footer { padding: 100px 5% 50px; text-align: center; background: linear-gradient
 
 /* --- MOBILE & TABLET OPTIMIZATIONS --- */
 @media (max-width: 991px) {
-    header { 
-        flex-direction: row; 
-        justify-content: space-between; 
-        gap: 0; 
-        padding: 15px 5%; 
-        background: rgba(5,5,5,0.95); 
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0;
+        padding: 12px 4%;
+        background: rgba(5,5,5,0.95);
     }
-    
-    .header-logo { height: 50px; }
-    .header-controls { flex-wrap: nowrap; gap: 10px; }
-    .social-nav a { width: 35px; height: 35px; font-size: 16px; }
 
-    .hero { padding-top: 120px; }
-    .hero h1 { line-height: 1; }
+    .header-logo { height: 45px; }
+    .header-controls { flex-wrap: nowrap; gap: 8px; }
+    .social-nav a { width: 32px; height: 32px; font-size: 14px; }
+
+    .hero { padding-top: 100px; }
+    .hero h1 { line-height: 1; font-size: 52px; }
     .hero-intro-tag { font-size: 11px; }
     .hero-subtitle-prestige { font-size: 14px; letter-spacing: 2px; }
 
-    .dashboard { padding: 60px 5%; }
-    .nav-grid { gap: 20px; }
-    .nav-card { padding: 50px 20px; flex: 1 1 280px; }
-    
-    /* Grid adjustments for mobile stats */
-    .stats-container { margin-top: 60px; padding: 40px 20px; grid-template-columns: 1fr 1fr; gap: 30px 15px; }
+    .dashboard { padding: 50px 4%; }
+    .nav-grid { gap: 15px; }
+    .nav-card {
+        padding: 30px 20px; flex: 1 1 100%;
+        flex-direction: row; gap: 15px; justify-content: flex-start; min-height: auto;
+    }
+    .card-icon { font-size: 36px; margin-bottom: 0; }
+    .nav-card span { font-size: 16px; letter-spacing: 1px; text-align: left; }
+    .nav-card:hover { transform: none; }
+
+    .stats-container { margin-top: 40px; padding: 25px 16px; grid-template-columns: 1fr 1fr; gap: 25px 12px; }
     .stat-item { padding-left: 10px; border-left: 2px solid rgba(212,175,55,0.1); }
-    .stat-num { font-size: 24px; }
-    
-    .corner-decor { width: 60px; height: 60px; }
+    .stat-num { font-size: 22px; }
+
+    .corner-decor { width: 40px; height: 40px; }
+    .corner-decor::after { width: 6px; height: 6px; }
     .marquee-strip { transform: rotate(0deg); margin-top: 0; }
+
+    .sticky-wa { padding: 10px 16px; font-size: 20px; bottom: 20px; right: 16px; }
+    .sticky-wa span { font-size: 13px; }
 }
 
 @media (max-width: 480px) {
-    .hero h1 { font-size: 48px; }
-    .quote-text { font-size: 22px; }
-    
-    .nav-card { padding: 40px 20px; min-height: 250px; }
-    .card-icon { font-size: 40px; margin-bottom: 20px; }
-    
-    /* Single column for stats on very small screens? Maybe 2 is still okay, but let's see. */
-    .stats-container { grid-template-columns: 1fr 1fr; } 
-    
-    .sticky-wa { bottom: 20px; right: 20px; padding: 10px 20px; font-size: 14px; }
-    .cta-btn { padding: 12px 30px; font-size: 14px; width: 100%; max-width: 300px; text-align: center; }
+    .hero h1 { font-size: 38px; }
+    .quote-text { font-size: 18px; }
+
+    .nav-card { padding: 22px 16px; }
+    .card-icon { font-size: 30px; }
+    .nav-card span { font-size: 14px; }
+
+    .stats-container { grid-template-columns: 1fr; text-align: center; padding: 20px 12px; }
+    .stat-item { align-items: center; border-left: none; padding-left: 0; }
+
+    .corner-decor { display: none; }
+    .sticky-wa span { display: none; }
+    .sticky-wa { width: 50px; height: 50px; padding: 0; font-size: 22px; border-radius: 50%; }
+    .cta-btn { padding: 14px 20px; font-size: 14px; width: 100%; text-align: center; border-radius: 4px; }
+}
+
+@media (max-width: 360px) {
+    .hero h1 { font-size: 32px; }
 }
 </style>
 </head>

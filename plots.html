@@ -534,27 +534,36 @@ footer {
 
 /* --- MOBILE --- */
 @media (max-width: 991px) {
-    header { grid-template-columns: 1fr auto; padding: 15px 5%; background: rgba(5,5,5,0.95); }
+    header { grid-template-columns: 1fr auto; padding: 12px 4%; background: rgba(5,5,5,0.95); }
     .header-menu { display: none; }
-    .header-logo { height: 60px; }
+    .header-logo { height: 50px; }
+    header.scrolled .header-logo { height: 40px; }
     .mobile-menu-toggle { display: flex; }
     .social-nav { display: none; }
-    .content-wrapper { padding-top: 120px; }
-    .corner-decor { width: 50px; height: 50px; }
-    .footer-content { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+    .content-wrapper { padding-top: 100px; }
+    .corner-decor { width: 40px; height: 40px; }
+    .corner-decor::after { width: 6px; height: 6px; }
+    .footer-content { grid-template-columns: 1fr; text-align: center; gap: 30px; }
     .footer-brand { align-items: center; }
     .footer-social-links { justify-content: center; }
-    .footer-bottom { flex-direction: column; gap: 20px; }
+    .footer-bottom { flex-direction: column; gap: 15px; }
+    .sticky-wa { padding: 10px 16px; font-size: 20px; bottom: 20px; right: 16px; }
+    .sticky-wa span { font-size: 13px; }
 }
 
 @media (max-width: 768px) {
-    h1 { font-size: 40px; }
-    h2 { font-size: 18px; }
-    #info-card { width: 90%; left: 5% !important; top: auto !important; bottom: 20px; transform: translateY(20px); }
+    h1 { font-size: 32px; }
+    h2 { font-size: 16px; }
+    #info-card { width: 92%; left: 4% !important; top: auto !important; bottom: 16px; transform: translateY(20px); border-radius: 8px; }
     #info-card.active { transform: translateY(0); }
     .interaction-hint { font-size: 11px; padding: 5px 15px; width: 80%; justify-content: center; }
-    .sticky-wa { padding: 10px 16px; font-size: 20px; bottom: 20px; right: 20px; }
-    .sticky-wa span { font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 26px; }
+    .corner-decor { display: none; }
+    .sticky-wa span { display: none; }
+    .sticky-wa { width: 50px; height: 50px; padding: 0; font-size: 22px; border-radius: 50%; }
 }
 
 </style>
