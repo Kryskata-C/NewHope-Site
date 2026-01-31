@@ -1155,22 +1155,5 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
         });
     }
 </script>
-
-<!-- DEBUG: Mobile detection indicator — REMOVE AFTER TESTING -->
-<div id="mobileDebug" style="position:fixed;bottom:10px;left:10px;z-index:99999;padding:8px 14px;border-radius:6px;font-family:monospace;font-size:13px;font-weight:bold;pointer-events:none;"></div>
-<script>
-(function(){
-    var el = document.getElementById('mobileDebug');
-    function update(){
-        var w = window.innerWidth;
-        var mobile = w <= 991;
-        el.textContent = (mobile ? 'MOBILE' : 'NOT MOBILE') + ' (' + w + 'px)';
-        el.style.background = mobile ? 'rgba(220,50,50,0.85)' : 'rgba(50,180,50,0.85)';
-        el.style.color = '#fff';
-    }
-    update();
-    window.addEventListener('resize', update);
-})();
-</script>
 </body>
 </html>
