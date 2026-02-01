@@ -107,14 +107,12 @@ html {
 
 /* --- VIDEO BACKGROUND --- */
 .video-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
-.video-background video {
-    min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1);
-    object-fit: cover; filter: brightness(0.25) grayscale(0.1);
-    animation: slowZoom 30s ease-in-out infinite alternate;
-}
-@keyframes slowZoom {
-    0% { transform: translate(-50%, -50%) scale(1); }
-    100% { transform: translate(-50%, -50%) scale(1.1); }
+.video-background iframe {
+    width: 100vw; height: 56.25vw; /* 16:9 aspect ratio */
+    min-height: 100vh; min-width: 177.78vh; /* inverse aspect ratio */
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none;
+    filter: brightness(0.25) grayscale(0.1);
 }
 
 /* --- PRELOADER --- */
@@ -679,6 +677,14 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
     .badge-text { font-size: 10px; }
 }
 </style>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CDYMNR14RB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CDYMNR14RB');
+</script>
 </head>
 <body>
 
@@ -697,9 +703,8 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
 </a>
 
 <div class="video-background">
-    <video autoplay muted loop playsinline>
-        <source src="video1.mp4" type="video/mp4">
-    </video>
+    <iframe src="https://www.youtube.com/embed/r9jb10lhP3U?autoplay=1&mute=1&loop=1&playlist=r9jb10lhP3U&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1"
+        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
 
 <div id="preloader">
@@ -792,22 +797,22 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
     <section class="dashboard" id="dashboard">
         <nav class="nav-grid">
             <a href="about.html" class="nav-card">
-                <i class="ri-community-fill card-icon"></i>
+                <i class="ri-home-heart-fill card-icon"></i>
                 <span>ЗА КВАРТАЛА</span>
             </a>
             
             <a href="plots.html" class="nav-card">
-                <i class="ri-layout-grid-fill card-icon"></i>
+                <i class="ri-map-2-fill card-icon"></i>
                 <span>КУПИ ПАРЦЕЛ (УПИ)</span>
             </a>
             
             <a href="media.html" class="nav-card">
-                <i class="ri-play-circle-line card-icon"></i>
+                <i class="ri-megaphone-fill card-icon"></i>
                 <span>ЗА НОВА НАДЕЖДА СЕ ГОВОРИ...</span>
             </a>
             
             <a href="partners.html" class="nav-card">
-                <i class="ri-shake-hands-fill card-icon"></i>
+                <i class="ri-hand-heart-fill card-icon"></i>
                 <span>ПАРТНЬОРИ</span>
             </a>
         </nav>
@@ -816,51 +821,51 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
             <div class="stats-corner-tr"></div>
             <div class="stats-corner-bl"></div>
             <div class="stat-item">
-                <div class="stat-num"><i class="ri-road-map-fill"></i></div>
+                <div class="stat-num"><i class="ri-route-fill"></i></div>
                 <span class="stat-label">АСФАЛТИРАНИ УЛИЦИ И ТРОТОАРИ</span>
             </div>
             <div class="stat-item">
-                <div class="stat-num"><i class="ri-flashlight-fill"></i></div>
+                <div class="stat-num"><i class="ri-fire-fill"></i></div>
                 <span class="stat-label">ГАЗИФИКАЦИЯ И ТОК</span>
             </div>
             <div class="stat-item">
-                <div class="stat-num"><i class="ri-drop-fill"></i></div>
+                <div class="stat-num"><i class="ri-water-flash-fill"></i></div>
                 <span class="stat-label">ВиК и КАНАЛИЗАЦИЯ</span>
             </div>
             <div class="stat-item">
-                <div class="stat-num"><i class="ri-router-fill"></i></div>
+                <div class="stat-num"><i class="ri-wifi-fill"></i></div>
                 <span class="stat-label">ОПТИЧНА МРЕЖА ЗА ТЕЛЕВИЗИЯ И БЪРЗ ИНТЕРНЕТ</span>
             </div>
             <div class="stat-item">
-                <div class="stat-num"><i class="ri-tree-fill"></i></div>
+                <div class="stat-num"><i class="ri-leaf-fill"></i></div>
                 <span class="stat-label">ЗЕЛЕНИ ПЛОЩИ</span>
             </div>
             <div class="stat-item">
-                <div class="stat-num"><i class="ri-parent-fill"></i></div>
+                <div class="stat-num"><i class="ri-ball-pen-fill"></i></div>
                 <span class="stat-label">ДЕТСКА ГРАДИНА И ПЛОЩАДКИ</span>
             </div>
             <div class="stat-item">
-                <div class="stat-num"><i class="ri-police-car-fill"></i></div>
+                <div class="stat-num"><i class="ri-shield-star-fill"></i></div>
                 <span class="stat-label">РПУ (ПОЛИЦИЯ)</span>
             </div>
              <div class="stat-item">
-                <div class="stat-num"><i class="ri-parking-box-fill"></i></div>
+                <div class="stat-num"><i class="ri-car-fill"></i></div>
                 <span class="stat-label">ПОДЗЕМЕН ПАРКИНГ С 200 МЕСТА</span>
             </div>
             <div class="stat-item">
-                <div class="stat-num"><i class="ri-hospital-fill"></i></div>
+                <div class="stat-num"><i class="ri-heart-pulse-fill"></i></div>
                 <span class="stat-label">МЕДИЦИНСКИ ЦЕНТЪР</span>
             </div>
              <div class="stat-item">
-                <div class="stat-num"><i class="ri-user-heart-fill"></i></div>
+                <div class="stat-num"><i class="ri-empathize-fill"></i></div>
                 <span class="stat-label">ЗЪБОЛЕКАРИ</span>
             </div>
              <div class="stat-item">
-                <div class="stat-num"><i class="ri-capsule-fill"></i></div>
+                <div class="stat-num"><i class="ri-medicine-bottle-fill"></i></div>
                 <span class="stat-label">АПТЕКА</span>
             </div>
              <div class="stat-item">
-                <div class="stat-num"><i class="ri-store-3-fill"></i></div>
+                <div class="stat-num"><i class="ri-shopping-bag-fill"></i></div>
                 <span class="stat-label">МАГАЗИНИ И ОФИСИ</span>
             </div>
         </div>
