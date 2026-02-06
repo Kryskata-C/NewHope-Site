@@ -418,6 +418,215 @@ p {
 .info-val { color: white; font-weight: bold; font-family: 'Rajdhani'; font-size: 20px; }
 .cta-hint { margin-top: 15px; padding-top: 10px; border-top: 1px dashed #333; font-size: 10px; color: var(--gold-dim); text-transform: uppercase; text-align: center; letter-spacing: 2px; }
 
+/* --- DEV MODE STYLES --- */
+.dev-panel {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    width: 320px;
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid var(--gold-main);
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 2000;
+    font-family: 'Rajdhani', monospace;
+    display: none;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+.dev-panel.active { display: block; }
+.dev-panel h3 {
+    color: var(--gold-main);
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--gold-dim);
+    padding-bottom: 10px;
+}
+.dev-panel label {
+    display: block;
+    color: #888;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+.dev-panel input, .dev-panel select {
+    width: 100%;
+    padding: 10px;
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+    font-family: 'Rajdhani', monospace;
+    font-size: 14px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+}
+.dev-panel input:focus, .dev-panel select:focus {
+    border-color: var(--gold-main);
+    outline: none;
+}
+.dev-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--gold-main);
+    color: #000;
+    border: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+.dev-btn:hover { background: var(--gold-bright); }
+.dev-btn.secondary {
+    background: transparent;
+    border: 1px solid var(--gold-main);
+    color: var(--gold-main);
+}
+.dev-btn.secondary:hover {
+    background: var(--gold-main);
+    color: #000;
+}
+.dev-btn.danger {
+    background: #ff4444;
+    color: white;
+}
+.dev-btn.danger:hover { background: #ff6666; }
+.points-list {
+    background: #0a0a0a;
+    border: 1px solid #222;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 12px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 12px;
+}
+.points-list .point-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 8px;
+    background: #151515;
+    margin-bottom: 4px;
+    border-radius: 3px;
+    color: #ccc;
+}
+.points-list .point-item:hover { background: #1a1a1a; }
+.points-list .point-item .del-point {
+    color: #ff4444;
+    cursor: pointer;
+    font-size: 14px;
+}
+.output-code {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 12px;
+    font-family: monospace;
+    font-size: 11px;
+    color: #0f0;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+}
+.dev-toggle {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    background: #ff6600;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    z-index: 2001;
+    border: none;
+    box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4);
+    display: none;
+}
+.dev-toggle.active { display: block; }
+.dev-toggle:hover { background: #ff8833; }
+
+/* Dev mode map enhancements */
+.map-container.dev-mode {
+    cursor: crosshair !important;
+}
+.map-container.dev-mode .plot-poly {
+    pointer-events: none;
+}
+.dev-point {
+    fill: #ff6600;
+    stroke: white;
+    stroke-width: 2;
+    cursor: move;
+    transition: r 0.15s;
+}
+.dev-point:hover {
+    r: 12;
+    fill: #ffaa00;
+}
+.dev-polygon {
+    fill: rgba(255, 102, 0, 0.3);
+    stroke: #ff6600;
+    stroke-width: 2;
+    stroke-dasharray: 5,5;
+    pointer-events: none;
+}
+.dev-preview-polygon {
+    fill: rgba(0, 255, 0, 0.2);
+    stroke: #00ff00;
+    stroke-width: 2;
+    pointer-events: none;
+}
+.zoom-indicator {
+    position: fixed;
+    top: 120px;
+    left: 20px;
+    background: rgba(0,0,0,0.9);
+    border: 1px solid var(--gold-main);
+    color: var(--gold-main);
+    padding: 10px 20px;
+    font-family: 'Rajdhani', monospace;
+    font-size: 14px;
+    border-radius: 4px;
+    z-index: 2000;
+    display: none;
+}
+.zoom-indicator.active { display: block; }
+.dev-instructions {
+    background: rgba(255, 102, 0, 0.1);
+    border: 1px solid #ff6600;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 11px;
+    color: #ccc;
+    line-height: 1.6;
+}
+.dev-instructions strong { color: #ff6600; }
+.dev-status {
+    background: #0a0a0a;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--gold-main);
+    margin-bottom: 12px;
+    text-align: center;
+}
+
 /* --- STICKY WHATSAPP --- */
 .sticky-wa {
     position: fixed; bottom: 30px; right: 30px; z-index: 1000;
@@ -627,6 +836,74 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     <i class="ri-whatsapp-line"></i>
     <span>Пиши ни</span>
 </a>
+
+<!-- DEV MODE TOGGLE -->
+<button class="dev-toggle active" id="devToggle">
+    <i class="ri-tools-line"></i> DEV MODE
+</button>
+
+<!-- DEV PANEL -->
+<div class="dev-panel" id="devPanel">
+    <h3><i class="ri-map-pin-add-line"></i> Plot Editor</h3>
+
+    <div class="dev-instructions">
+        <strong>Инструкции:</strong><br>
+        1. Кликни върху картата за точки<br>
+        2. Scroll за zoom (+ Shift за по-бърз)<br>
+        3. Влачи точки за корекция<br>
+        4. Мин. 3 точки за парцел
+    </div>
+
+    <div class="dev-status" id="devStatus">Готов за добавяне</div>
+
+    <label>УПИ Номер</label>
+    <input type="text" id="upiNumber" placeholder="I, II, III..." value="I">
+
+    <label>Площ (m²)</label>
+    <input type="number" id="plotArea" placeholder="500" value="">
+
+    <label>Тип</label>
+    <select id="plotType">
+        <option value="Жилищно">Жилищно</option>
+        <option value="Обществено">Обществено</option>
+    </select>
+
+    <label>Макс. РЗП (m²)</label>
+    <input type="number" id="plotRzp" placeholder="600" value="">
+
+    <label>Точки (<span id="pointCount">0</span>)</label>
+    <div class="points-list" id="pointsList">
+        <div style="color:#666; text-align:center; padding:20px;">Кликни на картата</div>
+    </div>
+
+    <button class="dev-btn" id="finishPlot">
+        <i class="ri-check-line"></i> Завърши парцел
+    </button>
+    <button class="dev-btn secondary" id="clearPoints">
+        <i class="ri-delete-bin-line"></i> Изчисти точки
+    </button>
+    <button class="dev-btn secondary" id="undoPoint">
+        <i class="ri-arrow-go-back-line"></i> Undo последна
+    </button>
+
+    <label style="margin-top:15px;">Генериран код</label>
+    <div class="output-code" id="outputCode">// Кликни "Завърши парцел"</div>
+
+    <button class="dev-btn" id="copyCode">
+        <i class="ri-clipboard-line"></i> Копирай код
+    </button>
+
+    <hr style="border:none; border-top:1px solid #333; margin:20px 0;">
+
+    <label>Всички парцели</label>
+    <div class="output-code" id="allPlotsCode" style="max-height:150px;">// Празно</div>
+    <button class="dev-btn secondary" id="copyAllCode">
+        <i class="ri-file-copy-line"></i> Копирай всичко
+    </button>
+</div>
+
+<!-- ZOOM INDICATOR -->
+<div class="zoom-indicator" id="zoomIndicator">Zoom: 100%</div>
 
 <header>
     <a href="index.html"><img src="logo.png" alt="Нова Надежда" class="header-logo"></a>
@@ -924,6 +1201,359 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             document.body.style.overflow = '';
         });
     });
+
+    // ========================================
+    // DEV MODE - PLOT EDITOR
+    // ========================================
+    (function() {
+        const devToggle = document.getElementById('devToggle');
+        const devPanel = document.getElementById('devPanel');
+        const mapContainer = document.querySelector('.map-container');
+        const svg = document.getElementById('plots-svg');
+        const mapImg = document.getElementById('master-map-img');
+        const zoomIndicator = document.getElementById('zoomIndicator');
+
+        let devMode = false;
+        let currentPoints = [];
+        let allPlots = [];
+        let currentZoom = 1;
+        let panX = 0, panY = 0;
+        let isPanning = false;
+        let startPan = { x: 0, y: 0 };
+        let draggingPoint = null;
+
+        // Toggle dev mode
+        devToggle.addEventListener('click', () => {
+            devMode = !devMode;
+            devPanel.classList.toggle('active', devMode);
+            mapContainer.classList.toggle('dev-mode', devMode);
+            zoomIndicator.classList.toggle('active', devMode);
+            devToggle.innerHTML = devMode
+                ? '<i class="ri-close-line"></i> EXIT DEV'
+                : '<i class="ri-tools-line"></i> DEV MODE';
+            devToggle.style.background = devMode ? '#ff4444' : '#ff6600';
+
+            if (devMode) {
+                updateStatus('DEV MODE активен - кликни за точки');
+                ensureDevElements();
+            } else {
+                clearDevElements();
+            }
+        });
+
+        // Ensure dev SVG elements exist
+        function ensureDevElements() {
+            if (!svg.querySelector('#dev-group')) {
+                const devGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                devGroup.id = 'dev-group';
+                svg.appendChild(devGroup);
+            }
+        }
+
+        function clearDevElements() {
+            const devGroup = svg.querySelector('#dev-group');
+            if (devGroup) devGroup.innerHTML = '';
+        }
+
+        // Get SVG coordinates from mouse event
+        function getSvgCoords(e) {
+            const rect = mapImg.getBoundingClientRect();
+            const viewBox = svg.viewBox.baseVal;
+
+            const x = ((e.clientX - rect.left) / rect.width) * viewBox.width;
+            const y = ((e.clientY - rect.top) / rect.height) * viewBox.height;
+
+            return { x: Math.round(x), y: Math.round(y) };
+        }
+
+        // Add point on click
+        mapContainer.addEventListener('click', (e) => {
+            if (!devMode || isPanning || draggingPoint) return;
+            if (e.target.classList.contains('dev-point')) return;
+
+            const coords = getSvgCoords(e);
+            currentPoints.push(coords);
+            updatePointsUI();
+            renderDevPolygon();
+            updateStatus(`Точка ${currentPoints.length} добавена (${coords.x}, ${coords.y})`);
+        });
+
+        // Zoom with scroll
+        mapContainer.addEventListener('wheel', (e) => {
+            if (!devMode) return;
+            e.preventDefault();
+
+            const zoomSpeed = e.shiftKey ? 0.2 : 0.1;
+            const delta = e.deltaY > 0 ? -zoomSpeed : zoomSpeed;
+            currentZoom = Math.max(0.5, Math.min(5, currentZoom + delta));
+
+            mapContainer.querySelector('.map-wrapper-inner').style.transform =
+                `scale(${currentZoom}) translate(${panX}px, ${panY}px)`;
+
+            zoomIndicator.textContent = `Zoom: ${Math.round(currentZoom * 100)}%`;
+        });
+
+        // Pan with middle mouse or right click drag
+        mapContainer.addEventListener('mousedown', (e) => {
+            if (!devMode) return;
+            if (e.button === 1 || e.button === 2) { // Middle or right click
+                e.preventDefault();
+                isPanning = true;
+                startPan = { x: e.clientX - panX, y: e.clientY - panY };
+                mapContainer.style.cursor = 'grabbing';
+            }
+        });
+
+        mapContainer.addEventListener('contextmenu', (e) => {
+            if (devMode) e.preventDefault();
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (isPanning && devMode) {
+                panX = (e.clientX - startPan.x) / currentZoom;
+                panY = (e.clientY - startPan.y) / currentZoom;
+                mapContainer.querySelector('.map-wrapper-inner').style.transform =
+                    `scale(${currentZoom}) translate(${panX}px, ${panY}px)`;
+            }
+
+            // Drag point
+            if (draggingPoint !== null && devMode) {
+                const coords = getSvgCoords(e);
+                currentPoints[draggingPoint] = coords;
+                updatePointsUI();
+                renderDevPolygon();
+            }
+        });
+
+        window.addEventListener('mouseup', () => {
+            isPanning = false;
+            draggingPoint = null;
+            if (devMode) mapContainer.style.cursor = 'crosshair';
+        });
+
+        // Render dev polygon and points
+        function renderDevPolygon() {
+            const devGroup = svg.querySelector('#dev-group');
+            if (!devGroup) return;
+            devGroup.innerHTML = '';
+
+            if (currentPoints.length >= 2) {
+                const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                polygon.classList.add('dev-polygon');
+                polygon.setAttribute('points', currentPoints.map(p => `${p.x},${p.y}`).join(' '));
+                devGroup.appendChild(polygon);
+            }
+
+            currentPoints.forEach((point, idx) => {
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.classList.add('dev-point');
+                circle.setAttribute('cx', point.x);
+                circle.setAttribute('cy', point.y);
+                circle.setAttribute('r', 8);
+                circle.setAttribute('data-idx', idx);
+
+                circle.addEventListener('mousedown', (e) => {
+                    e.stopPropagation();
+                    draggingPoint = idx;
+                });
+
+                devGroup.appendChild(circle);
+
+                // Point number label
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', point.x + 12);
+                text.setAttribute('y', point.y + 4);
+                text.setAttribute('fill', '#fff');
+                text.setAttribute('font-size', '14');
+                text.setAttribute('font-family', 'Rajdhani');
+                text.textContent = idx + 1;
+                devGroup.appendChild(text);
+            });
+        }
+
+        // Update points list UI
+        function updatePointsUI() {
+            const list = document.getElementById('pointsList');
+            const countEl = document.getElementById('pointCount');
+            countEl.textContent = currentPoints.length;
+
+            if (currentPoints.length === 0) {
+                list.innerHTML = '<div style="color:#666; text-align:center; padding:20px;">Кликни на картата</div>';
+                return;
+            }
+
+            list.innerHTML = currentPoints.map((p, i) => `
+                <div class="point-item">
+                    <span>${i + 1}. (${p.x}, ${p.y})</span>
+                    <span class="del-point" data-idx="${i}">✕</span>
+                </div>
+            `).join('');
+
+            // Delete point handlers
+            list.querySelectorAll('.del-point').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = parseInt(e.target.dataset.idx);
+                    currentPoints.splice(idx, 1);
+                    updatePointsUI();
+                    renderDevPolygon();
+                });
+            });
+        }
+
+        // Update status
+        function updateStatus(msg) {
+            document.getElementById('devStatus').textContent = msg;
+        }
+
+        // Finish plot
+        document.getElementById('finishPlot').addEventListener('click', () => {
+            if (currentPoints.length < 3) {
+                updateStatus('⚠️ Минимум 3 точки!');
+                return;
+            }
+
+            const upi = document.getElementById('upiNumber').value.trim() || 'X';
+            const area = document.getElementById('plotArea').value || 0;
+            const type = document.getElementById('plotType').value;
+            const rzp = document.getElementById('plotRzp').value || 0;
+
+            const pointsStr = currentPoints.map(p => `${p.x},${p.y}`).join(' ');
+
+            const polygonCode = `<polygon class="plot-poly" data-upi="${upi}" points="${pointsStr}"></polygon>`;
+            const dbCode = `"${upi}": { area: ${area}, type: "${type}", rzp: ${rzp} },`;
+
+            document.getElementById('outputCode').textContent =
+                `// SVG Polygon:\n${polygonCode}\n\n// plotsDB entry:\n${dbCode}`;
+
+            // Store in allPlots
+            allPlots.push({ upi, area, type, rzp, points: pointsStr });
+            updateAllPlotsCode();
+
+            // Add permanent polygon to SVG
+            const defs = svg.querySelector('defs');
+            const newPoly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            newPoly.classList.add('plot-poly');
+            newPoly.setAttribute('data-upi', upi);
+            newPoly.setAttribute('points', pointsStr);
+            svg.insertBefore(newPoly, defs.nextSibling);
+
+            // Add to plotsDB
+            plotsDB[upi] = { area: parseInt(area), type, rzp: parseFloat(rzp) };
+
+            // Reset for next plot
+            currentPoints = [];
+            updatePointsUI();
+            renderDevPolygon();
+
+            // Auto-increment UPI
+            const nextUpi = incrementRoman(upi);
+            document.getElementById('upiNumber').value = nextUpi;
+            document.getElementById('plotArea').value = '';
+            document.getElementById('plotRzp').value = '';
+
+            updateStatus(`✓ УПИ ${upi} добавен! Готов за ${nextUpi}`);
+        });
+
+        // Update all plots code
+        function updateAllPlotsCode() {
+            if (allPlots.length === 0) {
+                document.getElementById('allPlotsCode').textContent = '// Празно';
+                return;
+            }
+
+            let svgCode = '// SVG Polygons:\n';
+            let dbCode = '// plotsDB:\nconst plotsDB = {\n';
+
+            allPlots.forEach(p => {
+                svgCode += `<polygon class="plot-poly" data-upi="${p.upi}" points="${p.points}"></polygon>\n`;
+                dbCode += `    "${p.upi}": { area: ${p.area}, type: "${p.type}", rzp: ${p.rzp} },\n`;
+            });
+
+            dbCode += '};';
+
+            document.getElementById('allPlotsCode').textContent = svgCode + '\n' + dbCode;
+        }
+
+        // Roman numeral increment helper
+        function incrementRoman(roman) {
+            const romanNumerals = ['I','II','III','IV','V','VI','VII','VIII','IX','X',
+                'XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX',
+                'XXI','XXII','XXIII','XXIV','XXV','XXVI','XXVII','XXVIII','XXIX','XXX',
+                'XXXI','XXXII','XXXIII','XXXIV','XXXV','XXXVI','XXXVII','XXXVIII','XXXIX','XL',
+                'XLI','XLII','XLIII','XLIV','XLV','XLVI','XLVII','XLVIII','XLIX','L',
+                'LI','LII','LIII','LIV','LV','LVI','LVII','LVIII','LIX','LX',
+                'LXI','LXII','LXIII','LXIV','LXV','LXVI','LXVII','LXVIII','LXIX','LXX',
+                'LXXI','LXXII','LXXIII','LXXIV','LXXV','LXXVI','LXXVII','LXXVIII','LXXIX','LXXX'];
+            const idx = romanNumerals.indexOf(roman.toUpperCase());
+            return idx >= 0 && idx < romanNumerals.length - 1 ? romanNumerals[idx + 1] : roman;
+        }
+
+        // Clear points
+        document.getElementById('clearPoints').addEventListener('click', () => {
+            currentPoints = [];
+            updatePointsUI();
+            renderDevPolygon();
+            updateStatus('Точките са изчистени');
+        });
+
+        // Undo last point
+        document.getElementById('undoPoint').addEventListener('click', () => {
+            if (currentPoints.length > 0) {
+                currentPoints.pop();
+                updatePointsUI();
+                renderDevPolygon();
+                updateStatus(`Undo - остават ${currentPoints.length} точки`);
+            }
+        });
+
+        // Copy code
+        document.getElementById('copyCode').addEventListener('click', () => {
+            const code = document.getElementById('outputCode').textContent;
+            navigator.clipboard.writeText(code);
+            updateStatus('✓ Кодът е копиран!');
+        });
+
+        document.getElementById('copyAllCode').addEventListener('click', () => {
+            const code = document.getElementById('allPlotsCode').textContent;
+            navigator.clipboard.writeText(code);
+            updateStatus('✓ Целият код е копиран!');
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (!devMode) return;
+
+            if (e.key === 'Escape') {
+                currentPoints = [];
+                updatePointsUI();
+                renderDevPolygon();
+                updateStatus('Изчистено с ESC');
+            }
+
+            if (e.key === 'z' && e.ctrlKey) {
+                if (currentPoints.length > 0) {
+                    currentPoints.pop();
+                    updatePointsUI();
+                    renderDevPolygon();
+                    updateStatus('Undo (Ctrl+Z)');
+                }
+            }
+
+            if (e.key === 'Enter' && currentPoints.length >= 3) {
+                document.getElementById('finishPlot').click();
+            }
+
+            // Reset zoom with 0
+            if (e.key === '0') {
+                currentZoom = 1;
+                panX = 0;
+                panY = 0;
+                mapContainer.querySelector('.map-wrapper-inner').style.transform = 'scale(1)';
+                zoomIndicator.textContent = 'Zoom: 100%';
+            }
+        });
+
+    })();
 </script>
 </body>
 </html>
