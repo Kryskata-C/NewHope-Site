@@ -450,6 +450,30 @@ p {
     }
 }
 
+/* Sold plots - red tint */
+.plot-poly.sold {
+    fill: rgba(255, 68, 68, 0.15);
+    stroke: rgba(255, 68, 68, 0.5);
+}
+.plot-poly.sold:hover {
+    fill: rgba(255, 68, 68, 0.3);
+    stroke: #ff4444;
+    filter: drop-shadow(0 0 15px rgba(255, 68, 68, 0.5));
+    animation: none;
+}
+
+/* Reserved plots - orange tint */
+.plot-poly.reserved {
+    fill: rgba(255, 152, 0, 0.1);
+    stroke: rgba(255, 152, 0, 0.4);
+}
+.plot-poly.reserved:hover {
+    fill: rgba(255, 152, 0, 0.25);
+    stroke: #ff9800;
+    filter: drop-shadow(0 0 15px rgba(255, 152, 0, 0.5));
+    animation: none;
+}
+
 /* --- ℹ️ INFO CARD (HUD STYLE) --- */
 #info-card {
     position: fixed; pointer-events: none; z-index: 1000;
@@ -467,6 +491,8 @@ p {
 .info-header { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
 .info-title { font-family: 'Rajdhani'; font-size: 32px; color: var(--gold-main); font-weight: 700; line-height: 0.8; }
 .info-status { font-size: 10px; background: #25D366; color: #000; padding: 4px 8px; font-weight: 800; border-radius: 2px; text-transform: uppercase; letter-spacing: 1px; }
+.info-status.sold { background: #ff4444; color: #fff; }
+.info-status.reserved { background: #ff9800; color: #000; }
 .info-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 15px; color: #888; }
 .info-label { text-transform: uppercase; font-size: 11px; letter-spacing: 2px; }
 .info-val { color: white; font-weight: bold; font-family: 'Rajdhani'; font-size: 20px; }
@@ -1202,7 +1228,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 <div id="info-card">
     <div class="info-header">
         <span class="info-title" id="card-upi">УПИ X</span>
-        <span class="info-status">СВОБОДЕН</span>
+        <span class="info-status" id="card-status">СВОБОДЕН</span>
     </div>
     <div class="info-row">
         <span class="info-label">Площ</span>
@@ -1212,11 +1238,11 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         <span class="info-label">Предназначение</span>
         <span class="info-val" id="card-type">-</span>
     </div>
-    <div class="info-row">
+    <div class="info-row" id="rzp-row">
         <span class="info-label">Макс. РЗП</span>
         <span class="info-val" id="card-rzp">0 m²</span>
     </div>
-    <div class="cta-hint"><i class="ri-whatsapp-line"></i> КЛИКНИ ЗА ЗАПИТВАНЕ</div>
+    <div class="cta-hint" id="cta-hint"><i class="ri-whatsapp-line"></i> КЛИКНИ ЗА ЗАПИТВАНЕ</div>
 </div>
 
 <footer>
@@ -1256,86 +1282,86 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 <script>
     // --- PLOT DATA BASE ---
     const plotsDB = {
-        // Block 1: I-XIV
-        "I": { area: 0, type: "Жилищно", rzp: 0 },
-        "II": { area: 0, type: "Жилищно", rzp: 0 },
-        "III": { area: 0, type: "Жилищно", rzp: 0 },
-        "IV": { area: 0, type: "Жилищно", rzp: 0 },
-        "V": { area: 0, type: "Жилищно", rzp: 0 },
-        "VI": { area: 0, type: "Жилищно", rzp: 0 },
-        "VII": { area: 0, type: "Жилищно", rzp: 0 },
-        "VIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "IX": { area: 0, type: "Жилищно", rzp: 0 },
-        "X": { area: 0, type: "Жилищно", rzp: 0 },
-        "XI": { area: 0, type: "Жилищно", rzp: 0 },
-        "XII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XIV": { area: 0, type: "Жилищно", rzp: 0 },
-        // Block 2: XV-XXXIV
-        "XV": { area: 0, type: "Жилищно", rzp: 0 },
-        "XVI": { area: 0, type: "Жилищно", rzp: 0 },
-        "XVII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XVIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XIX": { area: 0, type: "Жилищно", rzp: 0 },
-        "XX": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXI": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXIV": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXV": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXVI": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXVII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXVIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXIX": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXX": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXXI": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXXII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXXIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXXIV": { area: 0, type: "Жилищно", rzp: 0 },
+        // Block 1: I-XIV (Бизнес зона)
+        "I": { area: 957, type: "За бизнес", rzp: 1148.4, status: "free" },
+        "II": { area: 959, type: "За бизнес", rzp: 1150.8, status: "free" },
+        "III": { area: 769, type: "За бизнес", rzp: 922.8, status: "free" },
+        "IV": { area: 772, type: "За бизнес", rzp: 926.4, status: "free" },
+        "V": { area: 427, type: "За бизнес", rzp: 512.4, status: "free" },
+        "VI": { area: 427, type: "За бизнес", rzp: 512.4, status: "free" },
+        "VII": { area: 427, type: "За бизнес", rzp: 512.4, status: "free" },
+        "VIII": { area: 427, type: "За бизнес", rzp: 512.4, status: "free" },
+        "IX": { area: 415, type: "За бизнес", rzp: 498, status: "free" },
+        "X": { area: 1708, type: "Търговски център", rzp: 0, status: "sold" },
+        "XI": { area: 0, type: "Районен Полицейски Участък", rzp: 0, status: "reserved" },
+        "XII": { area: 0, type: "Нощен клуб / Ресторант", rzp: 0, status: "sold" },
+        "XIII": { area: 190, type: "За бизнес", rzp: 228, status: "sold" },
+        "XIV": { area: 0, type: "Медицински Център, Аптека, Лаборатория, Зъболекари", rzp: 0, status: "sold" },
+        // Block 2: XV-XXXIV (Жилищна зона)
+        "XV": { area: 336, type: "За дом и/или бизнес", rzp: 403.2, status: "free" },
+        "XVI": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+        "XVII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+        "XVIII": { area: 336, type: "За дом и/или бизнес", rzp: 403.2, status: "free" },
+        "XIX": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XX": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXI": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXIII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXIV": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXV": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXVI": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXVII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXVIII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXIX": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXX": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XXXI": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
+        "XXXII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+        "XXXIII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+        "XXXIV": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
         // Block 3: XXXV-XLVIII
-        "XXXV": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXXVI": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXXVII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXXVIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XXXIX": { area: 0, type: "Жилищно", rzp: 0 },
-        "XL": { area: 0, type: "Жилищно", rzp: 0 },
-        "XLI": { area: 0, type: "Жилищно", rzp: 0 },
-        "XLII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XLIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XLIV": { area: 0, type: "Жилищно", rzp: 0 },
-        "XLV": { area: 0, type: "Жилищно", rzp: 0 },
-        "XLVI": { area: 0, type: "Жилищно", rzp: 0 },
-        "XLVII": { area: 0, type: "Жилищно", rzp: 0 },
-        "XLVIII": { area: 0, type: "Жилищно", rzp: 0 },
+        "XXXV": { area: 336, type: "За дом и/или бизнес", rzp: 403.2, status: "free" },
+        "XXXVI": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+        "XXXVII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+        "XXXVIII": { area: 336, type: "За дом и/или бизнес", rzp: 403.2, status: "free" },
+        "XXXIX": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XL": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XLI": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XLII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XLIII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XLIV": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "XLV": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
+        "XLVI": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+        "XLVII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+        "XLVIII": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
         // Block 4: XLIX-LXVIII
-        "XLIX": { area: 0, type: "Жилищно", rzp: 0 },
-        "L": { area: 0, type: "Жилищно", rzp: 0 },
-        "LI": { area: 0, type: "Жилищно", rzp: 0 },
-        "LII": { area: 0, type: "Жилищно", rzp: 0 },
-        "LIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "LIV": { area: 0, type: "Жилищно", rzp: 0 },
-        "LV": { area: 0, type: "Жилищно", rzp: 0 },
-        "LVI": { area: 0, type: "Жилищно", rzp: 0 },
-        "LVII": { area: 0, type: "Жилищно", rzp: 0 },
-        "LVIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "LIX": { area: 0, type: "Жилищно", rzp: 0 },
-        "LX": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXI": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXII": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXIV": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXV": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXVI": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXVII": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXVIII": { area: 0, type: "Жилищно", rzp: 0 },
+        "XLIX": { area: 312, type: "За дом и/или бизнес", rzp: 374.4, status: "free" },
+        "L": { area: 311, type: "За дом и/или бизнес", rzp: 373.2, status: "free" },
+        "LI": { area: 311, type: "За дом и/или бизнес", rzp: 373.2, status: "free" },
+        "LII": { area: 339, type: "За дом и/или бизнес", rzp: 406.8, status: "free" },
+        "LIII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "LIV": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "LV": { area: 312, type: "За дом и/или бизнес", rzp: 374.4, status: "free" },
+        "LVI": { area: 311, type: "За дом и/или бизнес", rzp: 373.2, status: "free" },
+        "LVII": { area: 311, type: "За дом и/или бизнес", rzp: 373.2, status: "free" },
+        "LVIII": { area: 387, type: "За дом и/или бизнес", rzp: 464.4, status: "free" },
+        "LIX": { area: 363, type: "За дом и/или бизнес", rzp: 435.6, status: "free" },
+        "LX": { area: 322, type: "За дом и/или бизнес", rzp: 386.4, status: "free" },
+        "LXI": { area: 322, type: "За дом и/или бизнес", rzp: 386.4, status: "free" },
+        "LXII": { area: 363, type: "За дом и/или бизнес", rzp: 435.6, status: "free" },
+        "LXIII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "LXIV": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+        "LXV": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
+        "LXVI": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+        "LXVII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+        "LXVIII": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
         // Block 5: LXIX-LXXV
-        "LXIX": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXX": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXXI": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXXII": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXXIII": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXXIV": { area: 0, type: "Жилищно", rzp: 0 },
-        "LXXV": { area: 0, type: "Жилищно", rzp: 0 },
+        "LXIX": { area: 376, type: "За дом и/или бизнес", rzp: 451.2, status: "free" },
+        "LXX": { area: 389, type: "За дом и/или бизнес", rzp: 466.8, status: "free" },
+        "LXXI": { area: 386, type: "За дом и/или бизнес", rzp: 463.2, status: "free" },
+        "LXXII": { area: 382, type: "За дом и/или бизнес", rzp: 458.4, status: "free" },
+        "LXXIII": { area: 379, type: "За дом и/или бизнес", rzp: 454.8, status: "free" },
+        "LXXIV": { area: 375, type: "За дом и/или бизнес", rzp: 450, status: "free" },
+        "LXXV": { area: 0, type: "Детска градина", rzp: 0, status: "reserved" },
     };
 
     const img = document.getElementById('master-map-img');
@@ -1352,7 +1378,21 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 
     // --- INTERACTIVITY LOGIC ---
     const polys = document.querySelectorAll('.plot-poly');
-    
+    const statusEl = document.getElementById('card-status');
+    const ctaHint = document.getElementById('cta-hint');
+    const rzpRow = document.getElementById('rzp-row');
+
+    // Apply status classes to plots on load
+    polys.forEach(poly => {
+        const upi = poly.getAttribute('data-upi');
+        const data = plotsDB[upi];
+        if (data && data.status === 'sold') {
+            poly.classList.add('sold');
+        } else if (data && data.status === 'reserved') {
+            poly.classList.add('reserved');
+        }
+    });
+
     // Hide hint after first interaction
     let hasInteracted = false;
     function hideHint() {
@@ -1369,9 +1409,28 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             const data = plotsDB[upi];
             if (data) {
                 document.getElementById('card-upi').textContent = `УПИ ${upi}`;
-                document.getElementById('card-area').textContent = data.area + ' m²';
+                document.getElementById('card-area').textContent = data.area ? data.area + ' m²' : '-';
                 document.getElementById('card-type').textContent = data.type;
-                document.getElementById('card-rzp').textContent = data.rzp + ' m²';
+                document.getElementById('card-rzp').textContent = data.rzp ? data.rzp + ' m²' : '-';
+
+                // Update status badge
+                statusEl.className = 'info-status';
+                if (data.status === 'sold') {
+                    statusEl.textContent = 'ПРОДАДЕН';
+                    statusEl.classList.add('sold');
+                    ctaHint.style.display = 'none';
+                    rzpRow.style.display = data.rzp ? 'flex' : 'none';
+                } else if (data.status === 'reserved') {
+                    statusEl.textContent = 'РЕЗЕРВИРАН';
+                    statusEl.classList.add('reserved');
+                    ctaHint.style.display = 'none';
+                    rzpRow.style.display = 'none';
+                } else {
+                    statusEl.textContent = 'СВОБОДЕН';
+                    ctaHint.style.display = 'block';
+                    rzpRow.style.display = 'flex';
+                }
+
                 infoCard.classList.add('active');
             }
         });
@@ -1380,11 +1439,11 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             // Keep card near mouse
             const x = e.clientX + 20;
             const y = e.clientY + 20;
-            
+
             // Boundary checks (so card doesn't go off screen)
             const cardWidth = 320;
             const finalX = (x + cardWidth > window.innerWidth) ? x - cardWidth - 40 : x;
-            
+
             infoCard.style.left = `${finalX}px`;
             infoCard.style.top = `${y}px`;
         });
@@ -1393,9 +1452,16 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             infoCard.classList.remove('active');
         });
 
-        // Click Action -> Open WhatsApp
+        // Click Action -> Open WhatsApp (only for free plots)
         poly.addEventListener('click', (e) => {
             const upi = poly.getAttribute('data-upi');
+            const data = plotsDB[upi];
+
+            // Don't open WhatsApp for sold or reserved plots
+            if (data && (data.status === 'sold' || data.status === 'reserved')) {
+                return;
+            }
+
             // Your Phone Number
             const phone = "359889212116";
             const text = `Здравейте, интересувам се от Парцел УПИ ${upi} в Нова Надежда.`;
