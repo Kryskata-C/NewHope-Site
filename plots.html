@@ -717,49 +717,9 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
                     </linearGradient>
                 </defs>
 
-                <polygon class="plot-poly" data-upi="I" points="180,102 458,102 458,172 180,172"></polygon>
-                <polygon class="plot-poly" data-upi="II" points="179,197 305,197 305,249 179,249"></polygon>
-                <polygon class="plot-poly" data-upi="III" points="331,198 459,198 459,250 331,250"></polygon>
-                <polygon class="plot-poly" data-upi="IV" points="177,275 213,275 213,355 177,355"></polygon>
-                <polygon class="plot-poly" data-upi="V" points="238,274 273,274 273,353 238,353"></polygon>
-                <polygon class="plot-poly" data-upi="VI" points="299,271 339,271 339,353 299,353"></polygon>
-                <polygon class="plot-poly" data-upi="VII" points="361,274 397,274 397,353 361,353"></polygon>
-                <polygon class="plot-poly" data-upi="VIII" points="422,274 455,274 455,352 422,352"></polygon>
-                <polygon class="plot-poly" data-upi="IX" points="419,434 457,434 457,511 419,511"></polygon>
-                <polygon class="plot-poly" data-upi="X" points="359,431 396,431 396,509 359,509"></polygon>
-                <polygon class="plot-poly" data-upi="XI" points="299,432 334,432 334,508 299,508"></polygon>
-                <polygon class="plot-poly" data-upi="XII" points="236,430 275,430 275,509 236,509"></polygon>
-                <polygon class="plot-poly" data-upi="XIII" points="176,430 211,430 211,507 176,507"></polygon>
-                <polygon class="plot-poly" data-upi="XIV" points="175,534 230,534 230,626 175,626"></polygon>
-                <polygon class="plot-poly" data-upi="XV" points="254,589 278,589 278,627 254,627"></polygon>
-                <polygon class="plot-poly" data-upi="XVI" points="301,625 302,569 253,568 256,534 457,534 462,615 444,629"></polygon>
-                <polygon class="plot-poly" data-upi="XVII" points="577,628 577,572 533,574 530,614 545,627"></polygon>
-                <polygon class="plot-poly" data-upi="XVIII" points="603,583 645,583 645,628 603,628"></polygon>
-                <polygon class="plot-poly" data-upi="XIX" points="649,582 691,582 691,626 649,626"></polygon>
-                <polygon class="plot-poly" data-upi="XX" points="717,627 748,628 763,618 763,573 716,574"></polygon>
-                <polygon class="plot-poly" data-upi="XXI" points="702,508 758,508 758,551 702,551"></polygon>
-                <polygon class="plot-poly" data-upi="XXII" points="533,508 594,508 594,550 533,550"></polygon>
-                <polygon class="plot-poly" data-upi="XXIII" points="699,466 761,466 761,505 699,505"></polygon>
-                <polygon class="plot-poly" data-upi="XXIV" points="534,463 593,463 593,506 534,506"></polygon>
-                <polygon class="plot-poly" data-upi="XXV" points="534,400 595,400 595,439 534,439"></polygon>
-                <polygon class="plot-poly" data-upi="XXVI" points="700,401 759,401 759,441 700,441"></polygon>
-                <polygon class="plot-poly" data-upi="XXVII" points="700,356 762,356 762,398 700,398"></polygon>
-                <polygon class="plot-poly" data-upi="XXVIII" points="534,359 594,359 594,398 534,398"></polygon>
-                <polygon class="plot-poly" data-upi="XXIX" points="533,292 596,292 596,330 533,330"></polygon>
-                <polygon class="plot-poly" data-upi="XXX" points="700,291 761,291 761,332 700,332"></polygon>
-                <polygon class="plot-poly" data-upi="XXXI" points="699,247 761,247 761,288 699,288"></polygon>
-                <polygon class="plot-poly" data-upi="XXXII" points="535,248 596,248 596,288 535,288"></polygon>
-                <polygon class="plot-poly" data-upi="XXXIII" points="577,223 580,170 550,169 536,186 535,224"></polygon>
-                <polygon class="plot-poly" data-upi="XXXIV" points="604,169 648,169 648,215 604,215"></polygon>
-                <polygon class="plot-poly" data-upi="XXXV" points="648,170 695,170 695,214 648,214"></polygon>
-                <polygon class="plot-poly" data-upi="XXXVI" points="720,224 762,226 764,183 748,168 718,170"></polygon>
-                <polygon class="plot-poly" data-upi="XXXVII" points="880,223 836,223 835,185 848,168 881,169"></polygon>
-                <polygon class="plot-poly" data-upi="XXXVIII" points="904,171 949,171 949,218 904,218"></polygon>
-                <polygon class="plot-poly" data-upi="XXXIX" points="950,171 996,171 996,217 950,217"></polygon>
-                <polygon class="plot-poly" data-upi="XL" points="1018,223 1066,222 1067,182 1050,169 1018,172"></polygon>
-                <polygon class="plot-poly" data-upi="XLI" points="835,249 896,249 896,288 835,288"></polygon>
-                <polygon class="plot-poly" data-upi="XLII" points="702,247 762,247 762,287 702,287"></polygon>
-                <polygon class="plot-poly" data-upi="XLIII" points="535,293 597,293 597,333 535,333"></polygon>
+                <!-- ADD NEW PLOT POLYGONS HERE -->
+                <!-- Example: <polygon class="plot-poly" data-upi="I" points="x1,y1 x2,y2 x3,y3 x4,y4"></polygon> -->
+
             </svg>
         </div>
     </div>
@@ -821,85 +781,11 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 
 <script>
     // --- PLOT DATA BASE ---
+    // ADD NEW PLOT DATA HERE
+    // Format: "UPI_NUMBER": { area: SIZE_IN_M2, type: "Жилищно" или "Обществено", rzp: MAX_RZP }
     const plotsDB = {
-        "I": { area: 1916, type: "Обществено", rzp: 2229.2 },
-        "II": { area: 769, type: "Обществено", rzp: 922.8 },
-        "III": { area: 772, type: "Обществено", rzp: 926.4 },
-        "IV": { area: 427, type: "Обществено", rzp: 512.4 },
-        "V": { area: 427, type: "Обществено", rzp: 512.4 },
-        "VI": { area: 427, type: "Обществено", rzp: 512.4 },
-        "VII": { area: 427, type: "Обществено", rzp: 512.4 },
-        "VIII": { area: 415, type: "Обществено", rzp: 498 },
-        "IX": { area: 419, type: "Обществено", rzp: 502.8 },
-        "X": { area: 427, type: "Обществено", rzp: 512.4 },
-        "XI": { area: 427, type: "Обществено", rzp: 512.4 },
-        "XII": { area: 427, type: "Обществено", rzp: 512.4 },
-        "XIII": { area: 428, type: "Обществено", rzp: 513.4 },
-        "XIV": { area: 615, type: "Обществено", rzp: 738 },
-        "XV": { area: 190, type: "Обществено", rzp: 228 },
-        "XVI": { area: 1562, type: "Обществено", rzp: 1874.4 },
-        "XVII": { area: 337, type: "Жилищно", rzp: 404.4 },
-        "XVIII": { area: 300, type: "Жилищно", rzp: 360 },
-        "XIX": { area: 300, type: "Жилищно", rzp: 360 },
-        "XX": { area: 337, type: "Жилищно", rzp: 404.4 },
-        "XXI": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXII": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXIII": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXIV": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXV": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXVI": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXVII": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXVIII": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXIX": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXX": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXXI": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXXII": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XXXIII": { area: 336, type: "Жилищно", rzp: 403.2 },
-        "XXXIV": { area: 300, type: "Жилищно", rzp: 360 },
-        "XXXV": { area: 300, type: "Жилищно", rzp: 360 },
-        "XXXVI": { area: 336, type: "Жилищно", rzp: 403.2 },
-        "XXXVII": { area: 336, type: "Жилищно", rzp: 403.2 },
-        "XXXVIII": { area: 300, type: "Жилищно", rzp: 360 },
-        "XXXIX": { area: 300, type: "Жилищно", rzp: 360 },
-        "XL": { area: 336, type: "Жилищно", rzp: 403.2 },
-        "XLI": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XLII": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XLIII": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XLIV": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XLV": { area: 2726, type: "Обществено", rzp: 2671.2 },
-        "XLVI": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XLVII": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "XLVIII": { area: 337, type: "Жилищно", rzp: 404.4 },
-        "XLIX": { area: 300, type: "Жилищно", rzp: 360 },
-        "L": { area: 300, type: "Жилищно", rzp: 360 },
-        "LI": { area: 337, type: "Жилищно", rzp: 404.4 },
-        "LII": { area: 337, type: "Жилищно", rzp: 404.4 },
-        "LIII": { area: 300, type: "Жилищно", rzp: 360 },
-        "LIV": { area: 300, type: "Жилищно", rzp: 360 },
-        "LV": { area: 337, type: "Жилищно", rzp: 404.4 },
-        "LVI": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "LVII": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "LVIII": { area: 363, type: "Жилищно", rzp: 435.6 },
-        "LIX": { area: 322, type: "Жилищно", rzp: 386.4 },
-        "LX": { area: 322, type: "Жилищно", rzp: 386.4 },
-        "LXI": { area: 363, type: "Жилищно", rzp: 435.6 },
-        "LXII": { area: 311, type: "Жилищно", rzp: 373.2 },
-        "LXIII": { area: 311, type: "Жилищно", rzp: 373.2 },
-        "LXIV": { area: 312, type: "Жилищно", rzp: 374.4 },
-        "LXV": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "LXVI": { area: 312, type: "Жилищно", rzp: 374.4 },
-        "LXVII": { area: 311, type: "Жилищно", rzp: 373.2 },
-        "LXVIII": { area: 311, type: "Жилищно", rzp: 373.2 },
-        "LXIX": { area: 339, type: "Жилищно", rzp: 406.8 },
-        "LXX": { area: 454, type: "Жилищно", rzp: 544.8 },
-        "LXXI": { area: 387, type: "Жилищно", rzp: 464.4 },
-        "LXXII": { area: 376, type: "Жилищно", rzp: 451.2 },
-        "LXXIII": { area: 389, type: "Жилищно", rzp: 466.8 },
-        "LXXIV": { area: 386, type: "Жилищно", rzp: 463.8 },
-        "LXXV": { area: 382, type: "Жилищно", rzp: 458.4 },
-        "LXXVI": { area: 379, type: "Жилищно", rzp: 454.8 },
-        "LXXVII": { area: 375, type: "Жилищно", rzp: 450 },
-        "LXXVIII": { area: 3001, type: "Обществено", rzp: 3601.2 }
+        // Example:
+        // "I": { area: 500, type: "Жилищно", rzp: 600 },
     };
 
     const img = document.getElementById('master-map-img');
