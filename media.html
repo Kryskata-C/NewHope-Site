@@ -6,7 +6,18 @@
 <title>Медия | ЖК Нова Надежда</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'ColusRegular';
+    src: url('fonts/Colus-Regular.woff2') format('woff2'),
+         url('fonts/Colus-Regular.woff') format('woff'),
+         url('fonts/Colus-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+</style>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
@@ -29,9 +40,21 @@ html {
 body {
     background-color: var(--bg-main);
     color: var(--text-white);
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', 'Roboto', sans-serif;
     overflow-x: hidden;
     position: relative;
+}
+
+/* Headings use ColusRegular */
+h1, h2, h3, h4, h5, h6,
+.page-hero h1,
+.section-header h2,
+.categories-header h2,
+.timeline-header h2,
+.cta-content h2,
+.category-card h3,
+.timeline-content h4 {
+    font-family: 'ColusRegular', 'Rajdhani', sans-serif;
 }
 
 /* --- CUSTOM CURSOR --- */
@@ -866,6 +889,13 @@ footer {
     transform: translateY(-3px);
 }
 
+/* Remove underlines from social links */
+.footer-social-links a,
+.social-nav a,
+.mobile-menu-socials a {
+    text-decoration: none !important;
+}
+
 .footer-bottom {
     max-width: 1200px;
     margin: 0 auto;
@@ -1042,43 +1072,6 @@ footer {
     </section>
 
 
-    <!-- MEDIA CATEGORIES -->
-    <section class="media-categories">
-        <div class="categories-header reveal">
-            <h2>Медийно покритие</h2>
-            <p>Тук събираме най-интересните материали – статии, видеа, репортажи и мнения от телевизии, радио и онлайн издания.</p>
-        </div>
-
-        <div class="categories-grid">
-            <div class="category-card tv reveal">
-                <div class="category-icon">
-                    <i class="ri-tv-2-line"></i>
-                </div>
-                <h3>Телевизия</h3>
-                <p>Репортажи и новинарски емисии от национални и регионални телевизии.</p>
-                <span class="count">0 материала</span>
-            </div>
-
-            <div class="category-card radio reveal">
-                <div class="category-icon">
-                    <i class="ri-radio-2-line"></i>
-                </div>
-                <h3>Радио</h3>
-                <p>Интервюта и предавания от популярни радиостанции в България.</p>
-                <span class="count">0 материала</span>
-            </div>
-
-            <div class="category-card online reveal">
-                <div class="category-icon">
-                    <i class="ri-global-line"></i>
-                </div>
-                <h3>Онлайн медии</h3>
-                <p>Статии и публикации от водещи новинарски сайтове и портали.</p>
-                <span class="count">0 материала</span>
-            </div>
-        </div>
-    </section>
-
     <!-- TIMELINE -->
     <section class="timeline-section">
         <div class="timeline-header reveal">
@@ -1141,6 +1134,42 @@ footer {
                     <h4>Обнародване в Държавен вестник</h4>
                     <p>Обнародване на Акта за одобряване в Държавен вестник.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEDIA CATEGORIES -->
+    <section class="media-categories">
+        <div class="categories-header reveal">
+            <p>Тук събираме най-интересните материали – статии, видеа, репортажи и мнения от телевизии, радио и онлайн издания.</p>
+        </div>
+
+        <div class="categories-grid">
+            <div class="category-card tv reveal">
+                <div class="category-icon">
+                    <i class="ri-tv-2-line"></i>
+                </div>
+                <h3>Телевизия</h3>
+                <p>Репортажи и новинарски емисии от национални и регионални телевизии.</p>
+                <span class="count">0 материала</span>
+            </div>
+
+            <div class="category-card radio reveal">
+                <div class="category-icon">
+                    <i class="ri-radio-2-line"></i>
+                </div>
+                <h3>Радио</h3>
+                <p>Интервюта и предавания от популярни радиостанции в България.</p>
+                <span class="count">0 материала</span>
+            </div>
+
+            <div class="category-card online reveal">
+                <div class="category-icon">
+                    <i class="ri-global-line"></i>
+                </div>
+                <h3>Онлайн медии</h3>
+                <p>Статии и публикации от водещи новинарски сайтове и портали.</p>
+                <span class="count">0 материала</span>
             </div>
         </div>
     </section>

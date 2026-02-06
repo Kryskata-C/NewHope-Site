@@ -6,7 +6,18 @@
 <title>Партньори | ЖК Нова Надежда</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'ColusRegular';
+    src: url('fonts/Colus-Regular.woff2') format('woff2'),
+         url('fonts/Colus-Regular.woff') format('woff'),
+         url('fonts/Colus-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+</style>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
@@ -29,9 +40,17 @@ html {
 body {
     background-color: var(--bg-main);
     color: var(--text-white);
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', 'Roboto', sans-serif;
     overflow-x: hidden;
     position: relative;
+}
+
+/* Headings use ColusRegular */
+h1, h2, h3, h4, h5, h6,
+.page-hero h1,
+.partner-name,
+.cta-box h3 {
+    font-family: 'ColusRegular', 'Rajdhani', sans-serif;
 }
 
 /* --- CUSTOM CURSOR --- */
@@ -677,6 +696,13 @@ footer {
     transform: translateY(-3px);
 }
 
+/* Remove underlines from social links */
+.footer-social-links a,
+.social-nav a,
+.mobile-menu-socials a {
+    text-decoration: none !important;
+}
+
 .footer-bottom {
     max-width: 1200px;
     margin: 0 auto;
@@ -825,7 +851,7 @@ footer {
     <section class="page-hero">
         <h1>Партньори</h1>
         <div class="page-hero-line"></div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>Инвеститорът Нова Надежда Сливен ЕООД е в партньорство за проекта с:</p>
     </section>
 
     <section class="partners-section">
@@ -851,7 +877,7 @@ footer {
             <div class="partner-card" data-partner>
                 <div class="partner-card-inner">
                     <div class="partner-logo-wrap">
-                        <img src="https://cdn-icons-png.flaticon.com/512/619/619034.png" alt="Ташкови" class="partner-logo">
+                        <img src="https://i.ibb.co/jkQ8GXz/tashkovi-logo.png" alt="Ташкови" class="partner-logo" onerror="this.src='https://via.placeholder.com/120x120/1a1a1a/d4af37?text=Т'">
                     </div>
                     <h3 class="partner-name">Ташкови</h3>
                     <div class="partner-details">
@@ -883,7 +909,7 @@ footer {
             <div class="partner-card" data-partner>
                 <div class="partner-card-inner">
                     <div class="partner-logo-wrap">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1998/1998087.png" alt="Госпожа Реклама" class="partner-logo">
+                        <img src="https://i.ibb.co/0jHqXvT/gospoja-reklama-logo.png" alt="Госпожа Реклама" class="partner-logo" onerror="this.src='https://via.placeholder.com/120x120/1a1a1a/d4af37?text=ГР'">
                     </div>
                     <h3 class="partner-name">Госпожа Реклама</h3>
                     <div class="partner-details">
@@ -900,8 +926,8 @@ footer {
 
     <section class="cta-section">
         <div class="cta-box">
-            <h3>Искате да станете партньор?</h3>
-            <p>Свържете се с нас и нека заедно изградим бъдещето на Сливен. Отворени сме за нови партньорства и сътрудничество.</p>
+            <h3>Свържете се с нас</h3>
+            <p>Искате да станете наш партньор? Отворени сме за нови идеи и сътрудничество.</p>
             <a href="contact.html" class="cta-btn">Свържете се с нас</a>
         </div>
     </section>

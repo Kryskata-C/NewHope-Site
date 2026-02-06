@@ -6,7 +6,18 @@
 <title>За Квартала | ЖК Нова Надежда</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'ColusRegular';
+    src: url('fonts/Colus-Regular.woff2') format('woff2'),
+         url('fonts/Colus-Regular.woff') format('woff'),
+         url('fonts/Colus-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+</style>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
@@ -29,9 +40,19 @@ html {
 body {
     background-color: var(--bg-main);
     color: var(--text-white);
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', 'Roboto', sans-serif;
     overflow-x: hidden;
     position: relative;
+}
+
+/* Headings use ColusRegular */
+h1, h2, h3, h4, h5, h6,
+.page-hero h1,
+.content-section h2,
+.feature-card h3,
+.vision-content h3,
+.cta-content h2 {
+    font-family: 'ColusRegular', 'Rajdhani', sans-serif;
 }
 
 /* --- CUSTOM CURSOR --- */
@@ -767,6 +788,13 @@ footer {
     transform: translateY(-3px);
 }
 
+/* Remove underlines from social links */
+.footer-social-links a,
+.social-nav a,
+.mobile-menu-socials a {
+    text-decoration: none !important;
+}
+
 .footer-bottom {
     max-width: 1200px;
     margin: 0 auto;
@@ -959,10 +987,6 @@ footer {
             </a>
         </div>
 
-        <div class="scroll-hint">
-            <span>Скролни надолу</span>
-            <i class="ri-arrow-down-double-line"></i>
-        </div>
     </section>
 
     <!-- STORY SECTION -->
@@ -1029,8 +1053,8 @@ footer {
 
             <div class="feature-card reveal">
                 <i class="ri-shield-check-line feature-icon"></i>
-                <h3>Полицейско управление</h3>
-                <p>Районно управление за сигурност и спокойствие на всички жители.</p>
+                <h3>Районен Полицейски Участък</h3>
+                <p>За сигурност и спокойствие на всички жители.</p>
             </div>
 
             <div class="feature-card reveal">

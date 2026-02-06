@@ -6,7 +6,18 @@
 <title>ЖК Нова Надежда | Престижният Квартал на Сливен</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Rajdhani:wght@300;500;600;700;800&family=Roboto:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'ColusRegular';
+    src: url('fonts/Colus-Regular.woff2') format('woff2'),
+         url('fonts/Colus-Regular.woff') format('woff'),
+         url('fonts/Colus-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+</style>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
@@ -26,10 +37,22 @@
 body {
     background-color: var(--bg-main);
     color: var(--text-white);
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', 'Roboto', sans-serif;
     overflow-x: hidden;
     position: relative;
     scroll-behavior: smooth;
+}
+
+/* Headings use ColusRegular */
+h1, h2, h3, h4, h5, h6,
+.hero h1,
+.nav-card span,
+.stat-label,
+.badge-text,
+.quote-text,
+.hero-subtitle-prestige,
+.price-badge {
+    font-family: 'ColusRegular', 'Rajdhani', sans-serif;
 }
 
 html {
@@ -288,6 +311,12 @@ header.scrolled .header-logo {
 .social-nav a.insta:hover { transform: translateY(-3px); box-shadow: 0 0 15px #E4405F; }
 .social-nav a.yt:hover { transform: translateY(-3px); box-shadow: 0 0 15px #FF0000; }
 .social-nav a.tiktok:hover { transform: translateY(-3px); box-shadow: -2px -2px 10px #25F4EE, 2px 2px 10px #FE2C55; }
+
+/* Remove underlines from social links */
+.social-nav a,
+.mobile-menu-socials a {
+    text-decoration: none !important;
+}
 
 
 /* --- HERO SECTION --- */
@@ -703,7 +732,7 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
 </a>
 
 <div class="video-background">
-    <iframe src="https://www.youtube.com/embed/r9jb10lhP3U?autoplay=1&mute=1&loop=1&playlist=r9jb10lhP3U&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1"
+    <iframe src="https://www.youtube.com/embed/r9jb10lhP3U?autoplay=1&mute=1&loop=1&playlist=r9jb10lhP3U&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1&start=0"
         frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
 
@@ -826,7 +855,7 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
             </div>
             <div class="stat-item">
                 <div class="stat-num"><i class="ri-fire-fill"></i></div>
-                <span class="stat-label">ГАЗИФИКАЦИЯ И ТОК</span>
+                <span class="stat-label">ГАЗИФИКАЦИЯ И ЕЛЕКТРИФИКАЦИЯ</span>
             </div>
             <div class="stat-item">
                 <div class="stat-num"><i class="ri-water-flash-fill"></i></div>
@@ -846,7 +875,7 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
             </div>
             <div class="stat-item">
                 <div class="stat-num"><i class="ri-shield-star-fill"></i></div>
-                <span class="stat-label">РПУ (ПОЛИЦИЯ)</span>
+                <span class="stat-label">РАЙОНЕН ПОЛИЦЕЙСКИ УЧАСТЪК</span>
             </div>
              <div class="stat-item">
                 <div class="stat-num"><i class="ri-car-fill"></i></div>
@@ -863,6 +892,10 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
              <div class="stat-item">
                 <div class="stat-num"><i class="ri-medicine-bottle-fill"></i></div>
                 <span class="stat-label">АПТЕКА</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><i class="ri-test-tube-fill"></i></div>
+                <span class="stat-label">ЛАБОРАТОРИЯ</span>
             </div>
              <div class="stat-item">
                 <div class="stat-num"><i class="ri-shopping-bag-fill"></i></div>

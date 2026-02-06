@@ -6,7 +6,18 @@
 <title>Купи Парцел | ЖК Нова Надежда</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'ColusRegular';
+    src: url('fonts/Colus-Regular.woff2') format('woff2'),
+         url('fonts/Colus-Regular.woff') format('woff'),
+         url('fonts/Colus-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+</style>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
@@ -32,9 +43,14 @@ html {
 body {
     background-color: var(--bg-main);
     color: var(--text-white);
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', 'Roboto', sans-serif;
     overflow-x: hidden;
     line-height: 1.6;
+}
+
+/* Headings use ColusRegular */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'ColusRegular', 'Rajdhani', sans-serif;
 }
 
 /* --- 🌫️ ATMOSPHERE --- */
