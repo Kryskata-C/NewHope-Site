@@ -385,16 +385,70 @@ p {
 
 /* --- ✨ INTERACTIVE PLOT STYLES --- */
 .plot-poly {
-    fill: rgba(212, 175, 55, 0.02); stroke: rgba(212, 175, 55, 0.3); stroke-width: 1px;
-    transition: stroke 0.3s, filter 0.3s; cursor: pointer; vector-effect: non-scaling-stroke;
+    fill: rgba(212, 175, 55, 0.02);
+    stroke: rgba(212, 175, 55, 0.3);
+    stroke-width: 1px;
+    cursor: pointer;
+    vector-effect: non-scaling-stroke;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    filter: drop-shadow(0 0 0 transparent);
 }
+
 .plot-poly:hover {
-    fill: url(#gold-scan-gradient); 
-    stroke: var(--gold-bright); stroke-width: 3px;
-    filter: drop-shadow(0 0 15px var(--gold-main));
-    animation: borderPulse 2s infinite alternate;
+    fill: url(#holographic-gradient);
+    stroke: var(--gold-bright);
+    stroke-width: 2px;
+    filter: drop-shadow(0 0 20px var(--gold-main))
+            drop-shadow(0 0 40px rgba(212, 175, 55, 0.5))
+            drop-shadow(0 0 60px rgba(212, 175, 55, 0.3));
+    animation: plotActivate 0.6s ease-out forwards,
+               glowPulse 2s ease-in-out infinite,
+               borderGlow 1.5s ease-in-out infinite;
 }
-@keyframes borderPulse { 0% { stroke-opacity: 1; stroke-width: 2px; } 100% { stroke-opacity: 0.8; stroke-width: 4px; } }
+
+/* Main activation animation */
+@keyframes plotActivate {
+    0% {
+        fill-opacity: 0;
+        stroke-dasharray: 0 1000;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 1000 0;
+        stroke-dashoffset: 0;
+    }
+    100% {
+        fill-opacity: 1;
+        stroke-dasharray: none;
+    }
+}
+
+/* Pulsing glow effect */
+@keyframes glowPulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 20px var(--gold-main))
+                drop-shadow(0 0 40px rgba(212, 175, 55, 0.5))
+                drop-shadow(0 0 60px rgba(212, 175, 55, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 30px var(--gold-bright))
+                drop-shadow(0 0 60px rgba(249, 215, 99, 0.6))
+                drop-shadow(0 0 90px rgba(212, 175, 55, 0.4));
+    }
+}
+
+/* Border glow animation */
+@keyframes borderGlow {
+    0%, 100% {
+        stroke: var(--gold-bright);
+        stroke-width: 2px;
+    }
+    50% {
+        stroke: #fff;
+        stroke-width: 3px;
+    }
+}
 
 /* --- ℹ️ INFO CARD (HUD STYLE) --- */
 #info-card {
@@ -982,20 +1036,70 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             <svg id="plots-svg" viewBox="0 0 1000 500" preserveAspectRatio="none">
                 
                 <defs>
-                    <linearGradient id="gold-scan-gradient" x1="0%" y1="0%" x2="200%" y2="200%">
-                        <stop offset="0%" stop-color="rgba(212, 175, 55, 0)" />
-                        <stop offset="40%" stop-color="rgba(212, 175, 55, 0.1)" />
-                        <stop offset="50%" stop-color="rgba(212, 175, 55, 0.6)" /> <stop offset="60%" stop-color="rgba(212, 175, 55, 0.1)" />
-                        <stop offset="100%" stop-color="rgba(212, 175, 55, 0)" />
-                        <animate attributeName="x1" from="-100%" to="100%" dur="2s" repeatCount="indefinite" />
-                        <animate attributeName="y1" from="-100%" to="100%" dur="2s" repeatCount="indefinite" />
-                        <animate attributeName="x2" from="0%" to="200%" dur="2s" repeatCount="indefinite" />
-                        <animate attributeName="y2" from="0%" to="200%" dur="2s" repeatCount="indefinite" />
+                    <!-- Main holographic fill gradient -->
+                    <linearGradient id="holographic-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="rgba(212, 175, 55, 0.1)">
+                            <animate attributeName="stop-color"
+                                values="rgba(212, 175, 55, 0.1);rgba(249, 215, 99, 0.3);rgba(212, 175, 55, 0.1)"
+                                dur="2s" repeatCount="indefinite" />
+                        </stop>
+                        <stop offset="50%" stop-color="rgba(249, 215, 99, 0.4)">
+                            <animate attributeName="stop-color"
+                                values="rgba(249, 215, 99, 0.4);rgba(255, 255, 255, 0.5);rgba(249, 215, 99, 0.4)"
+                                dur="2s" repeatCount="indefinite" />
+                        </stop>
+                        <stop offset="100%" stop-color="rgba(138, 113, 34, 0.2)">
+                            <animate attributeName="stop-color"
+                                values="rgba(138, 113, 34, 0.2);rgba(212, 175, 55, 0.35);rgba(138, 113, 34, 0.2)"
+                                dur="2s" repeatCount="indefinite" />
+                        </stop>
+                        <animate attributeName="x1" values="0%;100%;0%" dur="3s" repeatCount="indefinite" />
+                        <animate attributeName="y1" values="0%;50%;0%" dur="3s" repeatCount="indefinite" />
+                        <animate attributeName="x2" values="100%;0%;100%" dur="3s" repeatCount="indefinite" />
+                        <animate attributeName="y2" values="100%;50%;100%" dur="3s" repeatCount="indefinite" />
                     </linearGradient>
+
+                    <!-- Scan line effect overlay -->
+                    <pattern id="scan-lines" patternUnits="userSpaceOnUse" width="4" height="4">
+                        <line x1="0" y1="0" x2="0" y2="4" stroke="rgba(255,255,255,0.1)" stroke-width="1">
+                            <animate attributeName="stroke-opacity" values="0.05;0.15;0.05" dur="0.5s" repeatCount="indefinite" />
+                        </line>
+                    </pattern>
+
+                    <!-- Radial glow for center -->
+                    <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="rgba(255, 255, 255, 0.3)">
+                            <animate attributeName="stop-color"
+                                values="rgba(255,255,255,0.3);rgba(249,215,99,0.4);rgba(255,255,255,0.3)"
+                                dur="1.5s" repeatCount="indefinite" />
+                        </stop>
+                        <stop offset="100%" stop-color="rgba(212, 175, 55, 0)" />
+                    </radialGradient>
+
+                    <!-- Filter for enhanced glow -->
+                    <filter id="glow-filter" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
                 </defs>
 
-                <!-- ADD NEW PLOT POLYGONS HERE -->
-                <!-- Example: <polygon class="plot-poly" data-upi="I" points="x1,y1 x2,y2 x3,y3 x4,y4"></polygon> -->
+                <polygon class="plot-poly" data-upi="I" points="799,631 989,629 989,529 797,530"></polygon>
+                <polygon class="plot-poly" data-upi="II" points="1024,630 1213,630 1216,528 1021,527"></polygon>
+                <polygon class="plot-poly" data-upi="III" points="988,742 803,742 800,668 989,667"></polygon>
+                <polygon class="plot-poly" data-upi="IV" points="1217,742 1023,742 1024,667 1214,665"></polygon>
+                <polygon class="plot-poly" data-upi="V" points="856,895 801,896 800,778 857,776"></polygon>
+                <polygon class="plot-poly" data-upi="VI" points="891,895 891,779 945,776 946,895"></polygon>
+                <polygon class="plot-poly" data-upi="VII" points="980,897 980,775 1034,775 1036,896"></polygon>
+                <polygon class="plot-poly" data-upi="VIII" points="1068,894 1069,776 1124,775 1126,893"></polygon>
+                <polygon class="plot-poly" data-upi="IX" points="1159,892 1195,897 1213,876 1213,775 1158,777"></polygon>
+                <polygon class="plot-poly" data-upi="X" points="800,1120 1124,1120 1124,1004 802,1005"></polygon>
+                <polygon class="plot-poly" data-upi="XI" points="1160,1119 1216,1119 1218,1020 1196,1001 1157,1003"></polygon>
+                <polygon class="plot-poly" data-upi="XII" points="800,1294 885,1294 883,1158 800,1157"></polygon>
+                <polygon class="plot-poly" data-upi="XIII" points="953,1292 917,1292 918,1239 951,1238"></polygon>
+                <polygon class="plot-poly" data-upi="XIV" points="988,1291 1197,1290 1217,1269 1218,1156 918,1156 917,1203 986,1205"></polygon>
 
             </svg>
         </div>
@@ -1058,11 +1162,21 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 
 <script>
     // --- PLOT DATA BASE ---
-    // ADD NEW PLOT DATA HERE
-    // Format: "UPI_NUMBER": { area: SIZE_IN_M2, type: "Жилищно" или "Обществено", rzp: MAX_RZP }
     const plotsDB = {
-        // Example:
-        // "I": { area: 500, type: "Жилищно", rzp: 600 },
+        "I": { area: 0, type: "Жилищно", rzp: 0 },
+        "II": { area: 0, type: "Жилищно", rzp: 0 },
+        "III": { area: 0, type: "Жилищно", rzp: 0 },
+        "IV": { area: 0, type: "Жилищно", rzp: 0 },
+        "V": { area: 0, type: "Жилищно", rzp: 0 },
+        "VI": { area: 0, type: "Жилищно", rzp: 0 },
+        "VII": { area: 0, type: "Жилищно", rzp: 0 },
+        "VIII": { area: 0, type: "Жилищно", rzp: 0 },
+        "IX": { area: 0, type: "Жилищно", rzp: 0 },
+        "X": { area: 0, type: "Жилищно", rzp: 0 },
+        "XI": { area: 0, type: "Жилищно", rzp: 0 },
+        "XII": { area: 0, type: "Жилищно", rzp: 0 },
+        "XIII": { area: 0, type: "Жилищно", rzp: 0 },
+        "XIV": { area: 0, type: "Жилищно", rzp: 0 },
     };
 
     const img = document.getElementById('master-map-img');
