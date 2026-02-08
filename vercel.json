@@ -11,6 +11,7 @@
     { "src": "style.css", "use": "@vercel/static" },
     { "src": "settings.json", "use": "@vercel/static" },
     { "src": "video1.mp4", "use": "@vercel/static" },
+    { "src": "drone-video.mp4", "use": "@vercel/static" },
     { "src": "logo.png", "use": "@vercel/static" },
     { "src": "rotated_aligned.png", "use": "@vercel/static" }
   ],
@@ -26,7 +27,17 @@
     { "src": "/style.css", "dest": "/style.css" },
     { "src": "/settings.json", "dest": "/settings.json" },
     { "src": "/video1.mp4", "dest": "/video1.mp4" },
+    { "src": "/drone-video.mp4", "dest": "/drone-video.mp4" },
     { "src": "/logo.png", "dest": "/logo.png" },
     { "src": "/rotated_aligned.png", "dest": "/rotated_aligned.png" }
+  ],
+  "headers": [
+    {
+      "source": "/drone-video.mp4",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "Content-Type", "value": "video/mp4" }
+      ]
+    }
   ]
 }
