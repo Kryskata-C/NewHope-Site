@@ -505,6 +505,7 @@ p {
 .info-close { display: none; }
 .info-wa-btn { display: none; }
 .mobile-zoom-hint { display: none; }
+.scroll-hint-overlay { display: none; }
 .hint-mobile { display: none; }
 .hint-desktop { display: inline; }
 
@@ -874,7 +875,7 @@ footer {
     h2 { font-size: 16px; }
 
     /* Mobile map improvements */
-    .map-outer-wrapper { padding: 0 10px 30px; }
+    .map-outer-wrapper { padding: 0 10px 30px; position: relative; }
     .map-container {
         width: 100%;
         overflow: auto;
@@ -951,6 +952,50 @@ footer {
         position: relative;
         top: 10px;
         margin-bottom: 10px;
+    }
+
+    /* Scroll right hint overlay */
+    .scroll-hint-overlay {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        color: var(--gold-main);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        pointer-events: none;
+        animation: scrollHintPulse 1.5s ease-in-out infinite;
+        transition: opacity 0.5s ease;
+    }
+    .scroll-hint-overlay i {
+        font-size: 28px;
+        background: rgba(5, 5, 5, 0.7);
+        border: 1px solid var(--gold-dim);
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        backdrop-filter: blur(4px);
+    }
+    .scroll-hint-overlay span {
+        background: rgba(5, 5, 5, 0.7);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-family: 'Rajdhani', sans-serif;
+    }
+    .scroll-hint-overlay.hidden { opacity: 0; }
+
+    @keyframes scrollHintPulse {
+        0%, 100% { transform: translateY(-50%) translateX(0); }
+        50% { transform: translateY(-50%) translateX(6px); }
     }
 
     /* Pinch to zoom hint */
@@ -1150,6 +1195,10 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 <p class="mobile-zoom-hint"><i class="ri-zoom-in-line"></i> Плъзни за навигация • Щипни за zoom • Тапни за детайли</p>
 
 <div class="map-outer-wrapper">
+    <div class="scroll-hint-overlay" id="scrollHint">
+        <i class="ri-arrow-right-line"></i>
+        <span>Плъзни</span>
+    </div>
     <div class="map-container">
         <div class="interaction-hint" id="mapHint">
             <div class="pulse-beacon"></div>
@@ -1711,6 +1760,14 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         const svg = document.getElementById('plots-svg');
         const mapImg = document.getElementById('master-map-img');
         const zoomIndicator = document.getElementById('zoomIndicator');
+
+        // Hide scroll hint on first scroll
+        const scrollHint = document.getElementById('scrollHint');
+        if (scrollHint) {
+            mapContainer.addEventListener('scroll', () => {
+                scrollHint.classList.add('hidden');
+            }, { once: true });
+        }
 
         let devMode = false;
         let currentPoints = [];
