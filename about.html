@@ -703,6 +703,28 @@ header {
     margin-bottom: 40px;
 }
 
+/* --- DECORATIVE SEPARATOR --- */
+.section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 50px auto;
+    max-width: 400px;
+}
+.section-divider::before,
+.section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-main), transparent);
+}
+.section-divider i {
+    color: var(--gold-main);
+    font-size: 20px;
+    opacity: 0.7;
+}
+
 /* --- FOOTER --- */
 footer {
     padding: 80px 5% 40px;
@@ -1006,6 +1028,8 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 
     </section>
 
+    <div class="section-divider"><i class="ri-home-heart-line"></i></div>
+
     <!-- STORY SECTION -->
     <section class="content-section" id="story">
         <span class="section-label reveal">Нашата история</span>
@@ -1023,6 +1047,8 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 
         <p class="reveal"><strong>Днес това се променя.</strong> Нова Надежда е проектът, който замисля не като поредното строителство, а като цялостна градска структура, в която всичко необходимо за ежедневието е планирано предварително.</p>
     </section>
+
+    <div class="section-divider"><i class="ri-road-map-line"></i></div>
 
     <!-- INFRASTRUCTURE SECTION -->
     <section class="content-section">
