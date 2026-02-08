@@ -432,11 +432,16 @@ header.scrolled .header-logo {
 
 .price-badge {
     font-family: 'Rajdhani', sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 20px;
-    background: linear-gradient(90deg, #d4af37, #f9d763, #d4af37); -webkit-background-clip: text; background-clip: text; color: transparent;
-    text-transform: uppercase; letter-spacing: 3px; position: relative; 
-    background-size: 200% 100%; animation: shineText 3s infinite linear;
+    color: #d4af37;
+    text-transform: uppercase; letter-spacing: 3px; position: relative;
     filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
     display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+    .price-badge {
+        background: linear-gradient(90deg, #d4af37, #f9d763, #d4af37); -webkit-background-clip: text; background-clip: text; color: transparent;
+        background-size: 200% 100%; animation: shineText 3s infinite linear;
+    }
 }
 .price-badge::before {
     content: attr(data-text); position: absolute; left: 0; top: 0; width: 100%; height: 100%;
@@ -794,10 +799,10 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         <img src="logo.png" alt="Нова Надежда" class="header-logo">
         
         <nav class="header-menu">
-            <a href="about.html" class="header-link">ЗА КВАРТАЛА</a>
-            <a href="plots.html" class="header-link">КУПИ ПАРЦЕЛ</a>
-            <a href="media.html" class="header-link">МЕДИИ</a>
-            <a href="partners.html" class="header-link">ПАРТНЬОРИ</a>
+            <a href="/about" class="header-link">ЗА КВАРТАЛА</a>
+            <a href="/plots" class="header-link">КУПИ ПАРЦЕЛ</a>
+            <a href="/media" class="header-link">МЕДИИ</a>
+            <a href="/partners" class="header-link">ПАРТНЬОРИ</a>
         </nav>
 
         <div class="header-controls">
@@ -817,10 +822,10 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     </header>
 
     <div class="mobile-menu" id="mobileMenu">
-        <a href="about.html">За Квартала</a>
-        <a href="plots.html">Купи Парцел</a>
-        <a href="media.html">Медии</a>
-        <a href="partners.html">Партньори</a>
+        <a href="/about">За Квартала</a>
+        <a href="/plots">Купи Парцел</a>
+        <a href="/media">Медии</a>
+        <a href="/partners">Партньори</a>
         <div class="mobile-menu-socials">
             <a href="https://www.facebook.com/NewHope.Bg/" target="_blank"><i class="ri-facebook-fill"></i></a>
             <a href="https://www.instagram.com/newhopesliven" target="_blank"><i class="ri-instagram-line"></i></a>
@@ -861,7 +866,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
                 <i class="ri-map-pin-line"></i> Ела да се срещнем
              </a>
              <br>
-             <a href="plots.html" class="cta-btn">ИЗБЕРИ СИ ПАРЦЕЛ</a>
+             <a href="/plots" class="cta-btn">ИЗБЕРИ СИ ПАРЦЕЛ</a>
         </div>
 
         <i class="ri-arrow-down-s-line scroll-indicator"></i>
@@ -869,22 +874,22 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 
     <section class="dashboard" id="dashboard">
         <nav class="nav-grid">
-            <a href="about.html" class="nav-card">
+            <a href="/about" class="nav-card">
                 <i class="ri-home-heart-fill card-icon"></i>
                 <span>ЗА КВАРТАЛА</span>
             </a>
             
-            <a href="plots.html" class="nav-card">
+            <a href="/plots" class="nav-card">
                 <i class="ri-map-2-fill card-icon"></i>
                 <span>КУПИ ПАРЦЕЛ (УПИ)</span>
             </a>
             
-            <a href="media.html" class="nav-card">
+            <a href="/media" class="nav-card">
                 <i class="ri-megaphone-fill card-icon"></i>
                 <span>ЗА НОВА НАДЕЖДА СЕ ГОВОРИ...</span>
             </a>
             
-            <a href="partners.html" class="nav-card">
+            <a href="/partners" class="nav-card">
                 <i class="ri-hand-heart-fill card-icon"></i>
                 <span>ПАРТНЬОРИ</span>
             </a>
