@@ -130,12 +130,13 @@ html {
 
 /* --- VIDEO BACKGROUND --- */
 .video-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
-.video-background iframe {
+.video-background video {
     width: 100vw; height: 56.25vw; /* 16:9 aspect ratio */
     min-height: 100vh; min-width: 177.78vh; /* inverse aspect ratio */
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     pointer-events: none;
     filter: brightness(0.25) grayscale(0.1);
+    object-fit: cover;
 }
 
 /* --- PRELOADER --- */
@@ -749,8 +750,9 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 </a>
 
 <div class="video-background">
-    <iframe src="https://www.youtube.com/embed/r9jb10lhP3U?autoplay=1&mute=1&loop=1&playlist=r9jb10lhP3U&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1&start=0"
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="drone-video.mp4" type="video/mp4">
+    </video>
 </div>
 
 <div id="preloader">
