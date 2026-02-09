@@ -369,6 +369,7 @@ header.scrolled .header-logo {
     overflow: visible; margin-bottom: 15px; opacity: 0; animation: fadeInUp 1s 3.8s forwards;
     background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
     padding: 15px 60px; border-top: 1px solid rgba(212, 175, 55, 0.3); border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .quote-text {
     font-family: 'Rajdhani', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
@@ -1045,6 +1046,12 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     }
 
     function cycleQuote() {
+        const wrapper = document.querySelector('.dynamic-quote-wrapper');
+
+        // Store current dimensions before exit
+        const startWidth = wrapper.offsetWidth;
+        const startHeight = wrapper.offsetHeight;
+
         // Exit animation
         quoteElement.classList.remove('active');
         quoteElement.classList.add('exit');
@@ -1053,6 +1060,25 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             // Change text while hidden
             currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
             quoteElement.textContent = quotes[currentQuoteIndex];
+
+            // Get new auto dimensions after text change
+            const endWidth = wrapper.offsetWidth;
+            const endHeight = wrapper.offsetHeight;
+
+            // Animate wrapper size if it changed
+            if (startWidth !== endWidth || startHeight !== endHeight) {
+                wrapper.style.width = startWidth + 'px';
+                wrapper.style.height = startHeight + 'px';
+                void wrapper.offsetHeight; // force reflow
+                wrapper.style.width = endWidth + 'px';
+                wrapper.style.height = endHeight + 'px';
+
+                // Clear explicit dimensions after transition
+                setTimeout(() => {
+                    wrapper.style.width = '';
+                    wrapper.style.height = '';
+                }, 600);
+            }
 
             // Reset position and enter
             quoteElement.classList.remove('exit');
