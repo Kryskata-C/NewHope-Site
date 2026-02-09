@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Политика за бисквитки – NewHope</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        /* --- CORE STYLES FROM REFERENCE --- */
+        :root {
+            --bg-main: #0c0b09;
+            --bg-darker: #050505;
+            --surface: #1e1b16;
+            --surface-soft: #24201a;
+            --accent-gold: #d4af37;
+            --accent-gold-light: #f4d77a;
+            --text-primary: #fff8e9;
+            --text-secondary: #c1b29a;
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Rajdhani', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: radial-gradient(circle at top center, #1b1810 0%, var(--bg-main) 50%, var(--bg-darker) 100%);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Essential Utilities */
+        h1, h2, h3, h4 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1px; color: #fff; }
+        p { color: var(--text-secondary); line-height: 1.6; }
+        .gold-span { color: var(--accent-gold); display: inline-block; }
+        .section-label {
+            font-family: var(--font-display); font-size: 0.8rem; color: var(--accent-gold-light);
+            letter-spacing: 3px; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;
+        }
+        .section-label::before { content: ''; width: 20px; height: 1px; background: var(--accent-gold); }
+
+        /* Effects */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9000; opacity: 0.03;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+        .cursor-dot {
+            position: fixed; top: 0; left: 0; width: 6px; height: 6px;
+            background-color: var(--accent-gold-light); border-radius: 50%;
+            z-index: 9999; pointer-events: none; transform: translate(-50%, -50%);
+        }
+        .cursor-outline {
+            position: fixed; top: 0; left: 0; width: 30px; height: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 50%;
+            z-index: 9998; pointer-events: none; transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        body.hovered .cursor-outline { width: 50px; height: 50px; background-color: rgba(212, 175, 55, 0.05); border-color: var(--accent-gold); }
+
+        /* Navigation */
+        .navbar {
+            position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; background: rgba(12, 10, 5, 0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(244, 215, 122, 0.1);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 15px; text-decoration: none; color: white; }
+        .nav-logo-text { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
+
+        .cta-button {
+            padding: 0.8rem 2rem; border-radius: 50px; border: none;
+            background: linear-gradient(90deg, var(--accent-gold-light), var(--accent-gold));
+            color: #0c0b09; font-family: var(--font-display); font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+            text-decoration: none; display: inline-block; transition: 0.3s;
+        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.5); }
+
+        /* Hero */
+        .page-hero {
+            height: 45vh; position: relative; display: flex; justify-content: center; align-items: center;
+            text-align: center; overflow: hidden; margin-top: 80px;
+        }
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -2; opacity: 0.4;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, var(--bg-main) 90%);
+            z-index: -1;
+        }
+
+        /* Layouts */
+        .section-container { max-width: 900px; margin: 4rem auto; padding: 0 2rem; }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(36,32,26,0.9), rgba(24,20,14,0.95));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(244, 215, 122, 0.15);
+            border-radius: 24px; padding: 3rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .glass-card h2 { font-size: 1.3rem; margin-bottom: 1.2rem; }
+        .glass-card h3 { font-size: 1rem; margin-bottom: 0.8rem; color: var(--accent-gold-light); text-transform: none; letter-spacing: 0; }
+        .glass-card p { margin-bottom: 1rem; font-size: 1.05rem; }
+        .glass-card p:last-child { margin-bottom: 0; }
+
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .cookie-table th,
+        .cookie-table td {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(244, 215, 122, 0.1);
+            font-size: 0.95rem;
+        }
+        .cookie-table th {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--accent-gold-light);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .cookie-table td {
+            color: var(--text-secondary);
+        }
+        .cookie-table code {
+            background: rgba(244, 215, 122, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--accent-gold-light);
+        }
+
+        .last-updated {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        footer {
+            background: #080705; padding: 5rem 2rem; margin-top: 5rem; border-top: 1px solid rgba(244, 215, 122, 0.1); text-align: center;
+        }
+
+        @media (max-width: 992px) {
+            .navbar { padding: 1rem; }
+            h1 { font-size: 2.5rem; }
+            .glass-card { padding: 2rem 1.5rem; }
+            .cookie-table th,
+            .cookie-table td { padding: 0.5rem 0.5rem; font-size: 0.85rem; }
+        }
+
+        @media (max-width: 600px) {
+            .cookie-table { display: block; overflow-x: auto; }
+        }
+    </style>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CDYMNR14RB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CDYMNR14RB');
+</script>
+</head>
+<body>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="noise-overlay"></div>
+
+    <nav class="navbar">
+        <a href="/" class="nav-logo hover-trigger">
+            <i class="ri-arrow-left-line" style="font-size: 1.5rem; color: var(--accent-gold);"></i>
+            <div class="nav-logo-text">НАЗАД КЪМ <span class="gold-span">НАЧАЛОТО</span></div>
+        </a>
+        <a href="/#contact" class="cta-button hover-trigger">КОНТАКТ</a>
+    </nav>
+
+    <header class="page-hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content" style="z-index: 2; max-width: 800px; padding: 2rem;">
+          <div class="section-label" style="justify-content: center;">ПРАВНА ИНФОРМАЦИЯ</div>
+          <h1 class="reveal-up" style="font-size: 3rem; margin-bottom: 1rem;">Политика за <span class="gold-span">Бисквитки</span></h1>
+          <p class="reveal-up" style="font-size: 1.2rem;">Информация за използваните бисквитки и локално съхранение на данни.</p>
+      </div>
+    </header>
+
+    <main class="section-container">
+
+        <p class="last-updated">Последна актуализация: февруари 2025 г.</p>
+
+        <!-- Intro -->
+        <div class="glass-card reveal-up">
+            <h2><span class="gold-span">Какво</span> са бисквитките?</h2>
+            <p>Бисквитките (cookies) са малки текстови файлове, които се запазват на вашето устройство при посещение на уебсайт. Те помагат на сайта да запомни вашите предпочитания и да подобри потребителското ви изживяване.</p>
+            <p>Този сайт използва и localStorage — механизъм за локално съхранение на данни в браузъра, който работи по сходен начин, но данните не се изпращат автоматично към сървъра.</p>
+        </div>
+
+        <!-- Necessary -->
+        <div class="glass-card reveal-up">
+            <div class="section-label">ФУНКЦИОНАЛНИ</div>
+            <h2>Необходими <span class="gold-span">Бисквитки</span></h2>
+            <p>Тези данни са необходими за правилното функциониране на сайта и не могат да бъдат изключени.</p>
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Име</th>
+                        <th>Тип</th>
+                        <th>Цел</th>
+                        <th>Продължителност</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>nh_cookie_consent</code></td>
+                        <td>localStorage</td>
+                        <td>Запазва избора ви за приемане или отказване на бисквитки</td>
+                        <td>Постоянно</td>
+                    </tr>
+                    <tr>
+                        <td><code>nh_intro_played</code></td>
+                        <td>localStorage / sessionStorage</td>
+                        <td>Предотвратява повторното показване на началната анимация</td>
+                        <td>Сесия / Постоянно</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Analytics -->
+        <div class="glass-card reveal-up">
+            <div class="section-label">АНАЛИТИЧНИ</div>
+            <h2>Аналитични <span class="gold-span">Бисквитки</span></h2>
+            <p>Използваме Google Analytics (GA4), за да разберем как посетителите използват сайта. Тази информация ни помага да подобрим съдържанието и потребителското изживяване.</p>
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Име</th>
+                        <th>Доставчик</th>
+                        <th>Цел</th>
+                        <th>Продължителност</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>_ga</code></td>
+                        <td>Google</td>
+                        <td>Разграничава уникални потребители чрез генериране на случаен идентификатор</td>
+                        <td>2 години</td>
+                    </tr>
+                    <tr>
+                        <td><code>_ga_*</code></td>
+                        <td>Google</td>
+                        <td>Съхранява състоянието на сесията за Google Analytics 4</td>
+                        <td>2 години</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size: 0.95rem; opacity: 0.8;">Доставчик: Google LLC. Повече информация: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color: var(--accent-gold); text-decoration: underline;">Политика за поверителност на Google</a></p>
+        </div>
+
+        <!-- Marketing -->
+        <div class="glass-card reveal-up">
+            <div class="section-label">МАРКЕТИНГОВИ</div>
+            <h2>Маркетингови <span class="gold-span">Бисквитки</span></h2>
+            <p>Използваме Meta Pixel (Facebook) за проследяване на ефективността на рекламните ни кампании и за достигане до подходяща аудитория.</p>
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Име</th>
+                        <th>Доставчик</th>
+                        <th>Цел</th>
+                        <th>Продължителност</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>_fbp</code></td>
+                        <td>Meta (Facebook)</td>
+                        <td>Идентифицира браузъра за рекламно таргетиране и измерване</td>
+                        <td>3 месеца</td>
+                    </tr>
+                    <tr>
+                        <td><code>_fbc</code></td>
+                        <td>Meta (Facebook)</td>
+                        <td>Съхранява информация за кликване върху реклама</td>
+                        <td>2 години</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size: 0.95rem; opacity: 0.8;">Доставчик: Meta Platforms, Inc. Повече информация: <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener" style="color: var(--accent-gold); text-decoration: underline;">Политика за поверителност на Meta</a></p>
+        </div>
+
+        <!-- How to manage -->
+        <div class="glass-card reveal-up">
+            <div class="section-label">УПРАВЛЕНИЕ</div>
+            <h2>Как да управлявате <span class="gold-span">бисквитките</span>?</h2>
+            <p>Можете да контролирате и изтривате бисквитки чрез настройките на вашия браузър. Ето как:</p>
+            <p><strong style="color: var(--text-primary);">Google Chrome:</strong> Настройки → Поверителност и сигурност → Бисквитки и други данни за сайтове</p>
+            <p><strong style="color: var(--text-primary);">Mozilla Firefox:</strong> Настройки → Поверителност и защита → Бисквитки и данни от сайтове</p>
+            <p><strong style="color: var(--text-primary);">Safari:</strong> Предпочитания → Поверителност → Управление на данни за уебсайтове</p>
+            <p><strong style="color: var(--text-primary);">Microsoft Edge:</strong> Настройки → Бисквитки и разрешения за сайтове → Бисквитки и съхранявани данни</p>
+            <p style="margin-top: 0.5rem;">Имайте предвид, че блокирането на някои бисквитки може да повлияе на функционалността на сайта.</p>
+        </div>
+
+        <!-- Contact -->
+        <div class="glass-card reveal-up" style="text-align: center;">
+            <h2>Имате <span class="gold-span">въпроси</span>?</h2>
+            <p>Ако имате въпроси относно нашата политика за бисквитки, можете да се свържете с нас чрез формата за контакт на нашия сайт или на имейл адрес:</p>
+            <p style="margin-top: 0.5rem;"><a href="mailto:info@newhope-bg.com" style="color: var(--accent-gold); text-decoration: underline; font-size: 1.1rem;">info@newhope-bg.com</a></p>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="nav-logo" style="justify-content: center; margin-bottom: 1rem;">
+             <div class="nav-logo-text">НОВА <span class="gold-span">НАДЕЖДА</span></div>
+        </div>
+        <p>© 2025 ЖК „Нова надежда", Сливен. Всички права запазени.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true, mouseMultiplier: 1, smoothTouch: false,
+        });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX; const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+        });
+        document.querySelectorAll('.hover-trigger').forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => document.body.classList.add('hovered'));
+            trigger.addEventListener('mouseleave', () => document.body.classList.remove('hovered'));
+        });
+
+        // Animations
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.from(elem, {
+                y: 50, opacity: 0, duration: 1, ease: "power3.out",
+                scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" }
+            });
+        });
+    </script>
+</body>
+</html>
