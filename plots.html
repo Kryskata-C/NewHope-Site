@@ -496,6 +496,7 @@ p {
 .info-status { font-size: 10px; background: #25D366; color: #000; padding: 4px 8px; font-weight: 800; border-radius: 2px; text-transform: uppercase; letter-spacing: 1px; }
 .info-status.sold { background: #ff4444; color: #fff; }
 .info-status.reserved { background: #ff9800; color: #000; }
+.info-status.donation { background: #ff9800; color: #000; }
 .info-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 15px; color: #888; }
 .info-label { text-transform: uppercase; font-size: 11px; letter-spacing: 2px; }
 .info-val { color: white; font-weight: bold; font-family: 'Rajdhani'; font-size: 20px; }
@@ -1452,7 +1453,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         "VIII": { area: 427, type: "За бизнес", rzp: 512.4, status: "free" },
         "IX": { area: 415, type: "За бизнес", rzp: 498, status: "free" },
         "X": { area: 1708, type: "Търговски център", rzp: 0, status: "sold" },
-        "XI": { area: 0, type: "Районен Полицейски Участък", rzp: 0, status: "reserved" },
+        "XI": { area: 0, type: "Районен Полицейски Участък", rzp: 0, status: "donation" },
         "XII": { area: 0, type: "Нощен клуб / Ресторант", rzp: 0, status: "sold" },
         "XIII": { area: 190, type: "За бизнес", rzp: 228, status: "sold" },
         "XIV": { area: 0, type: "Медицински Център, Аптека, Лаборатория, Зъболекари", rzp: 0, status: "sold" },
@@ -1520,7 +1521,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         "LXXII": { area: 382, type: "За дом и/или бизнес", rzp: 458.4, status: "free" },
         "LXXIII": { area: 379, type: "За дом и/или бизнес", rzp: 454.8, status: "free" },
         "LXXIV": { area: 375, type: "За дом и/или бизнес", rzp: 450, status: "free" },
-        "LXXV": { area: 0, type: "Детска градина", rzp: 0, status: "reserved" },
+        "LXXV": { area: 0, type: "Детска градина", rzp: 0, status: "donation" },
     };
 
     const img = document.getElementById('master-map-img');
@@ -1554,6 +1555,8 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         if (data && data.status === 'sold') {
             poly.classList.add('sold');
         } else if (data && data.status === 'reserved') {
+            poly.classList.add('reserved');
+        } else if (data && data.status === 'donation') {
             poly.classList.add('reserved');
         }
     });
@@ -1592,6 +1595,12 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             ctaHint.style.display = 'none';
             rzpRow.style.display = 'none';
             infoWaBtn.style.display = 'none';
+        } else if (data.status === 'donation') {
+            statusEl.textContent = 'ДАРЕНИЕ';
+            statusEl.classList.add('donation');
+            ctaHint.style.display = 'none';
+            rzpRow.style.display = 'none';
+            infoWaBtn.style.display = 'none';
         } else {
             statusEl.textContent = 'СВОБОДЕН';
             ctaHint.style.display = 'block';
@@ -1618,7 +1627,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         if (!currentSelectedUpi) return;
 
         const data = plotsDB[currentSelectedUpi];
-        if (data && (data.status === 'sold' || data.status === 'reserved')) return;
+        if (data && (data.status === 'sold' || data.status === 'reserved' || data.status === 'donation')) return;
 
         const phone = "359889212116";
         const text = `Здравейте, интересувам се от Парцел УПИ ${currentSelectedUpi} в Нова Надежда.`;
@@ -1653,7 +1662,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             poly.addEventListener('click', (e) => {
                 const upi = poly.getAttribute('data-upi');
                 const data = plotsDB[upi];
-                if (data && (data.status === 'sold' || data.status === 'reserved')) return;
+                if (data && (data.status === 'sold' || data.status === 'reserved' || data.status === 'donation')) return;
 
                 const phone = "359889212116";
                 const text = `Здравейте, интересувам се от Парцел УПИ ${upi} в Нова Надежда.`;
