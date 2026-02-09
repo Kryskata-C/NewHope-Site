@@ -741,6 +741,46 @@ header {
     transform: translateX(5px);
 }
 
+/* --- TIMELINE COLLAPSE --- */
+.timeline-item.timeline-hidden {
+    display: none;
+    opacity: 0;
+    transform: translateX(-30px);
+}
+.timeline.expanded .timeline-item.timeline-hidden {
+    display: block;
+}
+
+.timeline-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 35px;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--gold-main);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.4s ease;
+}
+.timeline-toggle:hover {
+    border-color: var(--gold-main);
+    background: rgba(212, 175, 55, 0.08);
+    transform: translateY(-2px);
+}
+.timeline-toggle .toggle-icon {
+    font-size: 20px;
+    transition: transform 0.4s ease;
+}
+.timeline-toggle.expanded .toggle-icon {
+    transform: rotate(180deg);
+}
+
 /* --- CTA SECTION --- */
 .cta-section {
     padding: 150px 5%;
@@ -1096,6 +1136,24 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     </section>
 
 
+    <!-- MEDIA CATEGORIES -->
+    <section class="media-categories">
+        <div class="categories-header reveal">
+            <p>Тук събираме най-интересните материали – статии, видеа, репортажи и мнения от телевизии, радио и онлайн издания.</p>
+        </div>
+
+        <div class="categories-grid" style="grid-template-columns: 1fr; max-width: 400px; margin: 0 auto;">
+            <a href="/online-media" class="category-card online reveal" style="text-decoration: none;">
+                <div class="category-icon">
+                    <i class="ri-global-line"></i>
+                </div>
+                <h3>Онлайн медии</h3>
+                <p>Статии и публикации от водещи новинарски сайтове и портали.</p>
+                <span class="count">1 материал</span>
+            </a>
+        </div>
+    </section>
+
     <!-- TIMELINE -->
     <section class="timeline-section">
         <div class="timeline-header reveal">
@@ -1103,7 +1161,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             <h2>Развитие на проекта</h2>
         </div>
 
-        <div class="timeline">
+        <div class="timeline" id="timeline">
             <div class="timeline-item">
                 <span class="timeline-date">Октомври 2023</span>
                 <div class="timeline-content">
@@ -1128,7 +1186,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
                 </div>
             </div>
 
-            <div class="timeline-item">
+            <div class="timeline-item timeline-hidden">
                 <span class="timeline-date">Ноември 2025</span>
                 <div class="timeline-content">
                     <h4>Екологична оценка и партньорства</h4>
@@ -1136,7 +1194,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
                 </div>
             </div>
 
-            <div class="timeline-item">
+            <div class="timeline-item timeline-hidden">
                 <span class="timeline-date">Декември 2025</span>
                 <div class="timeline-content">
                     <h4>Приемане на окончателен проект за ОУП</h4>
@@ -1144,7 +1202,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
                 </div>
             </div>
 
-            <div class="timeline-item">
+            <div class="timeline-item timeline-hidden">
                 <span class="timeline-date">Януари 2026</span>
                 <div class="timeline-content">
                     <h4>Одобряване изменение на ОУП</h4>
@@ -1152,7 +1210,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
                 </div>
             </div>
 
-            <div class="timeline-item">
+            <div class="timeline-item timeline-hidden">
                 <span class="timeline-date">Февруари 2026</span>
                 <div class="timeline-content">
                     <h4>Обнародване в Държавен вестник</h4>
@@ -1160,23 +1218,12 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- MEDIA CATEGORIES -->
-    <section class="media-categories">
-        <div class="categories-header reveal">
-            <p>Тук събираме най-интересните материали – статии, видеа, репортажи и мнения от телевизии, радио и онлайн издания.</p>
-        </div>
-
-        <div class="categories-grid" style="grid-template-columns: 1fr; max-width: 400px; margin: 0 auto;">
-            <a href="/online-media" class="category-card online reveal" style="text-decoration: none;">
-                <div class="category-icon">
-                    <i class="ri-global-line"></i>
-                </div>
-                <h3>Онлайн медии</h3>
-                <p>Статии и публикации от водещи новинарски сайтове и портали.</p>
-                <span class="count">1 материал</span>
-            </a>
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="timeline-toggle" id="timelineToggle">
+                <span class="toggle-text">Покажи всички</span>
+                <i class="ri-arrow-down-s-line toggle-icon"></i>
+            </button>
         </div>
     </section>
 
@@ -1315,6 +1362,42 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 
     timelineItems.forEach(item => {
         timelineObserver.observe(item);
+    });
+
+    // Timeline expand/collapse
+    const timelineToggle = document.getElementById('timelineToggle');
+    const timeline = document.getElementById('timeline');
+    const hiddenItems = timeline.querySelectorAll('.timeline-hidden');
+    let isExpanded = false;
+
+    timelineToggle.addEventListener('click', () => {
+        isExpanded = !isExpanded;
+        timeline.classList.toggle('expanded', isExpanded);
+        timelineToggle.classList.toggle('expanded', isExpanded);
+        timelineToggle.querySelector('.toggle-text').textContent = isExpanded ? 'Скрий' : 'Покажи всички';
+
+        if (isExpanded) {
+            hiddenItems.forEach((item, i) => {
+                setTimeout(() => {
+                    item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                    item.classList.add('active');
+                }, i * 150);
+            });
+        } else {
+            hiddenItems.forEach(item => {
+                item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-30px)';
+                item.classList.remove('active');
+            });
+            setTimeout(() => {
+                if (!isExpanded) {
+                    timeline.classList.remove('expanded');
+                }
+            }, 350);
+        }
     });
 
     // Mobile menu toggle
