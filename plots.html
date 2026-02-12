@@ -1035,6 +1035,46 @@ footer {
     .sticky-wa { width: 50px; height: 50px; padding: 0; font-size: 22px; border-radius: 50%; }
 }
 
+/* Touch devices (iPad etc.) — force mobile info card regardless of screen width */
+@media (hover: none) and (pointer: coarse) {
+    #info-card {
+        width: 100%;
+        left: 0 !important;
+        right: 0;
+        top: auto !important;
+        bottom: 0;
+        transform: translateY(100%);
+        border-radius: 20px 20px 0 0;
+        padding: 20px 20px 30px;
+        pointer-events: auto;
+    }
+    #info-card.active { transform: translateY(0); }
+    #info-card::before { display: none; }
+    .info-close {
+        display: flex;
+        position: absolute;
+        top: 10px; right: 15px;
+        width: 36px; height: 36px;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 50%;
+        align-items: center; justify-content: center;
+        color: #fff; font-size: 20px; cursor: pointer;
+    }
+    .info-wa-btn {
+        display: flex;
+        align-items: center; justify-content: center;
+        gap: 10px; width: 100%; padding: 15px;
+        background: var(--wa-green); color: #fff;
+        text-decoration: none; border-radius: 8px;
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 700; font-size: 16px;
+        text-transform: uppercase; letter-spacing: 1px;
+        margin-top: 15px;
+    }
+    .cta-hint { display: none !important; }
+}
+
 </style>
 <!-- Google Analytics (GA4) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CDYMNR14RB"></script>
