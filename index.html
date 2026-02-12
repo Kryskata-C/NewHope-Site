@@ -60,7 +60,7 @@ html {
 }
 
 /* --- CUSTOM CURSOR --- */
-@media (min-width: 992px) {
+@media (hover: hover) and (pointer: fine) {
     * { cursor: none; }
     .cursor-dot, .cursor-outline {
         position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; display: block;
@@ -100,6 +100,7 @@ html {
         background: radial-gradient(circle, rgba(249, 215, 99, 0.2) 0%, transparent 60%);
     }
 }
+@media (hover: none), (pointer: coarse) { .cursor-dot, .cursor-outline { display: none !important; } }
 @media (max-width: 991px) { .cursor-dot, .cursor-outline { display: none !important; } }
 
 /* --- TEXTURES --- */
@@ -735,6 +736,60 @@ body.skip-intro .first-time-badge, body.skip-intro .dynamic-quote-wrapper, body.
     .price-number { font-size: 22px; }
     .badge-text { font-size: 10px; }
 }
+
+/* === PERF TIER: MID === */
+body.perf-mid .noise-overlay,
+body.perf-mid .grid-overlay { display: none; }
+
+body.perf-mid header,
+body.perf-mid .stats-container,
+body.perf-mid .cta-btn { backdrop-filter: blur(3px); }
+
+body.perf-mid .hero-accent .letter { animation: none; }
+body.perf-mid .badge-text { animation: none; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+body.perf-mid .hero-accent::after { animation: none; }
+body.perf-mid .video-background video { filter: brightness(0.25); }
+
+/* === PERF TIER: LOW === */
+body.perf-low .noise-overlay,
+body.perf-low .vignette-overlay,
+body.perf-low .grid-overlay { display: none !important; }
+
+body.perf-low .cursor-dot,
+body.perf-low .cursor-outline { display: none !important; }
+body.perf-low,
+body.perf-low * { cursor: auto !important; }
+
+body.perf-low .corner-decor { display: none !important; }
+
+body.perf-low .hero-accent .letter,
+body.perf-low .badge-text,
+body.perf-low .price-number,
+body.perf-low .sticky-wa { animation: none !important; }
+body.perf-low .hero-accent::after { display: none !important; }
+
+body.perf-low header,
+body.perf-low .stats-container,
+body.perf-low .cta-btn { backdrop-filter: none !important; }
+
+body.perf-low .nav-card:hover,
+body.perf-low .social-nav a:hover { box-shadow: none !important; }
+
+body.perf-low .video-background video { display: none; }
+body.perf-low .video-background {
+    background: url('header-bg.jpg') center/cover no-repeat;
+    filter: brightness(0.25);
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+    }
+    .noise-overlay, .grid-overlay, .corner-decor { display: none !important; }
+    .cursor-dot, .cursor-outline { display: none !important; }
+}
 </style>
 <!-- Google Analytics (GA4) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CDYMNR14RB"></script>
@@ -763,6 +818,25 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 </head>
 <body>
+<script>
+(function(){
+  var c=sessionStorage.getItem('perfTier');
+  if(c){document.body.classList.add('perf-'+c);return;}
+  var cores=navigator.hardwareConcurrency||2;
+  var mem=navigator.deviceMemory||4;
+  var conn=navigator.connection;
+  var net=conn?conn.effectiveType:'4g';
+  var rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var s=0;
+  if(cores>=4)s+=2;else if(cores>=2)s+=1;
+  if(mem>=8)s+=2;else if(mem>=4)s+=1;
+  if(net==='4g')s+=2;else if(net==='3g')s+=1;
+  if(rm)s-=2;
+  var t=s>=5?'high':s<=2?'low':'mid';
+  document.body.classList.add('perf-'+t);
+  sessionStorage.setItem('perfTier',t);
+})();
+</script>
 
 <div class="cursor-dot" id="cursor-dot"></div>
 <div class="cursor-outline" id="cursor-outline"></div>
@@ -981,12 +1055,14 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 
     // Smooth trailing effect for outline
     function animateOutline() {
+        if (document.body.classList.contains('perf-low')) return;
         if (window.getComputedStyle(cursorDot).display === 'none') {
             requestAnimationFrame(animateOutline);
             return;
         }
-        outlineX += (mouseX - outlineX) * 0.15;
-        outlineY += (mouseY - outlineY) * 0.15;
+        var lerpFactor = document.body.classList.contains('perf-mid') ? 0.3 : 0.15;
+        outlineX += (mouseX - outlineX) * lerpFactor;
+        outlineY += (mouseY - outlineY) * lerpFactor;
         cursorOutline.style.left = `${outlineX}px`;
         cursorOutline.style.top = `${outlineY}px`;
         requestAnimationFrame(animateOutline);
@@ -1042,7 +1118,8 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 
     function startTextCycle() {
         quoteElement.classList.add('active');
-        setInterval(cycleQuote, 3000);
+        var interval = document.body.classList.contains('perf-low') ? 5000 : 3000;
+        setInterval(cycleQuote, interval);
     }
 
     function cycleQuote() {
@@ -1201,8 +1278,8 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             });
         }
 
-        // Parallax effect on hero elements (desktop only — causes glitchy scroll on mobile)
-        if (window.innerWidth > 991) {
+        // Parallax effect on hero elements (desktop only, high-perf only)
+        if (window.innerWidth > 991 && document.body.classList.contains('perf-high')) {
             const heroElements = document.querySelectorAll('.first-time-badge, .hero h1, .hero-subtitle-prestige');
             const cachedHeight = window.innerHeight;
             window.addEventListener('scroll', () => {
@@ -1217,16 +1294,22 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             });
         }
 
-        // Nav card radial glow follow effect
-        document.querySelectorAll('.nav-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                card.style.setProperty('--mouse-x', x + '%');
-                card.style.setProperty('--mouse-y', y + '%');
+        // Nav card radial glow follow effect (skip on low, throttle on mid)
+        if (!document.body.classList.contains('perf-low')) {
+            const throttleMs = document.body.classList.contains('perf-mid') ? 50 : 0;
+            document.querySelectorAll('.nav-card').forEach(card => {
+                let throttled = false;
+                card.addEventListener('mousemove', (e) => {
+                    if (throttleMs && throttled) return;
+                    const rect = card.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    card.style.setProperty('--mouse-x', x + '%');
+                    card.style.setProperty('--mouse-y', y + '%');
+                    if (throttleMs) { throttled = true; setTimeout(() => throttled = false, throttleMs); }
+                });
             });
-        });
+        }
     }
 
     // Counter animation function
@@ -1253,6 +1336,27 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
 
         requestAnimationFrame(update);
     }
+
+    // Video performance optimization
+    (function() {
+        const video = document.getElementById('bg-video');
+        if (!video) return;
+        if (document.body.classList.contains('perf-low')) {
+            video.querySelectorAll('source').forEach(s => s.remove());
+            video.load();
+            return;
+        }
+        if (document.body.classList.contains('perf-mid')) {
+            video.playbackRate = 0.75;
+        }
+        const vidObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) video.play();
+                else video.pause();
+            });
+        }, { threshold: 0.1 });
+        vidObserver.observe(video);
+    })();
 
     // Mobile menu toggle
     const menuToggle = document.getElementById('menuToggle');

@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --- CUSTOM CURSOR (Desktop Only) --- */
-@media (min-width: 992px) {
+@media (hover: hover) and (pointer: fine) {
     * { cursor: none; }
     
     .cursor-dot, .cursor-outline {
@@ -65,7 +65,10 @@ h1, h2, h3, h4, h5, h6 {
     body:hover .cursor-outline { opacity: 1; }
 }
 
-/* Hide custom cursor on mobile */
+/* Hide custom cursor on touch devices and mobile */
+@media (hover: none), (pointer: coarse) {
+    .cursor-dot, .cursor-outline { display: none !important; }
+}
 @media (max-width: 991px) {
     .cursor-dot, .cursor-outline { display: none !important; }
 }

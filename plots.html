@@ -71,7 +71,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --- CUSTOM CURSOR --- */
-@media (min-width: 992px) {
+@media (hover: hover) and (pointer: fine) {
     * { cursor: none; }
     .cursor-dot, .cursor-outline {
         position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; display: block;
@@ -111,6 +111,7 @@ h1, h2, h3, h4, h5, h6 {
         background: radial-gradient(circle, rgba(249, 215, 99, 0.2) 0%, transparent 60%);
     }
 }
+@media (hover: none), (pointer: coarse) { .cursor-dot, .cursor-outline { display: none !important; } }
 @media (max-width: 991px) { .cursor-dot, .cursor-outline { display: none !important; } }
 
 /* --- CORNERS --- */
@@ -398,6 +399,7 @@ p {
     filter: drop-shadow(0 0 0 transparent);
 }
 
+@media (hover: hover) {
 .plot-poly:hover {
     fill: url(#holographic-gradient);
     stroke: var(--gold-bright);
@@ -408,6 +410,14 @@ p {
     animation: plotActivate 0.6s ease-out forwards,
                glowPulse 2s ease-in-out infinite,
                borderGlow 1.5s ease-in-out infinite;
+}
+}
+/* Touch: highlight selected plot via JS class */
+.plot-poly.touch-active {
+    fill: url(#holographic-gradient);
+    stroke: var(--gold-bright);
+    stroke-width: 2px;
+    filter: drop-shadow(0 0 20px var(--gold-main));
 }
 
 /* Main activation animation */
@@ -458,11 +468,13 @@ p {
     fill: rgba(255, 68, 68, 0.15);
     stroke: rgba(255, 68, 68, 0.5);
 }
+@media (hover: hover) {
 .plot-poly.sold:hover {
     fill: rgba(255, 68, 68, 0.3);
     stroke: #ff4444;
     filter: drop-shadow(0 0 15px rgba(255, 68, 68, 0.5));
     animation: none;
+}
 }
 
 /* Reserved plots - orange tint */
@@ -470,11 +482,13 @@ p {
     fill: rgba(255, 152, 0, 0.1);
     stroke: rgba(255, 152, 0, 0.4);
 }
+@media (hover: hover) {
 .plot-poly.reserved:hover {
     fill: rgba(255, 152, 0, 0.25);
     stroke: #ff9800;
     filter: drop-shadow(0 0 15px rgba(255, 152, 0, 0.5));
     animation: none;
+}
 }
 
 /* --- ℹ️ INFO CARD (HUD STYLE) --- */
@@ -1681,21 +1695,26 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
                 window.open(url, '_blank');
             });
         } else {
-            // Mobile: tap to show info card
+            // Touch: tap to show info card with visual feedback
             poly.addEventListener('click', (e) => {
                 e.preventDefault();
                 hideHint();
+                // Remove touch-active from all plots
+                polys.forEach(p => p.classList.remove('touch-active'));
+                // Highlight tapped plot
+                poly.classList.add('touch-active');
                 const upi = poly.getAttribute('data-upi');
                 showInfoCard(upi);
             });
         }
     });
 
-    // Close card when tapping outside on mobile
+    // Close card when tapping outside on touch
     if (isTouchDevice) {
         document.addEventListener('click', (e) => {
             if (!infoCard.contains(e.target) && !e.target.classList.contains('plot-poly')) {
                 infoCard.classList.remove('active');
+                polys.forEach(p => p.classList.remove('touch-active'));
                 currentSelectedUpi = null;
             }
         });

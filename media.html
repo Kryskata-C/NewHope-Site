@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* --- CUSTOM CURSOR --- */
-@media (min-width: 992px) {
+@media (hover: hover) and (pointer: fine) {
     * { cursor: none; }
     .cursor-dot, .cursor-outline {
         position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; display: block;
@@ -98,6 +98,7 @@ h1, h2, h3, h4, h5, h6,
         background: radial-gradient(circle, rgba(249, 215, 99, 0.2) 0%, transparent 60%);
     }
 }
+@media (hover: none), (pointer: coarse) { .cursor-dot, .cursor-outline { display: none !important; } }
 @media (max-width: 991px) { .cursor-dot, .cursor-outline { display: none !important; } }
 
 /* --- TEXTURES --- */
