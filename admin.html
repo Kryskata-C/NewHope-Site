@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | НН</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0a0a0a;
+    color: #e0e0e0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ---- LOGIN ---- */
+#login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 50% 30%, rgba(212,175,55,0.06) 0%, transparent 70%);
+}
+.login-box {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 44px 40px;
+    width: 380px;
+    animation: fadeSlideUp 0.5s ease;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.login-box h1 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #d4af37;
+}
+.login-box .subtitle {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 28px;
+}
+.login-box input {
+    width: 100%;
+    padding: 13px 16px;
+    margin-bottom: 14px;
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    color: #e0e0e0;
+    font-size: 15px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.login-box input:focus {
+    outline: none;
+    border-color: #d4af37;
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+}
+.login-btn {
+    width: 100%;
+    padding: 13px;
+    background: linear-gradient(135deg, #d4af37, #b8941e);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.3px;
+}
+.login-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(212,175,55,0.3);
+}
+.login-btn:active { transform: scale(0.98); }
+.login-btn.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+#login-error {
+    color: #ff6b6b;
+    font-size: 13px;
+    margin-top: 12px;
+    display: none;
+    animation: shake 0.4s ease;
+}
+
+/* ---- ADMIN PANEL ---- */
+#admin-panel {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+/* Header */
+.admin-header {
+    background: #111;
+    border-bottom: 1px solid #1e1e1e;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.admin-header h1 {
+    font-size: 17px;
+    color: #d4af37;
+    font-weight: 600;
+}
+
+/* Connection Status */
+.conn-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.4s ease;
+}
+.conn-status .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transition: background 0.4s;
+}
+.conn-status.connected {
+    background: rgba(74,222,128,0.1);
+    color: #4ade80;
+    border: 1px solid rgba(74,222,128,0.2);
+}
+.conn-status.connected .dot {
+    background: #4ade80;
+    box-shadow: 0 0 8px rgba(74,222,128,0.6);
+    animation: pulse-dot 2s ease infinite;
+}
+.conn-status.disconnected {
+    background: rgba(255,107,107,0.1);
+    color: #ff6b6b;
+    border: 1px solid rgba(255,107,107,0.2);
+}
+.conn-status.disconnected .dot {
+    background: #ff6b6b;
+    box-shadow: 0 0 8px rgba(255,107,107,0.6);
+}
+.conn-status.connecting {
+    background: rgba(251,191,36,0.1);
+    color: #fbbf24;
+    border: 1px solid rgba(251,191,36,0.2);
+}
+.conn-status.connecting .dot {
+    background: #fbbf24;
+    animation: pulse-dot 0.8s ease infinite;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.logout-btn {
+    padding: 8px 18px;
+    background: #1a1a1a;
+    color: #999;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+.logout-btn:hover {
+    background: #222;
+    color: #fff;
+    border-color: #444;
+}
+
+/* Seed Bar */
+.seed-bar {
+    padding: 14px 24px;
+    background: linear-gradient(90deg, rgba(212,175,55,0.08), rgba(212,175,55,0.03));
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: fadeSlideDown 0.4s ease;
+}
+.seed-btn {
+    padding: 9px 20px;
+    background: linear-gradient(135deg, #d4af37, #b8941e);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.seed-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+}
+.seed-bar span { font-size: 13px; color: #a89040; }
+
+/* Stats */
+.admin-stats {
+    display: flex;
+    gap: 14px;
+    padding: 22px 24px 10px;
+    flex-wrap: wrap;
+}
+.stat-card {
+    background: #141414;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    padding: 18px 28px;
+    min-width: 150px;
+    transition: transform 0.3s, border-color 0.3s;
+}
+.stat-card:hover {
+    transform: translateY(-2px);
+    border-color: #333;
+}
+.stat-card .num {
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+.stat-card .label {
+    font-size: 12px;
+    color: #666;
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.stat-card.free .num { color: #4ade80; }
+.stat-card.sold .num { color: #ff6b6b; }
+.stat-card.reserved .num { color: #fbbf24; }
+
+/* Plots Grid */
+.plots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+    padding: 14px 24px 60px;
+}
+.plot-card {
+    background: #141414;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: cardIn 0.35s ease backwards;
+    position: relative;
+    overflow: hidden;
+}
+.plot-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    transition: background 0.4s;
+}
+.plot-card:hover {
+    border-color: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.plot-card .plot-info { flex: 1; min-width: 0; }
+.plot-card .upi-num {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.plot-card .plot-type {
+    font-size: 11px;
+    color: #666;
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Select wrapper with spinner */
+.select-wrap {
+    position: relative;
+    min-width: 150px;
+}
+.select-wrap select {
+    width: 100%;
+    padding: 10px 14px;
+    padding-right: 36px;
+    background: #0e0e0e;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+}
+.select-wrap::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #666;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.select-wrap.loading::after { opacity: 0; }
+.select-wrap select:focus {
+    outline: none;
+    border-color: #d4af37;
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+}
+.select-wrap select option { background: #1a1a1a; }
+.select-wrap select:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+/* Spinner overlay on select */
+.select-spinner {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border: 2px solid transparent;
+    border-top-color: #d4af37;
+    border-right-color: #d4af37;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: none;
+}
+.select-wrap.loading .select-spinner { display: block; }
+
+/* Status colors on cards */
+.plot-card.status-free::before { background: #4ade80; }
+.plot-card.status-sold::before { background: #ff6b6b; }
+.plot-card.status-reserved::before { background: #fbbf24; }
+.plot-card.status-donation::before { background: #a78bfa; }
+
+.plot-card.status-free .select-wrap select { border-color: rgba(74,222,128,0.25); }
+.plot-card.status-sold .select-wrap select { border-color: rgba(255,107,107,0.25); }
+.plot-card.status-reserved .select-wrap select { border-color: rgba(251,191,36,0.25); }
+.plot-card.status-donation .select-wrap select { border-color: rgba(167,139,250,0.25); }
+
+/* Status micro-badge in UPI label */
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+.status-dot.free { background: #4ade80; box-shadow: 0 0 6px rgba(74,222,128,0.5); }
+.status-dot.sold { background: #ff6b6b; box-shadow: 0 0 6px rgba(255,107,107,0.5); }
+.status-dot.reserved { background: #fbbf24; box-shadow: 0 0 6px rgba(251,191,36,0.5); }
+.status-dot.donation { background: #a78bfa; box-shadow: 0 0 6px rgba(167,139,250,0.5); }
+
+/* Flash effect after successful save */
+.plot-card.flash {
+    animation: successFlash 0.6s ease;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: #1a1a1a;
+    border: 1px solid #4ade80;
+    color: #4ade80;
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(16px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 100;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.toast .toast-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(74,222,128,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+.toast.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* ---- ANIMATIONS ---- */
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes spin {
+    to { transform: translateY(-50%) rotate(360deg); }
+}
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+@keyframes successFlash {
+    0% { background: #141414; }
+    30% { background: rgba(74,222,128,0.08); }
+    100% { background: #141414; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .admin-header { padding: 12px 16px; }
+    .admin-stats { padding: 16px; gap: 10px; }
+    .plots-grid { padding: 10px 16px 40px; grid-template-columns: 1fr; }
+    .stat-card { padding: 14px 20px; min-width: 100px; }
+    .plot-card { padding: 14px; }
+    .login-box { margin: 16px; width: auto; padding: 32px 24px; }
+    .conn-status span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="login-screen">
+    <div class="login-box">
+        <h1>Нова Надежда</h1>
+        <div class="subtitle">Admin Panel</div>
+        <input type="email" id="email" placeholder="Email" autocomplete="email">
+        <input type="password" id="password" placeholder="Парола" autocomplete="current-password">
+        <button class="login-btn" id="login-btn" onclick="login()">Вход</button>
+        <div id="login-error"></div>
+    </div>
+</div>
+
+<!-- Admin Panel -->
+<div id="admin-panel">
+    <div class="admin-header">
+        <div class="header-left">
+            <h1>Управление на парцели</h1>
+            <div class="conn-status connecting" id="conn-status">
+                <div class="dot"></div>
+                <span>Свързване...</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="logout-btn" onclick="logout()">Изход</button>
+        </div>
+    </div>
+    <div id="seed-bar" class="seed-bar" style="display:none;">
+        <button class="seed-btn" onclick="seedFirebase()">Синхронизирай с Firebase</button>
+        <span>Няма данни във Firebase. Натиснете за първоначално зареждане.</span>
+    </div>
+    <div class="admin-stats" id="stats"></div>
+    <div class="plots-grid" id="plots-grid"></div>
+</div>
+
+<div class="toast" id="toast">
+    <div class="toast-icon">&#10003;</div>
+    <span id="toast-msg"></span>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script>
+firebase.initializeApp({
+    apiKey: "AIzaSyBG_LGOJEvDcpqGUJDDWLYmskw4ACJVqxg",
+    authDomain: "newhope-b74d7.firebaseapp.com",
+    databaseURL: "https://newhope-b74d7-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "newhope-b74d7",
+    storageBucket: "newhope-b74d7.firebasestorage.app",
+    messagingSenderId: "327850598967",
+    appId: "1:327850598967:web:74adb2ee4889fe9705d5b2"
+});
+
+const auth = firebase.auth();
+const db = firebase.database();
+const connStatusEl = document.getElementById('conn-status');
+let pendingChanges = new Set(); // track which UPIs are saving
+
+// Hardcoded plot definitions (same as plots.html)
+const plotsDB = {
+    "I": { area: 957, type: "За бизнес", rzp: 1148.4, status: "free" },
+    "II": { area: 959, type: "За бизнес", rzp: 1150.8, status: "free" },
+    "III": { area: 769, type: "За бизнес", rzp: 922.8, status: "free" },
+    "IV": { area: 772, type: "За бизнес", rzp: 926.4, status: "free" },
+    "V": { area: 427, type: "За бизнес", rzp: 512.4, status: "free" },
+    "VI": { area: 427, type: "За бизнес", rzp: 512.4, status: "free" },
+    "VII": { area: 427, type: "За бизнес", rzp: 512.4, status: "free" },
+    "VIII": { area: 427, type: "За бизнес", rzp: 512.4, status: "sold" },
+    "IX": { area: 415, type: "За бизнес", rzp: 498, status: "sold" },
+    "X": { area: 1708, type: "Търговски център", rzp: 0, status: "sold" },
+    "XI": { area: 0, type: "Районен Полицейски Участък", rzp: 0, status: "donation" },
+    "XII": { area: 0, type: "Нощен клуб / Ресторант", rzp: 0, status: "sold" },
+    "XIII": { area: 190, type: "За бизнес", rzp: 228, status: "sold" },
+    "XIV": { area: 0, type: "Медицински Център, Аптека, Лаборатория, Зъболекари", rzp: 0, status: "sold" },
+    "XV": { area: 336, type: "За дом и/или бизнес", rzp: 403.2, status: "free" },
+    "XVI": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+    "XVII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+    "XVIII": { area: 336, type: "За дом и/или бизнес", rzp: 403.2, status: "free" },
+    "XIX": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XX": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XXI": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "sold" },
+    "XXII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XXIII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XXIV": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XXV": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XXVI": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "sold" },
+    "XXVII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XXVIII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XXIX": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XXX": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XXXI": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
+    "XXXII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+    "XXXIII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+    "XXXIV": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "sold" },
+    "XXXV": { area: 336, type: "За дом и/или бизнес", rzp: 403.2, status: "free" },
+    "XXXVI": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+    "XXXVII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "sold" },
+    "XXXVIII": { area: 336, type: "За дом и/или бизнес", rzp: 403.2, status: "free" },
+    "XXXIX": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XL": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XLI": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XLII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XLIII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XLIV": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "XLV": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
+    "XLVI": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+    "XLVII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+    "XLVIII": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
+    "XLIX": { area: 312, type: "За дом и/или бизнес", rzp: 374.4, status: "free" },
+    "L": { area: 311, type: "За дом и/или бизнес", rzp: 373.2, status: "free" },
+    "LI": { area: 311, type: "За дом и/или бизнес", rzp: 373.2, status: "free" },
+    "LII": { area: 339, type: "За дом и/или бизнес", rzp: 406.8, status: "free" },
+    "LIII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "LIV": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "LV": { area: 312, type: "За дом и/или бизнес", rzp: 374.4, status: "free" },
+    "LVI": { area: 311, type: "За дом и/или бизнес", rzp: 373.2, status: "free" },
+    "LVII": { area: 311, type: "За дом и/или бизнес", rzp: 373.2, status: "free" },
+    "LVIII": { area: 387, type: "За дом и/или бизнес", rzp: 464.4, status: "free" },
+    "LIX": { area: 363, type: "За дом и/или бизнес", rzp: 435.6, status: "free" },
+    "LX": { area: 322, type: "За дом и/или бизнес", rzp: 386.4, status: "free" },
+    "LXI": { area: 322, type: "За дом и/или бизнес", rzp: 386.4, status: "free" },
+    "LXII": { area: 363, type: "За дом и/или бизнес", rzp: 435.6, status: "sold" },
+    "LXIII": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "LXIV": { area: 454, type: "За дом и/или бизнес", rzp: 544.8, status: "free" },
+    "LXV": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
+    "LXVI": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+    "LXVII": { area: 300, type: "За дом и/или бизнес", rzp: 360, status: "free" },
+    "LXVIII": { area: 337, type: "За дом и/или бизнес", rzp: 404.4, status: "free" },
+    "LXIX": { area: 376, type: "За дом и/или бизнес", rzp: 451.2, status: "free" },
+    "LXX": { area: 389, type: "За дом и/или бизнес", rzp: 466.8, status: "free" },
+    "LXXI": { area: 386, type: "За дом и/или бизнес", rzp: 463.2, status: "free" },
+    "LXXII": { area: 382, type: "За дом и/или бизнес", rzp: 458.4, status: "free" },
+    "LXXIII": { area: 379, type: "За дом и/или бизнес", rzp: 454.8, status: "sold" },
+    "LXXIV": { area: 375, type: "За дом и/или бизнес", rzp: 450, status: "free" },
+    "LXXV": { area: 0, type: "Детска градина", rzp: 0, status: "donation" },
+};
+
+function romanToArabic(roman) {
+    const values = { I:1, V:5, X:10, L:50, C:100, D:500, M:1000 };
+    let result = 0;
+    for (let i = 0; i < roman.length; i++) {
+        const cur = values[roman[i]];
+        const next = values[roman[i + 1]];
+        if (next && cur < next) { result -= cur; } else { result += cur; }
+    }
+    return result;
+}
+
+const statusLabels = {
+    free: "Свободен",
+    sold: "Продаден",
+    reserved: "Резервиран",
+    donation: "Дарение"
+};
+
+// --- Connection Status ---
+function setConnStatus(state) {
+    connStatusEl.className = 'conn-status ' + state;
+    const labels = { connected: 'Свързан', disconnected: 'Няма връзка', connecting: 'Свързване...' };
+    connStatusEl.querySelector('span').textContent = labels[state];
+}
+
+// Monitor Firebase connection
+const connRef = firebase.database().ref('.info/connected');
+connRef.on('value', snap => {
+    setConnStatus(snap.val() ? 'connected' : 'disconnected');
+});
+
+// --- Auth ---
+function login() {
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('password').value;
+    const errEl = document.getElementById('login-error');
+    const btn = document.getElementById('login-btn');
+    errEl.style.display = 'none';
+    btn.classList.add('loading');
+    btn.textContent = 'Влизане...';
+
+    auth.signInWithEmailAndPassword(email, pass)
+        .then(() => {
+            btn.classList.remove('loading');
+            btn.textContent = 'Вход';
+        })
+        .catch(err => {
+            btn.classList.remove('loading');
+            btn.textContent = 'Вход';
+            errEl.textContent = 'Грешен email или парола.';
+            errEl.style.display = 'block';
+        });
+}
+
+function logout() {
+    auth.signOut();
+}
+
+document.getElementById('password').addEventListener('keydown', e => {
+    if (e.key === 'Enter') login();
+});
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+        loadPlots();
+    } else {
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('admin-panel').style.display = 'none';
+    }
+});
+
+// --- Plots UI ---
+let firstLoad = true;
+
+function loadPlots() {
+    db.ref('plots').on('value', snapshot => {
+        const fbData = snapshot.val();
+
+        document.getElementById('seed-bar').style.display = fbData ? 'none' : 'flex';
+
+        if (fbData) {
+            Object.keys(fbData).forEach(upi => {
+                if (plotsDB[upi]) plotsDB[upi].status = fbData[upi];
+            });
+        }
+
+        // Clear pending states since we got fresh data
+        const justFinished = new Set(pendingChanges);
+        pendingChanges.clear();
+
+        if (firstLoad) {
+            renderGrid();
+            firstLoad = false;
+        } else {
+            updateGridInPlace(justFinished);
+        }
+        renderStats();
+    });
+}
+
+function renderStats() {
+    const counts = { free: 0, sold: 0, reserved: 0, donation: 0 };
+    Object.values(plotsDB).forEach(p => { counts[p.status] = (counts[p.status] || 0) + 1; });
+
+    document.getElementById('stats').innerHTML = `
+        <div class="stat-card free"><div class="num">${counts.free}</div><div class="label">Свободни</div></div>
+        <div class="stat-card sold"><div class="num">${counts.sold}</div><div class="label">Продадени</div></div>
+        <div class="stat-card reserved"><div class="num">${counts.reserved}</div><div class="label">Резервирани</div></div>
+    `;
+}
+
+function renderGrid() {
+    const grid = document.getElementById('plots-grid');
+    grid.innerHTML = '';
+
+    const upis = Object.keys(plotsDB).sort((a, b) => romanToArabic(a) - romanToArabic(b));
+
+    upis.forEach((upi, i) => {
+        const data = plotsDB[upi];
+        const card = document.createElement('div');
+        card.className = `plot-card status-${data.status}`;
+        card.id = `card-${upi}`;
+        card.style.animationDelay = `${i * 0.03}s`;
+        card.innerHTML = buildCardHTML(upi, data);
+        grid.appendChild(card);
+    });
+}
+
+function updateGridInPlace(justFinished) {
+    const upis = Object.keys(plotsDB);
+    upis.forEach(upi => {
+        const card = document.getElementById(`card-${upi}`);
+        if (!card) return;
+
+        const data = plotsDB[upi];
+        card.className = `plot-card status-${data.status}`;
+
+        // Update select value and spinner
+        const wrap = card.querySelector('.select-wrap');
+        const sel = card.querySelector('select');
+        if (sel) {
+            sel.value = data.status;
+            sel.disabled = false;
+        }
+        if (wrap) wrap.classList.remove('loading');
+
+        // Update status dot
+        const dot = card.querySelector('.status-dot');
+        if (dot) dot.className = `status-dot ${data.status}`;
+
+        // Flash animation on cards that just saved
+        if (justFinished.has(upi)) {
+            card.classList.add('flash');
+            setTimeout(() => card.classList.remove('flash'), 700);
+        }
+    });
+}
+
+function buildCardHTML(upi, data) {
+    const isLoading = pendingChanges.has(upi);
+    return `
+        <div class="plot-info">
+            <div class="upi-num">
+                <span class="status-dot ${data.status}"></span>
+                УПИ ${romanToArabic(upi)}
+            </div>
+            <div class="plot-type">${data.type}${data.area ? ' &middot; ' + data.area + ' m&sup2;' : ''}</div>
+        </div>
+        <div class="select-wrap ${isLoading ? 'loading' : ''}">
+            <select data-upi="${upi}" onchange="changeStatus('${upi}', this.value)" ${isLoading ? 'disabled' : ''}>
+                <option value="free" ${data.status === 'free' ? 'selected' : ''}>Свободен</option>
+                <option value="sold" ${data.status === 'sold' ? 'selected' : ''}>Продаден</option>
+                <option value="reserved" ${data.status === 'reserved' ? 'selected' : ''}>Резервиран</option>
+                <option value="donation" ${data.status === 'donation' ? 'selected' : ''}>Дарение</option>
+            </select>
+            <div class="select-spinner"></div>
+        </div>
+    `;
+}
+
+function changeStatus(upi, newStatus) {
+    // Set loading state immediately
+    pendingChanges.add(upi);
+    const card = document.getElementById(`card-${upi}`);
+    if (card) {
+        const wrap = card.querySelector('.select-wrap');
+        const sel = card.querySelector('select');
+        if (wrap) wrap.classList.add('loading');
+        if (sel) sel.disabled = true;
+    }
+
+    db.ref('plots/' + upi).set(newStatus)
+        .then(() => {
+            showToast(`УПИ ${romanToArabic(upi)} &rarr; ${statusLabels[newStatus]}`);
+        })
+        .catch(() => {
+            pendingChanges.delete(upi);
+            if (card) {
+                const wrap = card.querySelector('.select-wrap');
+                const sel = card.querySelector('select');
+                if (wrap) wrap.classList.remove('loading');
+                if (sel) sel.disabled = false;
+            }
+            showToast('Грешка при запис!', true);
+        });
+}
+
+function seedFirebase() {
+    const updates = {};
+    Object.keys(plotsDB).forEach(upi => {
+        updates[upi] = plotsDB[upi].status;
+    });
+    db.ref('plots').set(updates).then(() => {
+        showToast('Firebase синхронизиран!');
+    });
+}
+
+let toastTimer;
+function showToast(msg, isError) {
+    const t = document.getElementById('toast');
+    const icon = t.querySelector('.toast-icon');
+    const msgEl = document.getElementById('toast-msg');
+    msgEl.innerHTML = msg;
+    if (isError) {
+        t.style.borderColor = '#ff6b6b';
+        t.style.color = '#ff6b6b';
+        icon.innerHTML = '&#10007;';
+    } else {
+        t.style.borderColor = '#4ade80';
+        t.style.color = '#4ade80';
+        icon.innerHTML = '&#10003;';
+    }
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+</script>
+</body>
+</html>

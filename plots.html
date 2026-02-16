@@ -1493,6 +1493,10 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     </div>
 </footer>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <script>
     // --- PLOT DATA BASE ---
     function romanToArabic(roman) {
@@ -1613,18 +1617,49 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     let currentSelectedUpi = null;
 
-    // Apply status classes to plots on load
-    polys.forEach(poly => {
-        const upi = poly.getAttribute('data-upi');
-        const data = plotsDB[upi];
-        if (data && data.status === 'sold') {
-            poly.classList.add('sold');
-        } else if (data && data.status === 'reserved') {
-            poly.classList.add('reserved');
-        } else if (data && data.status === 'donation') {
-            poly.classList.add('reserved');
+    // Apply status classes to plots
+    function applyStatuses() {
+        polys.forEach(poly => {
+            const upi = poly.getAttribute('data-upi');
+            const data = plotsDB[upi];
+            poly.classList.remove('sold', 'reserved');
+            if (data && data.status === 'sold') {
+                poly.classList.add('sold');
+            } else if (data && data.status === 'reserved') {
+                poly.classList.add('reserved');
+            } else if (data && data.status === 'donation') {
+                poly.classList.add('reserved');
+            }
+        });
+        if (currentSelectedUpi) {
+            showInfoCard(currentSelectedUpi);
         }
-    });
+    }
+    applyStatuses();
+
+    // Firebase real-time sync
+    try {
+        firebase.initializeApp({
+            apiKey: "AIzaSyBG_LGOJEvDcpqGUJDDWLYmskw4ACJVqxg",
+            authDomain: "newhope-b74d7.firebaseapp.com",
+            databaseURL: "https://newhope-b74d7-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "newhope-b74d7",
+            storageBucket: "newhope-b74d7.firebasestorage.app",
+            messagingSenderId: "327850598967",
+            appId: "1:327850598967:web:74adb2ee4889fe9705d5b2"
+        });
+        firebase.database().ref('plots').on('value', (snapshot) => {
+            const fbData = snapshot.val();
+            if (fbData) {
+                Object.keys(fbData).forEach(upi => {
+                    if (plotsDB[upi]) {
+                        plotsDB[upi].status = fbData[upi];
+                    }
+                });
+                applyStatuses();
+            }
+        });
+    } catch(e) { console.warn('Firebase unavailable, using local data.'); }
 
     // Hide hint after first interaction
     let hasInteracted = false;
