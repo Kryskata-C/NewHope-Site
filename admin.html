@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel | НН</title>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -32,442 +33,314 @@ body {
     animation: fadeSlideUp 0.5s ease;
     box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
-.login-box h1 {
-    font-size: 22px;
-    margin-bottom: 8px;
-    color: #d4af37;
-}
-.login-box .subtitle {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 28px;
-}
+.login-box h1 { font-size: 22px; margin-bottom: 8px; color: #d4af37; }
+.login-box .subtitle { font-size: 13px; color: #666; margin-bottom: 28px; }
 .login-box input {
-    width: 100%;
-    padding: 13px 16px;
-    margin-bottom: 14px;
-    background: #111;
-    border: 1px solid #2a2a2a;
-    border-radius: 10px;
-    color: #e0e0e0;
-    font-size: 15px;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%; padding: 13px 16px; margin-bottom: 14px;
+    background: #111; border: 1px solid #2a2a2a; border-radius: 10px;
+    color: #e0e0e0; font-size: 15px; transition: border-color 0.3s, box-shadow 0.3s;
 }
-.login-box input:focus {
-    outline: none;
-    border-color: #d4af37;
-    box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
-}
+.login-box input:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
 .login-btn {
-    width: 100%;
-    padding: 13px;
+    width: 100%; padding: 13px;
     background: linear-gradient(135deg, #d4af37, #b8941e);
-    color: #000;
-    border: none;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
+    color: #000; border: none; border-radius: 10px;
+    font-size: 15px; font-weight: 700; cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    letter-spacing: 0.3px;
 }
-.login-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(212,175,55,0.3);
-}
+.login-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212,175,55,0.3); }
 .login-btn:active { transform: scale(0.98); }
-.login-btn.loading {
-    pointer-events: none;
-    opacity: 0.7;
-}
-#login-error {
-    color: #ff6b6b;
-    font-size: 13px;
-    margin-top: 12px;
-    display: none;
-    animation: shake 0.4s ease;
-}
+.login-btn.loading { pointer-events: none; opacity: 0.7; }
+#login-error { color: #ff6b6b; font-size: 13px; margin-top: 12px; display: none; animation: shake 0.4s ease; }
 
-/* ---- ADMIN PANEL ---- */
-#admin-panel {
-    display: none;
-    animation: fadeIn 0.4s ease;
-}
+/* ---- VIEWS ---- */
+.view { display: none; animation: fadeIn 0.4s ease; }
+.view.active { display: block; }
 
-/* Header */
+/* ---- HEADER ---- */
 .admin-header {
-    background: #111;
-    border-bottom: 1px solid #1e1e1e;
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: #111; border-bottom: 1px solid #1e1e1e;
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-.admin-header h1 {
-    font-size: 17px;
-    color: #d4af37;
-    font-weight: 600;
-}
-
-/* Connection Status */
+.header-left { display: flex; align-items: center; gap: 16px; }
+.admin-header h1 { font-size: 17px; color: #d4af37; font-weight: 600; }
 .conn-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-    transition: all 0.4s ease;
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; transition: all 0.4s ease;
 }
-.conn-status .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    transition: background 0.4s;
+.conn-status .dot { width: 8px; height: 8px; border-radius: 50%; transition: background 0.4s; }
+.conn-status.connected { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
+.conn-status.connected .dot { background: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,0.6); animation: pulse-dot 2s ease infinite; }
+.conn-status.disconnected { background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); }
+.conn-status.disconnected .dot { background: #ff6b6b; box-shadow: 0 0 8px rgba(255,107,107,0.6); }
+.conn-status.connecting { background: rgba(251,191,36,0.1); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+.conn-status.connecting .dot { background: #fbbf24; animation: pulse-dot 0.8s ease infinite; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.logout-btn, .back-btn {
+    padding: 8px 18px; background: #1a1a1a; color: #999;
+    border: 1px solid #2a2a2a; border-radius: 8px; cursor: pointer; font-size: 13px; transition: all 0.2s;
 }
-.conn-status.connected {
-    background: rgba(74,222,128,0.1);
-    color: #4ade80;
-    border: 1px solid rgba(74,222,128,0.2);
-}
-.conn-status.connected .dot {
-    background: #4ade80;
-    box-shadow: 0 0 8px rgba(74,222,128,0.6);
-    animation: pulse-dot 2s ease infinite;
-}
-.conn-status.disconnected {
-    background: rgba(255,107,107,0.1);
-    color: #ff6b6b;
-    border: 1px solid rgba(255,107,107,0.2);
-}
-.conn-status.disconnected .dot {
-    background: #ff6b6b;
-    box-shadow: 0 0 8px rgba(255,107,107,0.6);
-}
-.conn-status.connecting {
-    background: rgba(251,191,36,0.1);
-    color: #fbbf24;
-    border: 1px solid rgba(251,191,36,0.2);
-}
-.conn-status.connecting .dot {
-    background: #fbbf24;
-    animation: pulse-dot 0.8s ease infinite;
-}
+.logout-btn:hover, .back-btn:hover { background: #222; color: #fff; border-color: #444; }
+.back-btn { display: flex; align-items: center; gap: 6px; }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+/* ---- DASHBOARD ---- */
+.dashboard {
+    display: flex; align-items: center; justify-content: center;
+    min-height: calc(100vh - 60px); padding: 40px 24px;
 }
-.logout-btn {
-    padding: 8px 18px;
-    background: #1a1a1a;
-    color: #999;
-    border: 1px solid #2a2a2a;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: all 0.2s;
+.dashboard-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; max-width: 700px; width: 100%;
 }
-.logout-btn:hover {
-    background: #222;
-    color: #fff;
-    border-color: #444;
+.dash-card {
+    background: #141414; border: 1px solid #1e1e1e; border-radius: 20px;
+    padding: 50px 40px; text-align: center; cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative; overflow: hidden;
 }
+.dash-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 120%, var(--card-glow) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.4s;
+}
+.dash-card:hover::before { opacity: 1; }
+.dash-card:hover {
+    border-color: var(--card-color);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.dash-card:active { transform: scale(0.97); }
+.dash-card i {
+    font-size: 48px; color: var(--card-color); margin-bottom: 20px;
+    position: relative; transition: transform 0.3s;
+}
+.dash-card:hover i { transform: scale(1.1); }
+.dash-card h2 {
+    font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px; position: relative;
+}
+.dash-card p { font-size: 13px; color: #666; position: relative; }
+.dash-card.plots { --card-color: #4ade80; --card-glow: rgba(74,222,128,0.06); }
+.dash-card.news { --card-color: #60a5fa; --card-glow: rgba(96,165,250,0.06); }
 
-/* Seed Bar */
+/* ---- SEED BAR ---- */
 .seed-bar {
     padding: 14px 24px;
     background: linear-gradient(90deg, rgba(212,175,55,0.08), rgba(212,175,55,0.03));
     border-bottom: 1px solid rgba(212,175,55,0.15);
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    animation: fadeSlideDown 0.4s ease;
+    display: flex; align-items: center; gap: 14px; animation: fadeSlideDown 0.4s ease;
 }
 .seed-btn {
-    padding: 9px 20px;
-    background: linear-gradient(135deg, #d4af37, #b8941e);
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 13px;
+    padding: 9px 20px; background: linear-gradient(135deg, #d4af37, #b8941e);
+    color: #000; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
-.seed-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(212,175,55,0.3);
-}
+.seed-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(212,175,55,0.3); }
 .seed-bar span { font-size: 13px; color: #a89040; }
 
-/* Stats */
-.admin-stats {
-    display: flex;
-    gap: 14px;
-    padding: 22px 24px 10px;
-    flex-wrap: wrap;
-}
+/* ---- STATS ---- */
+.admin-stats { display: flex; gap: 14px; padding: 22px 24px 10px; flex-wrap: wrap; }
 .stat-card {
-    background: #141414;
-    border: 1px solid #1e1e1e;
-    border-radius: 12px;
-    padding: 18px 28px;
-    min-width: 150px;
-    transition: transform 0.3s, border-color 0.3s;
+    background: #141414; border: 1px solid #1e1e1e; border-radius: 12px;
+    padding: 18px 28px; min-width: 150px; transition: transform 0.3s, border-color 0.3s;
 }
-.stat-card:hover {
-    transform: translateY(-2px);
-    border-color: #333;
-}
-.stat-card .num {
-    font-size: 32px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1;
-}
-.stat-card .label {
-    font-size: 12px;
-    color: #666;
-    margin-top: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
+.stat-card:hover { transform: translateY(-2px); border-color: #333; }
+.stat-card .num { font-size: 32px; font-weight: 800; color: #fff; line-height: 1; }
+.stat-card .label { font-size: 12px; color: #666; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
 .stat-card.free .num { color: #4ade80; }
 .stat-card.sold .num { color: #ff6b6b; }
 .stat-card.reserved .num { color: #fbbf24; }
 
-/* Plots Grid */
+/* ---- PLOTS GRID ---- */
 .plots-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 10px;
-    padding: 14px 24px 60px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px; padding: 14px 24px 60px;
 }
 .plot-card {
-    background: #141414;
-    border: 1px solid #1e1e1e;
-    border-radius: 12px;
-    padding: 16px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: cardIn 0.35s ease backwards;
-    position: relative;
-    overflow: hidden;
+    background: #141414; border: 1px solid #1e1e1e; border-radius: 12px;
+    padding: 16px 18px; display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: cardIn 0.35s ease backwards; position: relative; overflow: hidden;
 }
 .plot-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    transition: background 0.4s;
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; transition: background 0.4s;
 }
-.plot-card:hover {
-    border-color: #333;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-}
+.plot-card:hover { border-color: #333; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
 .plot-card .plot-info { flex: 1; min-width: 0; }
-.plot-card .upi-num {
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.plot-card .plot-type {
-    font-size: 11px;
-    color: #666;
-    margin-top: 3px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+.plot-card .upi-num { font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
+.plot-card .plot-type { font-size: 11px; color: #666; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Select wrapper with spinner */
-.select-wrap {
-    position: relative;
-    min-width: 150px;
-}
+.select-wrap { position: relative; min-width: 150px; }
 .select-wrap select {
-    width: 100%;
-    padding: 10px 14px;
-    padding-right: 36px;
-    background: #0e0e0e;
-    border: 1px solid #2a2a2a;
-    border-radius: 8px;
-    color: #e0e0e0;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s;
-    appearance: none;
-    -webkit-appearance: none;
+    width: 100%; padding: 10px 14px; padding-right: 36px;
+    background: #0e0e0e; border: 1px solid #2a2a2a; border-radius: 8px;
+    color: #e0e0e0; font-size: 13px; font-weight: 500; cursor: pointer;
+    transition: all 0.3s; appearance: none; -webkit-appearance: none;
 }
 .select-wrap::after {
-    content: '';
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 5px solid #666;
-    pointer-events: none;
-    transition: opacity 0.3s;
+    content: ''; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent;
+    border-top: 5px solid #666; pointer-events: none; transition: opacity 0.3s;
 }
 .select-wrap.loading::after { opacity: 0; }
-.select-wrap select:focus {
-    outline: none;
-    border-color: #d4af37;
-    box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
-}
+.select-wrap select:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
 .select-wrap select option { background: #1a1a1a; }
-.select-wrap select:disabled {
-    opacity: 0.5;
-    cursor: wait;
-}
+.select-wrap select:disabled { opacity: 0.5; cursor: wait; }
 
-/* Spinner overlay on select */
 .select-spinner {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    border: 2px solid transparent;
-    border-top-color: #d4af37;
-    border-right-color: #d4af37;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-    display: none;
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    width: 18px; height: 18px; border: 2px solid transparent;
+    border-top-color: #d4af37; border-right-color: #d4af37;
+    border-radius: 50%; animation: spin 0.6s linear infinite; display: none;
 }
 .select-wrap.loading .select-spinner { display: block; }
 
-/* Status colors on cards */
 .plot-card.status-free::before { background: #4ade80; }
 .plot-card.status-sold::before { background: #ff6b6b; }
 .plot-card.status-reserved::before { background: #fbbf24; }
 .plot-card.status-donation::before { background: #a78bfa; }
-
 .plot-card.status-free .select-wrap select { border-color: rgba(74,222,128,0.25); }
 .plot-card.status-sold .select-wrap select { border-color: rgba(255,107,107,0.25); }
 .plot-card.status-reserved .select-wrap select { border-color: rgba(251,191,36,0.25); }
 .plot-card.status-donation .select-wrap select { border-color: rgba(167,139,250,0.25); }
 
-/* Status micro-badge in UPI label */
-.status-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    display: inline-block;
-    flex-shrink: 0;
-}
+.status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
 .status-dot.free { background: #4ade80; box-shadow: 0 0 6px rgba(74,222,128,0.5); }
 .status-dot.sold { background: #ff6b6b; box-shadow: 0 0 6px rgba(255,107,107,0.5); }
 .status-dot.reserved { background: #fbbf24; box-shadow: 0 0 6px rgba(251,191,36,0.5); }
 .status-dot.donation { background: #a78bfa; box-shadow: 0 0 6px rgba(167,139,250,0.5); }
 
-/* Flash effect after successful save */
-.plot-card.flash {
-    animation: successFlash 0.6s ease;
-}
+.plot-card.flash { animation: successFlash 0.6s ease; }
 
-/* Toast */
+/* ---- NEWS SECTION ---- */
+.news-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 24px 14px;
+}
+.news-header h2 { font-size: 16px; color: #888; font-weight: 500; }
+.add-news-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 22px; background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: #fff; border: none; border-radius: 10px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.add-news-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(96,165,250,0.3); }
+.add-news-btn:active { transform: scale(0.97); }
+
+.news-list { padding: 0 24px 60px; display: flex; flex-direction: column; gap: 12px; }
+
+.news-card {
+    background: #141414; border: 1px solid #1e1e1e; border-radius: 12px;
+    display: flex; overflow: hidden; transition: all 0.3s; animation: cardIn 0.35s ease backwards;
+    border-left: 3px solid #60a5fa;
+}
+.news-card:hover { border-color: #333; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+.news-card-img {
+    width: 180px; min-height: 120px; flex-shrink: 0;
+    background-size: cover; background-position: center; background-color: #1a1a1a;
+}
+.news-card-body { flex: 1; padding: 18px 20px; min-width: 0; }
+.news-card-meta { display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; }
+.news-card-meta span { font-size: 11px; color: #666; display: flex; align-items: center; gap: 5px; }
+.news-card-meta i { font-size: 13px; color: #555; }
+.news-card-body h3 {
+    font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.news-card-body p {
+    font-size: 12px; color: #666; line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.news-card-actions {
+    display: flex; flex-direction: column; justify-content: center; gap: 6px;
+    padding: 12px 16px; flex-shrink: 0;
+}
+.news-card-actions button {
+    padding: 8px 14px; border: 1px solid #2a2a2a; border-radius: 6px;
+    background: #1a1a1a; color: #999; font-size: 12px; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 5px;
+}
+.news-card-actions button:hover { background: #222; color: #fff; border-color: #444; }
+.news-card-actions .delete-btn:hover { color: #ff6b6b; border-color: rgba(255,107,107,0.4); }
+
+/* ---- NEWS FORM MODAL ---- */
+.modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200; opacity: 0; visibility: hidden;
+    transition: all 0.3s; backdrop-filter: blur(4px);
+}
+.modal-overlay.active { opacity: 1; visibility: visible; }
+.modal {
+    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px;
+    width: 560px; max-width: 95vw; max-height: 90vh; overflow-y: auto;
+    padding: 36px; transform: translateY(20px) scale(0.97);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+}
+.modal-overlay.active .modal { transform: translateY(0) scale(1); }
+.modal h2 { font-size: 20px; color: #d4af37; margin-bottom: 24px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 12px; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.form-group input, .form-group textarea {
+    width: 100%; padding: 12px 14px; background: #111; border: 1px solid #2a2a2a;
+    border-radius: 8px; color: #e0e0e0; font-size: 14px; font-family: inherit;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.form-group input:focus, .form-group textarea:focus {
+    outline: none; border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96,165,250,0.12);
+}
+.form-group textarea { min-height: 100px; resize: vertical; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-actions { display: flex; gap: 12px; margin-top: 24px; }
+.form-actions button {
+    flex: 1; padding: 12px; border: none; border-radius: 10px;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.save-btn {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6); color: #fff;
+}
+.save-btn:hover { box-shadow: 0 4px 16px rgba(96,165,250,0.3); transform: translateY(-1px); }
+.save-btn:disabled { opacity: 0.5; cursor: wait; pointer-events: none; }
+.cancel-btn { background: #222; color: #999; border: 1px solid #2a2a2a !important; }
+.cancel-btn:hover { color: #fff; background: #2a2a2a; }
+
+.empty-state {
+    text-align: center; padding: 80px 20px; color: #444;
+}
+.empty-state i { font-size: 48px; margin-bottom: 16px; display: block; }
+.empty-state p { font-size: 14px; }
+
+/* ---- TOAST ---- */
 .toast {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    background: #1a1a1a;
-    border: 1px solid #4ade80;
-    color: #4ade80;
-    padding: 14px 22px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 500;
-    opacity: 0;
-    transform: translateY(16px) scale(0.95);
+    position: fixed; bottom: 28px; right: 28px;
+    background: #1a1a1a; border: 1px solid #4ade80; color: #4ade80;
+    padding: 14px 22px; border-radius: 12px; font-size: 14px; font-weight: 500;
+    opacity: 0; transform: translateY(16px) scale(0.95);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-    z-index: 100;
+    pointer-events: none; z-index: 300;
     box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
 }
 .toast .toast-icon {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: rgba(74,222,128,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    flex-shrink: 0;
+    width: 20px; height: 20px; border-radius: 50%; background: rgba(74,222,128,0.15);
+    display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0;
 }
-.toast.show {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
+.toast.show { opacity: 1; transform: translateY(0) scale(1); }
 
 /* ---- ANIMATIONS ---- */
-@keyframes fadeSlideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeSlideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-@keyframes cardIn {
-    from { opacity: 0; transform: translateY(12px) scale(0.97); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-@keyframes spin {
-    to { transform: translateY(-50%) rotate(360deg); }
-}
-@keyframes pulse-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-}
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    75% { transform: translateX(6px); }
-}
-@keyframes successFlash {
-    0% { background: #141414; }
-    30% { background: rgba(74,222,128,0.08); }
-    100% { background: #141414; }
-}
+@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cardIn { from { opacity: 0; transform: translateY(12px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+@keyframes successFlash { 0% { background: #141414; } 30% { background: rgba(74,222,128,0.08); } 100% { background: #141414; } }
 
-/* Responsive */
+/* ---- RESPONSIVE ---- */
 @media (max-width: 600px) {
     .admin-header { padding: 12px 16px; }
     .admin-stats { padding: 16px; gap: 10px; }
@@ -475,7 +348,15 @@ body {
     .stat-card { padding: 14px 20px; min-width: 100px; }
     .plot-card { padding: 14px; }
     .login-box { margin: 16px; width: auto; padding: 32px 24px; }
-    .conn-status span { display: none; }
+    .conn-status span.conn-label { display: none; }
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .dash-card { padding: 36px 24px; }
+    .news-card { flex-direction: column; }
+    .news-card-img { width: 100%; min-height: 160px; }
+    .news-card-actions { flex-direction: row; padding: 10px 16px; }
+    .form-row { grid-template-columns: 1fr; }
+    .modal { padding: 24px; }
+    .news-header { flex-direction: column; gap: 12px; align-items: stretch; }
 }
 </style>
 </head>
@@ -493,26 +374,106 @@ body {
     </div>
 </div>
 
-<!-- Admin Panel -->
-<div id="admin-panel">
+<!-- App (hidden until logged in) -->
+<div id="app" style="display:none;">
     <div class="admin-header">
         <div class="header-left">
-            <h1>Управление на парцели</h1>
+            <button class="back-btn" id="back-btn" style="display:none;" onclick="showDashboard()">
+                <i class="ri-arrow-left-s-line"></i> Назад
+            </button>
+            <h1 id="header-title">Админ панел</h1>
             <div class="conn-status connecting" id="conn-status">
                 <div class="dot"></div>
-                <span>Свързване...</span>
+                <span class="conn-label">Свързване...</span>
             </div>
         </div>
         <div class="header-right">
             <button class="logout-btn" onclick="logout()">Изход</button>
         </div>
     </div>
-    <div id="seed-bar" class="seed-bar" style="display:none;">
-        <button class="seed-btn" onclick="seedFirebase()">Синхронизирай с Firebase</button>
-        <span>Няма данни във Firebase. Натиснете за първоначално зареждане.</span>
+
+    <!-- DASHBOARD VIEW -->
+    <div class="view active" id="view-dashboard">
+        <div class="dashboard">
+            <div class="dashboard-grid">
+                <div class="dash-card plots" onclick="showView('plots')">
+                    <i class="ri-map-2-line"></i>
+                    <h2>Парцели</h2>
+                    <p>Управление на статуси</p>
+                </div>
+                <div class="dash-card news" onclick="showView('news')">
+                    <i class="ri-newspaper-line"></i>
+                    <h2>Новини</h2>
+                    <p>Медийни публикации</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="admin-stats" id="stats"></div>
-    <div class="plots-grid" id="plots-grid"></div>
+
+    <!-- PLOTS VIEW -->
+    <div class="view" id="view-plots">
+        <div id="seed-bar" class="seed-bar" style="display:none;">
+            <button class="seed-btn" onclick="seedFirebase()">Синхронизирай с Firebase</button>
+            <span>Няма данни за парцели. Натиснете за първоначално зареждане.</span>
+        </div>
+        <div class="admin-stats" id="stats"></div>
+        <div class="plots-grid" id="plots-grid"></div>
+    </div>
+
+    <!-- NEWS VIEW -->
+    <div class="view" id="view-news">
+        <div class="news-header">
+            <h2 id="news-count">0 публикации</h2>
+            <button class="add-news-btn" onclick="openNewsForm()">
+                <i class="ri-add-line"></i> Добави публикация
+            </button>
+        </div>
+        <div class="news-list" id="news-list"></div>
+    </div>
+</div>
+
+<!-- News Form Modal -->
+<div class="modal-overlay" id="news-modal">
+    <div class="modal">
+        <h2 id="modal-title">Нова публикация</h2>
+        <input type="hidden" id="news-edit-id">
+        <div class="form-group">
+            <label>Заглавие</label>
+            <input type="text" id="news-title" placeholder="Заглавие на статията">
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Източник</label>
+                <input type="text" id="news-source" placeholder="напр. България Днес">
+            </div>
+            <div class="form-group">
+                <label>Дата</label>
+                <input type="text" id="news-date" placeholder="напр. 8 февруари 2026">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Автор</label>
+            <input type="text" id="news-author" placeholder="Име на автора">
+        </div>
+        <div class="form-group">
+            <label>Линк към статията</label>
+            <input type="url" id="news-link" placeholder="https://...">
+        </div>
+        <div class="form-group">
+            <label>URL на снимка</label>
+            <input type="url" id="news-image" placeholder="https://...">
+        </div>
+        <div class="form-group">
+            <label>Описание</label>
+            <textarea id="news-desc" placeholder="Кратко описание на статията..."></textarea>
+        </div>
+        <div class="form-actions">
+            <button class="cancel-btn" onclick="closeNewsForm()">Отказ</button>
+            <button class="save-btn" id="save-news-btn" onclick="saveNews()">
+                <span id="save-btn-text">Запази</span>
+            </button>
+        </div>
+    </div>
 </div>
 
 <div class="toast" id="toast">
@@ -539,9 +500,9 @@ firebase.initializeApp({
 const auth = firebase.auth();
 const db = firebase.database();
 const connStatusEl = document.getElementById('conn-status');
-let pendingChanges = new Set(); // track which UPIs are saving
+let pendingChanges = new Set();
 
-// Hardcoded plot definitions (same as plots.html)
+// ---- PLOT DATA ----
 const plotsDB = {
     "I": { area: 957, type: "За бизнес", rzp: 1148.4, status: "free" },
     "II": { area: 959, type: "За бизнес", rzp: 1150.8, status: "free" },
@@ -631,27 +592,19 @@ function romanToArabic(roman) {
     return result;
 }
 
-const statusLabels = {
-    free: "Свободен",
-    sold: "Продаден",
-    reserved: "Резервиран",
-    donation: "Дарение"
-};
+const statusLabels = { free: "Свободен", sold: "Продаден", reserved: "Резервиран", donation: "Дарение" };
 
-// --- Connection Status ---
+// ---- CONNECTION STATUS ----
 function setConnStatus(state) {
     connStatusEl.className = 'conn-status ' + state;
     const labels = { connected: 'Свързан', disconnected: 'Няма връзка', connecting: 'Свързване...' };
-    connStatusEl.querySelector('span').textContent = labels[state];
+    connStatusEl.querySelector('.conn-label').textContent = labels[state];
 }
-
-// Monitor Firebase connection
-const connRef = firebase.database().ref('.info/connected');
-connRef.on('value', snap => {
+firebase.database().ref('.info/connected').on('value', snap => {
     setConnStatus(snap.val() ? 'connected' : 'disconnected');
 });
 
-// --- Auth ---
+// ---- AUTH ----
 function login() {
     const email = document.getElementById('email').value;
     const pass = document.getElementById('password').value;
@@ -660,64 +613,48 @@ function login() {
     errEl.style.display = 'none';
     btn.classList.add('loading');
     btn.textContent = 'Влизане...';
-
     auth.signInWithEmailAndPassword(email, pass)
-        .then(() => {
-            btn.classList.remove('loading');
-            btn.textContent = 'Вход';
-        })
-        .catch(err => {
-            btn.classList.remove('loading');
-            btn.textContent = 'Вход';
-            errEl.textContent = 'Грешен email или парола.';
-            errEl.style.display = 'block';
-        });
+        .then(() => { btn.classList.remove('loading'); btn.textContent = 'Вход'; })
+        .catch(() => { btn.classList.remove('loading'); btn.textContent = 'Вход'; errEl.textContent = 'Грешен email или парола.'; errEl.style.display = 'block'; });
 }
-
-function logout() {
-    auth.signOut();
-}
-
-document.getElementById('password').addEventListener('keydown', e => {
-    if (e.key === 'Enter') login();
-});
+function logout() { auth.signOut(); }
+document.getElementById('password').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
 
 auth.onAuthStateChanged(user => {
     if (user) {
         document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('admin-panel').style.display = 'block';
-        loadPlots();
+        document.getElementById('app').style.display = 'block';
+        initPlots();
+        initNews();
     } else {
         document.getElementById('login-screen').style.display = 'flex';
-        document.getElementById('admin-panel').style.display = 'none';
+        document.getElementById('app').style.display = 'none';
     }
 });
 
-// --- Plots UI ---
-let firstLoad = true;
+// ---- NAVIGATION ----
+function showView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    const titles = { dashboard: 'Админ панел', plots: 'Управление на парцели', news: 'Управление на новини' };
+    document.getElementById('header-title').textContent = titles[name];
+    document.getElementById('back-btn').style.display = name === 'dashboard' ? 'none' : 'flex';
+}
+function showDashboard() { showView('dashboard'); }
 
-function loadPlots() {
+// ---- PLOTS ----
+let plotsFirstLoad = true;
+
+function initPlots() {
     db.ref('plots').on('value', snapshot => {
         const fbData = snapshot.val();
-
         document.getElementById('seed-bar').style.display = fbData ? 'none' : 'flex';
-
         if (fbData) {
-            Object.keys(fbData).forEach(upi => {
-                if (plotsDB[upi]) plotsDB[upi].status = fbData[upi];
-            });
+            Object.keys(fbData).forEach(upi => { if (plotsDB[upi]) plotsDB[upi].status = fbData[upi]; });
         }
-
-        // Clear pending states since we got fresh data
         const justFinished = new Set(pendingChanges);
         pendingChanges.clear();
-
-        if (firstLoad) {
-            renderGrid();
-            firstLoad = false;
-        } else {
-            updateGridInPlace(justFinished);
-        }
+        if (plotsFirstLoad) { renderPlotsGrid(); plotsFirstLoad = false; } else { updatePlotsInPlace(justFinished); }
         renderStats();
     });
 }
@@ -725,7 +662,6 @@ function loadPlots() {
 function renderStats() {
     const counts = { free: 0, sold: 0, reserved: 0, donation: 0 };
     Object.values(plotsDB).forEach(p => { counts[p.status] = (counts[p.status] || 0) + 1; });
-
     document.getElementById('stats').innerHTML = `
         <div class="stat-card free"><div class="num">${counts.free}</div><div class="label">Свободни</div></div>
         <div class="stat-card sold"><div class="num">${counts.sold}</div><div class="label">Продадени</div></div>
@@ -733,110 +669,196 @@ function renderStats() {
     `;
 }
 
-function renderGrid() {
+function renderPlotsGrid() {
     const grid = document.getElementById('plots-grid');
     grid.innerHTML = '';
-
     const upis = Object.keys(plotsDB).sort((a, b) => romanToArabic(a) - romanToArabic(b));
-
     upis.forEach((upi, i) => {
         const data = plotsDB[upi];
         const card = document.createElement('div');
         card.className = `plot-card status-${data.status}`;
         card.id = `card-${upi}`;
         card.style.animationDelay = `${i * 0.03}s`;
-        card.innerHTML = buildCardHTML(upi, data);
+        card.innerHTML = buildPlotCardHTML(upi, data);
         grid.appendChild(card);
     });
 }
 
-function updateGridInPlace(justFinished) {
-    const upis = Object.keys(plotsDB);
-    upis.forEach(upi => {
+function updatePlotsInPlace(justFinished) {
+    Object.keys(plotsDB).forEach(upi => {
         const card = document.getElementById(`card-${upi}`);
         if (!card) return;
-
         const data = plotsDB[upi];
         card.className = `plot-card status-${data.status}`;
-
-        // Update select value and spinner
         const wrap = card.querySelector('.select-wrap');
         const sel = card.querySelector('select');
-        if (sel) {
-            sel.value = data.status;
-            sel.disabled = false;
-        }
+        if (sel) { sel.value = data.status; sel.disabled = false; }
         if (wrap) wrap.classList.remove('loading');
-
-        // Update status dot
         const dot = card.querySelector('.status-dot');
         if (dot) dot.className = `status-dot ${data.status}`;
-
-        // Flash animation on cards that just saved
-        if (justFinished.has(upi)) {
-            card.classList.add('flash');
-            setTimeout(() => card.classList.remove('flash'), 700);
-        }
+        if (justFinished.has(upi)) { card.classList.add('flash'); setTimeout(() => card.classList.remove('flash'), 700); }
     });
 }
 
-function buildCardHTML(upi, data) {
+function buildPlotCardHTML(upi, data) {
     const isLoading = pendingChanges.has(upi);
     return `
         <div class="plot-info">
-            <div class="upi-num">
-                <span class="status-dot ${data.status}"></span>
-                УПИ ${romanToArabic(upi)}
-            </div>
+            <div class="upi-num"><span class="status-dot ${data.status}"></span> УПИ ${romanToArabic(upi)}</div>
             <div class="plot-type">${data.type}${data.area ? ' &middot; ' + data.area + ' m&sup2;' : ''}</div>
         </div>
         <div class="select-wrap ${isLoading ? 'loading' : ''}">
-            <select data-upi="${upi}" onchange="changeStatus('${upi}', this.value)" ${isLoading ? 'disabled' : ''}>
+            <select data-upi="${upi}" onchange="changePlotStatus('${upi}', this.value)" ${isLoading ? 'disabled' : ''}>
                 <option value="free" ${data.status === 'free' ? 'selected' : ''}>Свободен</option>
                 <option value="sold" ${data.status === 'sold' ? 'selected' : ''}>Продаден</option>
                 <option value="reserved" ${data.status === 'reserved' ? 'selected' : ''}>Резервиран</option>
                 <option value="donation" ${data.status === 'donation' ? 'selected' : ''}>Дарение</option>
             </select>
             <div class="select-spinner"></div>
-        </div>
-    `;
+        </div>`;
 }
 
-function changeStatus(upi, newStatus) {
-    // Set loading state immediately
+function changePlotStatus(upi, newStatus) {
     pendingChanges.add(upi);
     const card = document.getElementById(`card-${upi}`);
     if (card) {
-        const wrap = card.querySelector('.select-wrap');
-        const sel = card.querySelector('select');
-        if (wrap) wrap.classList.add('loading');
-        if (sel) sel.disabled = true;
+        const wrap = card.querySelector('.select-wrap'); const sel = card.querySelector('select');
+        if (wrap) wrap.classList.add('loading'); if (sel) sel.disabled = true;
     }
-
     db.ref('plots/' + upi).set(newStatus)
-        .then(() => {
-            showToast(`УПИ ${romanToArabic(upi)} &rarr; ${statusLabels[newStatus]}`);
-        })
+        .then(() => showToast(`УПИ ${romanToArabic(upi)} &rarr; ${statusLabels[newStatus]}`))
         .catch(() => {
             pendingChanges.delete(upi);
-            if (card) {
-                const wrap = card.querySelector('.select-wrap');
-                const sel = card.querySelector('select');
-                if (wrap) wrap.classList.remove('loading');
-                if (sel) sel.disabled = false;
-            }
+            if (card) { const w = card.querySelector('.select-wrap'); const s = card.querySelector('select'); if (w) w.classList.remove('loading'); if (s) s.disabled = false; }
             showToast('Грешка при запис!', true);
         });
 }
 
 function seedFirebase() {
     const updates = {};
-    Object.keys(plotsDB).forEach(upi => {
-        updates[upi] = plotsDB[upi].status;
+    Object.keys(plotsDB).forEach(upi => { updates[upi] = plotsDB[upi].status; });
+    db.ref('plots').set(updates).then(() => showToast('Парцели синхронизирани!'));
+}
+
+// ---- NEWS ----
+let newsData = {};
+
+function initNews() {
+    db.ref('news').orderByChild('createdAt').on('value', snapshot => {
+        newsData = {};
+        snapshot.forEach(child => { newsData[child.key] = child.val(); });
+        renderNewsList();
     });
-    db.ref('plots').set(updates).then(() => {
-        showToast('Firebase синхронизиран!');
+}
+
+function renderNewsList() {
+    const list = document.getElementById('news-list');
+    const keys = Object.keys(newsData).sort((a, b) => (newsData[b].createdAt || 0) - (newsData[a].createdAt || 0));
+    document.getElementById('news-count').textContent = keys.length + (keys.length === 1 ? ' публикация' : ' публикации');
+
+    if (keys.length === 0) {
+        list.innerHTML = '<div class="empty-state"><i class="ri-newspaper-line"></i><p>Няма добавени публикации.</p></div>';
+        return;
+    }
+
+    list.innerHTML = '';
+    keys.forEach((key, i) => {
+        const n = newsData[key];
+        const card = document.createElement('div');
+        card.className = 'news-card';
+        card.style.animationDelay = `${i * 0.05}s`;
+        card.innerHTML = `
+            <div class="news-card-img" style="background-image:url('${escapeHtml(n.image || '')}')"></div>
+            <div class="news-card-body">
+                <div class="news-card-meta">
+                    <span><i class="ri-global-line"></i> ${escapeHtml(n.source || '')}</span>
+                    <span><i class="ri-calendar-line"></i> ${escapeHtml(n.date || '')}</span>
+                    <span><i class="ri-user-line"></i> ${escapeHtml(n.author || '')}</span>
+                </div>
+                <h3>${escapeHtml(n.title || '')}</h3>
+                <p>${escapeHtml(n.description || '')}</p>
+            </div>
+            <div class="news-card-actions">
+                <button onclick="editNews('${key}')"><i class="ri-edit-line"></i> Редакция</button>
+                <button class="delete-btn" onclick="deleteNews('${key}')"><i class="ri-delete-bin-line"></i> Изтрий</button>
+            </div>
+        `;
+        list.appendChild(card);
     });
+}
+
+function openNewsForm(data, id) {
+    document.getElementById('news-edit-id').value = id || '';
+    document.getElementById('modal-title').textContent = id ? 'Редакция на публикация' : 'Нова публикация';
+    document.getElementById('news-title').value = data ? data.title : '';
+    document.getElementById('news-source').value = data ? data.source : '';
+    document.getElementById('news-date').value = data ? data.date : '';
+    document.getElementById('news-author').value = data ? data.author : '';
+    document.getElementById('news-link').value = data ? data.link : '';
+    document.getElementById('news-image').value = data ? data.image : '';
+    document.getElementById('news-desc').value = data ? data.description : '';
+    document.getElementById('save-btn-text').textContent = 'Запази';
+    document.getElementById('save-news-btn').disabled = false;
+    document.getElementById('news-modal').classList.add('active');
+}
+
+function closeNewsForm() {
+    document.getElementById('news-modal').classList.remove('active');
+}
+
+function editNews(key) {
+    openNewsForm(newsData[key], key);
+}
+
+function deleteNews(key) {
+    if (!confirm('Сигурни ли сте, че искате да изтриете тази публикация?')) return;
+    db.ref('news/' + key).remove().then(() => showToast('Публикация изтрита.'));
+}
+
+function saveNews() {
+    const btn = document.getElementById('save-news-btn');
+    const btnText = document.getElementById('save-btn-text');
+    const editId = document.getElementById('news-edit-id').value;
+
+    const article = {
+        title: document.getElementById('news-title').value.trim(),
+        source: document.getElementById('news-source').value.trim(),
+        date: document.getElementById('news-date').value.trim(),
+        author: document.getElementById('news-author').value.trim(),
+        link: document.getElementById('news-link').value.trim(),
+        image: document.getElementById('news-image').value.trim(),
+        description: document.getElementById('news-desc').value.trim(),
+        createdAt: editId && newsData[editId] ? newsData[editId].createdAt : Date.now()
+    };
+
+    if (!article.title) { document.getElementById('news-title').focus(); return; }
+
+    btn.disabled = true;
+    btnText.textContent = 'Запазване...';
+
+    const ref = editId ? db.ref('news/' + editId) : db.ref('news').push();
+    ref.set(article)
+        .then(() => {
+            closeNewsForm();
+            showToast(editId ? 'Публикация обновена!' : 'Публикация добавена!');
+        })
+        .catch(() => {
+            btn.disabled = false;
+            btnText.textContent = 'Запази';
+            showToast('Грешка при запис!', true);
+        });
+}
+
+// Close modal on overlay click
+document.getElementById('news-modal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeNewsForm();
+});
+
+// ---- HELPERS ----
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
 }
 
 let toastTimer;
@@ -845,15 +867,9 @@ function showToast(msg, isError) {
     const icon = t.querySelector('.toast-icon');
     const msgEl = document.getElementById('toast-msg');
     msgEl.innerHTML = msg;
-    if (isError) {
-        t.style.borderColor = '#ff6b6b';
-        t.style.color = '#ff6b6b';
-        icon.innerHTML = '&#10007;';
-    } else {
-        t.style.borderColor = '#4ade80';
-        t.style.color = '#4ade80';
-        icon.innerHTML = '&#10003;';
-    }
+    t.style.borderColor = isError ? '#ff6b6b' : '#4ade80';
+    t.style.color = isError ? '#ff6b6b' : '#4ade80';
+    icon.innerHTML = isError ? '&#10007;' : '&#10003;';
     t.classList.add('show');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => t.classList.remove('show'), 2800);

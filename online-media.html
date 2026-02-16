@@ -519,21 +519,62 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     </section>
 
     <!-- ARTICLES -->
-    <section class="articles-section">
-        <a href="https://www.bgdnes.bg/shou/article/22248045" target="_blank" class="article-card reveal">
-            <div class="article-image">
-                <img src="https://cache1.24chasa.bg/Images/Cache/049/Image_22248049_40_0.jpg" alt="Бившата на Бачорски с разказ за надеждата за промяна в ромския квартал на Сливен">
-            </div>
-            <div class="article-body">
-                <div class="article-source"><i class="ri-global-line"></i> България Днес</div>
-                <div class="article-date"><i class="ri-calendar-line"></i> 8 февруари 2026</div>
-                <h3>Бившата на Бачорски с разказ за надеждата за промяна в ромския квартал на Сливен</h3>
-                <p>Инфлуенсърката Емилия Лозанова сподели за мащабния частен проект в ромския квартал на Сливен, включващ модерни жилища, търговски площи, медицински център, паркинг и оптична мрежа – „не просто сгради, а цяла среда."</p>
-                <div class="article-author"><i class="ri-user-line"></i> Мартин Христов</div>
-                <span class="read-more">Прочети в оригинал <i class="ri-arrow-right-line"></i></span>
-            </div>
-        </a>
+    <section class="articles-section" id="articles-section">
+        <!-- Articles loaded from Firebase -->
     </section>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    <script>
+    (function() {
+        try {
+            firebase.initializeApp({
+                apiKey: "AIzaSyBG_LGOJEvDcpqGUJDDWLYmskw4ACJVqxg",
+                authDomain: "newhope-b74d7.firebaseapp.com",
+                databaseURL: "https://newhope-b74d7-default-rtdb.europe-west1.firebasedatabase.app",
+                projectId: "newhope-b74d7",
+                storageBucket: "newhope-b74d7.firebasestorage.app",
+                messagingSenderId: "327850598967",
+                appId: "1:327850598967:web:74adb2ee4889fe9705d5b2"
+            });
+
+            function escapeHtml(str) {
+                const div = document.createElement('div');
+                div.textContent = str || '';
+                return div.innerHTML;
+            }
+
+            firebase.database().ref('news').orderByChild('createdAt').on('value', snapshot => {
+                const section = document.getElementById('articles-section');
+                const articles = [];
+                snapshot.forEach(child => { articles.push(child.val()); });
+                articles.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+                if (articles.length === 0) {
+                    section.innerHTML = '<p style="text-align:center;color:#555;padding:60px 20px;">Няма публикации.</p>';
+                    return;
+                }
+
+                section.innerHTML = articles.map(n => `
+                    <a href="${escapeHtml(n.link)}" target="_blank" class="article-card reveal active">
+                        <div class="article-image">
+                            <img src="${escapeHtml(n.image)}" alt="${escapeHtml(n.title)}">
+                        </div>
+                        <div class="article-body">
+                            <div class="article-source"><i class="ri-global-line"></i> ${escapeHtml(n.source)}</div>
+                            <div class="article-date"><i class="ri-calendar-line"></i> ${escapeHtml(n.date)}</div>
+                            <h3>${escapeHtml(n.title)}</h3>
+                            <p>${escapeHtml(n.description)}</p>
+                            <div class="article-author"><i class="ri-user-line"></i> ${escapeHtml(n.author)}</div>
+                            <span class="read-more">Прочети в оригинал <i class="ri-arrow-right-line"></i></span>
+                        </div>
+                    </a>
+                `).join('');
+            });
+        } catch(e) { console.warn('Firebase unavailable for news.'); }
+    })();
+    </script>
 </main>
 
 <footer>

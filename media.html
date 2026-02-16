@@ -1150,7 +1150,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
                 </div>
                 <h3>Електронни медии</h3>
                 <p>Статии и публикации от водещи новинарски сайтове и портали.</p>
-                <span class="count">1 материал</span>
+                <span class="count" id="news-count">1 материал</span>
             </a>
         </div>
     </section>
@@ -1275,6 +1275,28 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         </div>
     </div>
 </footer>
+
+<!-- Firebase SDK for dynamic news count -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+try {
+    firebase.initializeApp({
+        apiKey: "AIzaSyBG_LGOJEvDcpqGUJDDWLYmskw4ACJVqxg",
+        authDomain: "newhope-b74d7.firebaseapp.com",
+        databaseURL: "https://newhope-b74d7-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "newhope-b74d7",
+        storageBucket: "newhope-b74d7.firebasestorage.app",
+        messagingSenderId: "327850598967",
+        appId: "1:327850598967:web:74adb2ee4889fe9705d5b2"
+    });
+    firebase.database().ref('news').on('value', snap => {
+        const count = snap.numChildren();
+        const el = document.getElementById('news-count');
+        if (el) el.textContent = count + (count === 1 ? ' материал' : ' материала');
+    });
+} catch(e) {}
+</script>
 
 <script>
     // --- CUSTOM CURSOR ---
