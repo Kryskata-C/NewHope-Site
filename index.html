@@ -790,6 +790,10 @@ body.perf-low .video-background {
     filter: brightness(0.25);
 }
 
+/* === PRELOADER CSS FALLBACK (if JS load event is blocked by CDN resources) === */
+@keyframes autoHidePreloader { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+#preloader { animation: autoHidePreloader 1s 8s forwards; }
+
 /* === ACCESSIBILITY === */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -798,8 +802,23 @@ body.perf-low .video-background {
     }
     .noise-overlay, .grid-overlay, .corner-decor { display: none !important; }
     .cursor-dot, .cursor-outline { display: none !important; }
+    .first-time-badge, .dynamic-quote-wrapper, .hero h1,
+    .hero-subtitle-prestige, .hero-cta, .quote-text,
+    .nav-card, .stat-item, .stats-container, footer {
+        opacity: 1 !important;
+        transform: none !important;
+    }
 }
 </style>
+<noscript>
+<style>
+    #preloader { display: none !important; }
+    .first-time-badge, .dynamic-quote-wrapper, .hero h1,
+    .hero-subtitle-prestige, .hero-cta, .quote-text,
+    .nav-card, .stat-item, .stats-container, footer,
+    .mobile-menu a { opacity: 1 !important; transform: none !important; }
+</style>
+</noscript>
 <!-- Google Analytics (GA4) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CDYMNR14RB"></script>
 <script>
@@ -1125,7 +1144,10 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     let currentQuoteIndex = 0;
     const quoteElement = document.getElementById('quote-display');
 
+    var _textCycleStarted = false;
     function startTextCycle() {
+        if (_textCycleStarted) return;
+        _textCycleStarted = true;
         quoteElement.classList.add('active');
         var interval = document.body.classList.contains('perf-low') ? 5000 : 3000;
         setInterval(cycleQuote, interval);
@@ -1204,7 +1226,10 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     });
 
     // --- SCROLL EFFECTS ---
+    var _scrollEffectsInit = false;
     function initScrollEffects() {
+        if (_scrollEffectsInit) return;
+        _scrollEffectsInit = true;
         // Header shrink on scroll
         const header = document.querySelector('header');
         window.addEventListener('scroll', () => {
@@ -1387,6 +1412,20 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             });
         });
     }
+
+    // Safety: init scroll effects now (don't wait for load event which may be delayed by blocked CDN resources in Lockdown Mode)
+    initScrollEffects();
+
+    // Safety: if load event hasn't fired in 8s (CDN resources hanging), dismiss preloader and start content
+    setTimeout(function() {
+        var preloader = document.getElementById('preloader');
+        if (preloader && preloader.style.display !== 'none') {
+            preloader.style.opacity = '0';
+            setTimeout(function() { preloader.style.display = 'none'; }, 1000);
+            document.body.classList.add('skip-intro');
+            startTextCycle();
+        }
+    }, 8000);
 </script>
 
 <!-- Cookie Consent -->

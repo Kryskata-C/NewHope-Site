@@ -433,7 +433,19 @@ footer {
 @media (max-width: 360px) {
     .page-hero h1 { font-size: 24px; }
 }
+
+/* Ensure elements are visible when animations are disabled */
+@media (prefers-reduced-motion: reduce) {
+    .hero-icon, .page-hero h1, .hero-subtitle, .back-link,
+    .reveal { opacity: 1 !important; transform: none !important; }
+}
 </style>
+<noscript>
+<style>
+    .reveal, .reveal.active, .hero-icon, .page-hero h1, .hero-subtitle, .back-link,
+    .mobile-menu a { opacity: 1 !important; transform: none !important; }
+</style>
+</noscript>
 <!-- Google Analytics (GA4) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CDYMNR14RB"></script>
 <script>
