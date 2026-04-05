@@ -2,6 +2,18 @@
 <html lang="bg">
 <head>
 <meta charset="UTF-8">
+<script>if(new URLSearchParams(window.location.search).get('type')==='house')document.documentElement.classList.add('embed-map');</script>
+<style>
+html.embed-map, html.embed-map body { height:100%!important; overflow:hidden!important; margin:0!important; padding:0!important; }
+html.embed-map header, html.embed-map .mobile-menu, html.embed-map .sticky-wa, html.embed-map footer,
+html.embed-map .noise-overlay, html.embed-map .grid-overlay, html.embed-map .vignette,
+html.embed-map .cursor-dot, html.embed-map .cursor-outline, html.embed-map .corner-decor,
+html.embed-map .dev-toggle, html.embed-map .zoom-indicator, html.embed-map .hero-section,
+html.embed-map section, html.embed-map .mobile-zoom-hint { display:none!important; }
+html.embed-map .map-outer-wrapper { display:block!important; position:fixed!important; top:0!important; left:0!important; width:100vw!important; height:100vh!important; z-index:9999!important; }
+html.embed-map .map-container { width:100%!important; height:100%!important; max-width:none!important; border:none!important; border-radius:0!important; }
+html.embed-map .scroll-hint-overlay { display:none!important; }
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Купи Парцел | ЖК Нова Надежда</title>
 <link rel="icon" type="image/png" href="logo.png">
@@ -2246,20 +2258,6 @@ try {
         }
     }, function(err) { console.warn('Firebase read failed:', err.message); });
 } catch(e) { console.warn('Firebase unavailable, using local data.'); }
-</script>
-<script>
-// Embed mode: hide chrome when loaded inside iframe with ?type=house
-if (new URLSearchParams(window.location.search).get('type') === 'house') {
-    document.documentElement.style.cssText = 'height:100%;overflow:hidden;';
-    document.body.style.cssText = 'height:100%;overflow:hidden;margin:0;padding:0;';
-    ['header','.mobile-menu','.sticky-wa','footer','.noise-overlay','.grid-overlay','.vignette','.cursor-dot','.cursor-outline','.corner-decor','.dev-toggle','.zoom-indicator'].forEach(sel => {
-        document.querySelectorAll(sel).forEach(el => el.style.display = 'none');
-    });
-    const mc = document.querySelector('.map-container');
-    if (mc) {
-        mc.style.cssText = 'width:100vw;height:100vh;max-width:none;position:fixed;top:0;left:0;z-index:9999;border:none;border-radius:0;';
-    }
-}
 </script>
 </body>
 </html>
