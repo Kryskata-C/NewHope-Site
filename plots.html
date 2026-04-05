@@ -1718,7 +1718,10 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         if (data && (data.status === 'sold' || data.status === 'reserved' || data.status === 'donation')) return;
 
         const phone = "359889212116";
-        const text = `Здравейте, интересувам се от Парцел УПИ ${romanToArabic(currentSelectedUpi)} в Нова Надежда.`;
+        const isHouseInquiry = new URLSearchParams(window.location.search).get('type') === 'house';
+                const text = isHouseInquiry
+                    ? `Здравейте, интересувам се от закупуване на УПИ ${romanToArabic(currentSelectedUpi)} с цел построяване на къща/бизнес в Нова Надежда.`
+                    : `Здравейте, интересувам се от Парцел УПИ ${romanToArabic(currentSelectedUpi)} в Нова Надежда.`;
         const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
         window.open(url, '_blank');
     });
@@ -1753,7 +1756,10 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
                 if (data && (data.status === 'sold' || data.status === 'reserved' || data.status === 'donation')) return;
 
                 const phone = "359889212116";
-                const text = `Здравейте, интересувам се от Парцел УПИ ${romanToArabic(upi)} в Нова Надежда.`;
+                const isHouseInquiry = new URLSearchParams(window.location.search).get('type') === 'house';
+                const text = isHouseInquiry
+                    ? `Здравейте, интересувам се от закупуване на УПИ ${romanToArabic(upi)} с цел построяване на къща/бизнес в Нова Надежда.`
+                    : `Здравейте, интересувам се от Парцел УПИ ${romanToArabic(upi)} в Нова Надежда.`;
                 const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
                 window.open(url, '_blank');
             });

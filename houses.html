@@ -688,13 +688,13 @@ header {
     z-index: 3;
 }
 
-.btn-whatsapp-cta {
+.btn-map-cta {
     display: inline-flex;
     align-items: center;
     gap: 12px;
     padding: 18px 40px;
-    background: #25D366;
-    color: white;
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold-main));
+    color: #050505;
     font-family: 'Rajdhani', sans-serif;
     font-size: 16px;
     font-weight: 700;
@@ -702,19 +702,74 @@ header {
     letter-spacing: 2px;
     text-decoration: none;
     border-radius: 50px;
+    border: none;
+    cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
     white-space: nowrap;
 }
 
-.btn-whatsapp-cta i {
+.btn-map-cta i {
     font-size: 22px;
 }
 
-.btn-whatsapp-cta:hover {
+.btn-map-cta:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
-    background: #1fb855;
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+    background: linear-gradient(135deg, var(--gold-main), var(--gold-bright));
+}
+
+/* Map Modal */
+.map-modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.map-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+.map-modal {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 1400px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-main);
+}
+.map-modal iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+.map-modal-close {
+    position: absolute;
+    top: 15px; right: 15px;
+    width: 45px; height: 45px;
+    background: rgba(5, 5, 5, 0.9);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--gold-main);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+.map-modal-close:hover {
+    background: var(--gold-main);
+    color: #050505;
 }
 
 .map-link {
@@ -935,7 +990,7 @@ footer {
     .infra-pill { padding: 12px 20px; }
     .infra-pill span { font-size: 13px; }
     .map-section { padding: 50px 4%; }
-    .btn-whatsapp-cta { padding: 14px 24px; font-size: 13px; letter-spacing: 1px; }
+    .btn-map-cta { padding: 14px 24px; font-size: 13px; letter-spacing: 1px; }
 
     .footer-content { grid-template-columns: 1fr; text-align: center; gap: 30px; }
     .footer-brand { align-items: center; }
@@ -962,8 +1017,7 @@ footer {
     .corner-decor { display: none; }
     .sticky-wa span { display: none; }
     .sticky-wa { width: 50px; height: 50px; padding: 0; font-size: 22px; border-radius: 50%; }
-    .btn-whatsapp-cta { padding: 12px 18px; font-size: 12px; }
-    .btn-whatsapp-cta span { display: none; }
+    .btn-map-cta { padding: 12px 18px; font-size: 12px; }
 }
 
 @media (max-width: 360px) {
@@ -1176,18 +1230,22 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
             <img src="rotated_aligned.png" alt="Карта на ЖК Нова Надежда – парцели">
             <div class="map-corner-br"></div>
             <div class="map-cta-overlay">
-                <a href="https://wa.me/359889212116?text=Здравейте, интересувам се от закупуване на УПИ с построяване на къща/ сграда" target="_blank" class="btn-whatsapp-cta">
-                    <i class="ri-whatsapp-line"></i>
-                    Кликни за запитване за КЪЩА
-                </a>
+                <button class="btn-map-cta" id="openMapModal">
+                    <i class="ri-map-pin-line"></i>
+                    Избери парцел за къща
+                </button>
             </div>
         </div>
-
-        <a href="/plots" class="map-link reveal">
-            Виж интерактивна карта <i class="ri-arrow-right-line"></i>
-        </a>
     </section>
 </main>
+
+<!-- Map Modal -->
+<div class="map-modal-overlay" id="mapModal">
+    <div class="map-modal">
+        <button class="map-modal-close" id="closeMapModal"><i class="ri-close-line"></i></button>
+        <iframe src="/plots?type=house" id="mapIframe"></iframe>
+    </div>
+</div>
 
 <footer>
     <div class="footer-content">
@@ -1247,7 +1305,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     }
     animateOutline();
 
-    document.querySelectorAll('a, button, .btn-primary, .btn-whatsapp-cta, .service-card, .infra-pill').forEach(el => {
+    document.querySelectorAll('a, button, .btn-primary, .btn-map-cta, .service-card, .infra-pill').forEach(el => {
         el.addEventListener('mouseenter', () => { dot.classList.add('hovering'); outline.classList.add('hovering'); });
         el.addEventListener('mouseleave', () => { dot.classList.remove('hovering'); outline.classList.remove('hovering'); });
     });
@@ -1310,6 +1368,37 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     window.addEventListener('load', checkReveal);
     checkReveal();
 })();
+</script>
+
+<script>
+// Map Modal
+const openBtn = document.getElementById('openMapModal');
+const modal = document.getElementById('mapModal');
+const closeBtn = document.getElementById('closeMapModal');
+
+openBtn.addEventListener('click', () => {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+});
+
+closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+});
+
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
 </script>
 
 </body>
