@@ -2247,5 +2247,19 @@ try {
     }, function(err) { console.warn('Firebase read failed:', err.message); });
 } catch(e) { console.warn('Firebase unavailable, using local data.'); }
 </script>
+<script>
+// Embed mode: hide chrome when loaded inside iframe with ?type=house
+if (new URLSearchParams(window.location.search).get('type') === 'house') {
+    document.documentElement.style.cssText = 'height:100%;overflow:hidden;';
+    document.body.style.cssText = 'height:100%;overflow:hidden;margin:0;padding:0;';
+    ['header','.mobile-menu','.sticky-wa','footer','.noise-overlay','.grid-overlay','.vignette','.cursor-dot','.cursor-outline','.corner-decor','.dev-toggle','.zoom-indicator'].forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => el.style.display = 'none');
+    });
+    const mc = document.querySelector('.map-container');
+    if (mc) {
+        mc.style.cssText = 'width:100vw;height:100vh;max-width:none;position:fixed;top:0;left:0;z-index:9999;border:none;border-radius:0;';
+    }
+}
+</script>
 </body>
 </html>
