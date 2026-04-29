@@ -139,7 +139,8 @@ header {
 .header-logo { height: 100px; width: auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); transition: 0.3s; }
 .header-logo:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--gold-main)); }
 
-.header-menu { display: flex; justify-content: center; gap: 30px; }
+.header-menu { display: flex; justify-content: center; gap: 24px; flex-wrap: nowrap; white-space: nowrap; }
+@media (min-width: 992px) and (max-width: 1200px) { .header-menu { gap: 14px; } .header-link { font-size: 13px; letter-spacing: 1.5px; } }
 .header-link {
     font-family: 'Rajdhani', sans-serif; color: white; text-decoration: none; text-transform: uppercase;
     font-weight: 600; font-size: 14px; letter-spacing: 2px; position: relative; transition: 0.3s;
@@ -636,162 +637,94 @@ header {
 .category-card.radio { --card-color: #8B5CF6; }
 .category-card.online { --card-color: #3B82F6; }
 
-/* --- MEDIA TIMELINE --- */
-.timeline-section {
-    padding: 100px 5%;
-    max-width: 1000px;
+/* --- CHRONOLOGY LINK CARD --- */
+.chronology-link-section {
+    padding: 80px 5% 100px;
+    max-width: 1100px;
     margin: 0 auto;
 }
-
-.timeline-header {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.timeline-header h2 {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 700;
-    color: var(--text-white);
-}
-
-.timeline {
-    position: relative;
-    padding-left: 50px;
-}
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 20px; top: 0;
-    width: 2px; height: 100%;
-    background: linear-gradient(to bottom, var(--gold-main), transparent);
-}
-
-.timeline-item {
-    position: relative;
-    padding-bottom: 50px;
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: all 0.6s ease;
-}
-
-.timeline-item.active {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -38px; top: 5px;
-    width: 16px; height: 16px;
-    background: var(--gold-main);
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-}
-
-.timeline-date {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 14px;
-    color: var(--gold-main);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-}
-
-.timeline-content {
-    background: rgba(10,10,10,0.8);
-    border: 1px solid var(--glass-border);
-    padding: 25px;
-    border-radius: 8px;
-    transition: all 0.4s ease;
-}
-
-.timeline-item:hover .timeline-content {
-    border-color: var(--gold-main);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.timeline-content h4 {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text-white);
-    margin-bottom: 10px;
-}
-
-.timeline-content p {
-    color: #888;
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-.timeline-link {
-    display: inline-flex;
+.chronology-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    gap: 8px;
-    color: var(--gold-main);
+    gap: 32px;
+    padding: 36px 40px;
+    background: linear-gradient(135deg, rgba(15,15,15,0.95) 0%, rgba(10,10,10,0.85) 100%);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
     text-decoration: none;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: color 0.3s;
-}
-
-.timeline-link:hover {
-    color: var(--gold-bright);
-}
-
-.timeline-link i {
-    transition: transform 0.3s;
-}
-
-.timeline-link:hover i {
-    transform: translateX(5px);
-}
-
-/* --- TIMELINE COLLAPSE --- */
-.timeline-item.timeline-hidden {
-    display: none;
-    opacity: 0;
-    transform: translateX(-30px);
-}
-.timeline.expanded .timeline-item.timeline-hidden {
-    display: block;
-}
-
-.timeline-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 35px;
-    background: transparent;
-    border: 1px solid var(--glass-border);
-    color: var(--gold-main);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    cursor: pointer;
-    border-radius: 50px;
     transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
 }
-.timeline-toggle:hover {
-    border-color: var(--gold-main);
-    background: rgba(212, 175, 55, 0.08);
-    transform: translateY(-2px);
-}
-.timeline-toggle .toggle-icon {
-    font-size: 20px;
+.chronology-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 4px; height: 100%;
+    background: var(--gold-main);
+    transform: scaleY(0);
+    transform-origin: top;
     transition: transform 0.4s ease;
 }
-.timeline-toggle.expanded .toggle-icon {
-    transform: rotate(180deg);
+.chronology-card:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+.chronology-card:hover::before { transform: scaleY(1); }
+.chronology-card-icon {
+    width: 76px; height: 76px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    color: var(--gold-main);
+    background: rgba(212, 175, 55, 0.06);
+    flex-shrink: 0;
+    transition: all 0.4s ease;
+}
+.chronology-card:hover .chronology-card-icon {
+    background: var(--gold-main);
+    color: #000;
+    border-color: var(--gold-main);
+}
+.chronology-card-content .section-label { margin-bottom: 8px; }
+.chronology-card-content h2 {
+    font-family: 'ColusRegular', 'Rajdhani', sans-serif;
+    font-size: clamp(22px, 3vw, 30px);
+    color: var(--text-white);
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+.chronology-card-content p {
+    color: #999;
+    font-size: 15px;
+    line-height: 1.6;
+}
+.chronology-card-arrow {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-main);
+    font-size: 22px;
+    flex-shrink: 0;
+    transition: all 0.4s ease;
+}
+.chronology-card:hover .chronology-card-arrow {
+    background: var(--gold-main);
+    color: #000;
+    border-color: var(--gold-main);
+    transform: translateX(4px);
+}
+@media (max-width: 700px) {
+    .chronology-card { grid-template-columns: 1fr; text-align: center; padding: 28px 22px; gap: 18px; }
+    .chronology-card-icon, .chronology-card-arrow { margin: 0 auto; }
 }
 
 /* --- CTA SECTION --- */
@@ -1119,6 +1052,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         <a href="/houses" class="header-link">КЪЩИ</a>
         <a href="/apartments" class="header-link">АПАРТАМЕНТИ</a>
         <a href="/media" class="header-link active">МЕДИИ</a>
+        <a href="/chronology" class="header-link">РАЗВИТИЕ</a>
         <a href="/partners" class="header-link">ПАРТНЬОРИ</a>
     </nav>
 
@@ -1145,6 +1079,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     <a href="/houses">Къщи</a>
     <a href="/apartments">Апартаменти</a>
     <a href="/media" class="active">Медии</a>
+    <a href="/chronology">Развитие на проекта</a>
     <a href="/partners">Партньори</a>
     <div class="mobile-menu-socials">
         <a href="https://www.facebook.com/NewHope.Bg/" target="_blank"><i class="ri-facebook-fill"></i></a>
@@ -1183,93 +1118,21 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         </div>
     </section>
 
-    <!-- TIMELINE -->
-    <section class="timeline-section">
-        <div class="timeline-header reveal">
-            <span class="section-label">Хронология</span>
-            <h2>Развитие на проекта</h2>
-        </div>
-
-        <div class="timeline" id="timeline">
-            <div class="timeline-item">
-                <span class="timeline-date">Октомври 2023</span>
-                <div class="timeline-content">
-                    <h4>Старт на проекта</h4>
-                    <p>Възлагане за изготвяне на конструктивно становище за годността на съществуващи сгради и проект за събаряне на съществуващ сграден фонд.</p>
-                </div>
+    <!-- CHRONOLOGY LINK CARD -->
+    <section class="chronology-link-section">
+        <a href="/chronology" class="chronology-card reveal">
+            <div class="chronology-card-icon">
+                <i class="ri-history-line"></i>
             </div>
-
-            <div class="timeline-item">
-                <span class="timeline-date">Май 2025</span>
-                <div class="timeline-content">
-                    <h4>Договор за събаряне и разрушаване</h4>
-                    <p>Подписване на договор с Тримекс Груп ЕООД за събаряне и разрушаване на сгради.</p>
-                </div>
+            <div class="chronology-card-content">
+                <span class="section-label">Хронология</span>
+                <h2>Развитие на проекта</h2>
+                <p>Виж всички ключови етапи – от първите конструктивни становища до одобрението на устройствените планове и започването на строителството.</p>
             </div>
-
-            <div class="timeline-item">
-                <span class="timeline-date">Юли 2025</span>
-                <div class="timeline-content">
-                    <h4>Решение на Общински съвет Сливен</h4>
-                    <p>Решение № 839/31.07.2025 г. за одобряване и разрешаване изменение на Общия устройствен план на гр. Сливен и Селищно Образувание „Изгрев".</p>
-                </div>
+            <div class="chronology-card-arrow">
+                <i class="ri-arrow-right-line"></i>
             </div>
-
-            <div class="timeline-item timeline-hidden">
-                <span class="timeline-date">Ноември 2025</span>
-                <div class="timeline-content">
-                    <h4>Екологична оценка и партньорства</h4>
-                    <p>Решение на РИОСВ – Стара Загора за екологична оценка. Споразумения с А1 България и Газтрейд Сливен за изграждане на оптична и газова мрежа.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item timeline-hidden">
-                <span class="timeline-date">Декември 2025</span>
-                <div class="timeline-content">
-                    <h4>Приемане на окончателен проект за ОУП</h4>
-                    <p>Обществено обсъждане и заседание на ОбЕСУТ при Община Сливен – приемане на окончателен проект за изменение на ОУП на град Сливен.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item timeline-hidden">
-                <span class="timeline-date">Януари 2026</span>
-                <div class="timeline-content">
-                    <h4>Одобряване изменение на ОУП</h4>
-                    <p>Общински съвет Сливен приема решение за одобряване изменение на Общия устройствен план на град Сливен.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item timeline-hidden">
-                <span class="timeline-date">Февруари 2026</span>
-                <div class="timeline-content">
-                    <h4>Обнародване в Държавен вестник</h4>
-                    <p>Обнародване на решението на Общински съвет Сливен в Държавен вестник.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item timeline-hidden">
-                <span class="timeline-date">Март 2026</span>
-                <div class="timeline-content">
-                    <h4>Заповед за изменение на ПУП</h4>
-                    <p>Заповед №Р015-537 на Община Сливен, относно изработване чрез възлагане от заинтересованите лица на Изменение на Подробен устройствен план.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item timeline-hidden">
-                <span class="timeline-date">Март 2026</span>
-                <div class="timeline-content">
-                    <h4>Съгласуване с Електроразпределение Юг</h4>
-                    <p>Съгласуване на задание за ПУП по чл.128а от ЗУТ с "Електроразпределение Юг" ЕАД.</p>
-                </div>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 40px;">
-            <button class="timeline-toggle" id="timelineToggle">
-                <span class="toggle-text">Покажи всички</span>
-                <i class="ri-arrow-down-s-line toggle-icon"></i>
-            </button>
-        </div>
+        </a>
     </section>
 
     <!-- Hidden until contact page is ready
@@ -1397,7 +1260,6 @@ try {
 
     // --- SCROLL REVEAL ANIMATIONS ---
     const revealElements = document.querySelectorAll('.reveal');
-    const timelineItems = document.querySelectorAll('.timeline-item');
 
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -1412,59 +1274,6 @@ try {
 
     revealElements.forEach(el => {
         revealObserver.observe(el);
-    });
-
-    // Timeline animation with stagger
-    const timelineObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('active');
-                }, index * 200);
-            }
-        });
-    }, {
-        threshold: 0.2
-    });
-
-    timelineItems.forEach(item => {
-        timelineObserver.observe(item);
-    });
-
-    // Timeline expand/collapse
-    const timelineToggle = document.getElementById('timelineToggle');
-    const timeline = document.getElementById('timeline');
-    const hiddenItems = timeline.querySelectorAll('.timeline-hidden');
-    let isExpanded = false;
-
-    timelineToggle.addEventListener('click', () => {
-        isExpanded = !isExpanded;
-        timeline.classList.toggle('expanded', isExpanded);
-        timelineToggle.classList.toggle('expanded', isExpanded);
-        timelineToggle.querySelector('.toggle-text').textContent = isExpanded ? 'Скрий' : 'Покажи всички';
-
-        if (isExpanded) {
-            hiddenItems.forEach((item, i) => {
-                setTimeout(() => {
-                    item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateX(0)';
-                    item.classList.add('active');
-                }, i * 150);
-            });
-        } else {
-            hiddenItems.forEach(item => {
-                item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                item.style.opacity = '0';
-                item.style.transform = 'translateX(-30px)';
-                item.classList.remove('active');
-            });
-            setTimeout(() => {
-                if (!isExpanded) {
-                    timeline.classList.remove('expanded');
-                }
-            }, 350);
-        }
     });
 
     // Mobile menu toggle

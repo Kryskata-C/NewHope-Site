@@ -135,7 +135,8 @@ header {
 .header-logo { height: 100px; width: auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); transition: 0.3s; }
 .header-logo:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--gold-main)); }
 
-.header-menu { display: flex; justify-content: center; gap: 30px; }
+.header-menu { display: flex; justify-content: center; gap: 24px; flex-wrap: nowrap; white-space: nowrap; }
+@media (min-width: 992px) and (max-width: 1200px) { .header-menu { gap: 14px; } .header-link { font-size: 13px; letter-spacing: 1.5px; } }
 .header-link {
     font-family: 'Rajdhani', sans-serif; color: white; text-decoration: none; text-transform: uppercase;
     font-weight: 600; font-size: 14px; letter-spacing: 2px; position: relative; transition: 0.3s;
@@ -953,6 +954,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
         <a href="/houses" class="header-link">КЪЩИ</a>
         <a href="/apartments" class="header-link active">АПАРТАМЕНТИ</a>
         <a href="/media" class="header-link">МЕДИИ</a>
+        <a href="/chronology" class="header-link">РАЗВИТИЕ</a>
         <a href="/partners" class="header-link">ПАРТНЬОРИ</a>
     </nav>
 
@@ -979,6 +981,7 @@ src="https://www.facebook.com/tr?id=2351974405321468&ev=PageView&noscript=1"
     <a href="/houses">Къщи</a>
     <a href="/apartments" class="active">Апартаменти</a>
     <a href="/media">Медии</a>
+    <a href="/chronology">Развитие на проекта</a>
     <a href="/partners">Партньори</a>
     <div class="mobile-menu-socials">
         <a href="https://www.facebook.com/NewHope.Bg/" target="_blank"><i class="ri-facebook-fill"></i></a>
